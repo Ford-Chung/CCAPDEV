@@ -1,4 +1,3 @@
-
 .inputBox {
     width: 70%;
     padding: 7.5px;
@@ -13,11 +12,22 @@
     border-color: #1e2020;
 }
 
+.childContainer{
+    height: 500px;
+    width: 500px;
+    display: block;
+    justify-content: center;
+    text-align: center;
+    padding-top:30px;
+    padding-bottom: 30px;
+    margin:5%;
+}
+
 .button {
     background-color: #707793; 
     border: 1px solid #1e2020;
     color: white;
-    padding: 7.5px 30.5%;
+    padding: 7.5px 29%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -33,20 +43,3 @@
 .button:hover {
     background-color: #3BBA9C; 
 }
-
-.childContainer{
-    height: 500px;
-    width: 500px;
-    display: block;
-    justify-content: center;
-    text-align: center;
-    padding-top:30px;
-    padding-bottom: 30px;
-    margin:5%;
-}
-
-
-
-
-
-

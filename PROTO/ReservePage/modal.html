@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Modal</title>
+  <link href="modal.css" rel="stylesheet">
+  <script defer src="modal.js"></script>
+</head>
+<body>  
+    <div class="modal" id="modalA">
+      <div class="modal-header">
+        <div id="title">Example Modal</div>
+        <button data-close-button class="close-button">&times;</button>
+      </div>
+      <div class="contentA">
+        <div class="modal-body">
+          <div class="date">Date: 2024-2-12</div>
+          <div class="time">Time: 9:00-9:30</div>
+          <div>
+            <input type="checkbox" id="anon">
+            <label for="anon">Reserve Anonymously</label>
+          </div>
+          <div><button data-reserve-button id="reserve">Reserve</button></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal" id="modalB">
+      <div class="modal-header">
+        <div id="title">Example Modal</div>
+        <button data-close-button class="close-button">&times;</button>
+      </div>
+      <div class="contentA">
+        <div class="modal-body">
+          <div class="date">Date: 2024-2-12</div>
+          <div class="time">Time: 9:00-9:30</div>
+          <div>
+            <input type="checkbox" id="anon">
+            <label for="anon">Unavailable</label>
+          </div>
+          <div><button data-reserve-button id="reserve">Reserve</button></div>
+        </div>
+      </div>
+
+    </div>
+    <div id="overlay"></div>
+</body>
+</html>

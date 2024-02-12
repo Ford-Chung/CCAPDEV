@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RE:SERVE</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: hsl(180, 25%, 25%);
+        }
+
+        .lab-pic img{
+            width: 100%;
+            height: 320px;
+            margin-top: 64px;
+        }
+
+        .lab-pic2 img{
+            width: 400px;
+            height: 320px;
+        }
+
+        .content {
+            display: flex;
+            padding: 40px;
+        }
+
+        .intro {
+            color: white;
+            font-size: 24px;
+            font-style: sans-serif;
+            padding-left: 5%;
+            padding-top: 5%;
+        }
+
+        .background img{
+            opacity: .2;
+            position: absolute;
+            z-index: -1;
+            width: 100%;
+        }
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+</head>
+<body>
+    <div id="nav-placeholder">
+
+    </div>
+    <div class="background">
+        <img src="../Image/bg.jpg">
+    </div>
+  
+    <main>
+        <div class="lab-pic">
+            <img src="../Image/computer_lab.jpg">
+        </div>
+        <div class="content">
+            <div class="lab-pic2">
+                <img src="../Image/computer_lab2.jpg">
+            </div>
+            <div class="intro">A computer lab reservation system where students can easily view and 
+                reserve available labs and time slots while giving the technician the ability to create and 
+                remove laboratories, timeslots, and student reservations would streamline the entire process. 
+                This system would not only enhance efficiency but also minimize conflicts in reservation, 
+                ensuring that students have access to the campus labs when they need them.</div>
+        </div>
+    </main>
+
+    <div id="nav-placeholder">
+
+    </div>
+    
+    <script>
+    $(function(){
+      $("#nav-placeholder").load("../navbar/navbar.html");
+    });
+    </script>
+</body>
+</html>

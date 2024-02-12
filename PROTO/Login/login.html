@@ -5,6 +5,11 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="main.css">
         <link rel="stylesheet" href="login.css">
+        <script>
+            function redirectMain(){
+                window.location.href="../Mainpage/mainpage.html";
+            }
+        </script>
     </head>
 
     <body>
@@ -18,11 +23,11 @@
                     <form>
                         <input class="inputBox" type="text" placeholder="Username"></input>
                         <input class="inputBox" type="password" placeholder="Password"> </input> 
-                        <input class="button" type="button" value="Log in">
+                        <input class="button" type="button" value="Log in" onclick="redirectMain()">
                     </form>
                 </div>
                 <hr class="borderDefault">
-                <h4> Don't have an account? <a href=""> Sign up</a></h4>
+                <h4> Don't have an account? <a href="register.html"> Sign up</a></h4>
                 <hr class="borderDefault">
             </div>
         </div>
