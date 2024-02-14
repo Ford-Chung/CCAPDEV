@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="login.css">
+        <script>
+            function redirectMain(){
+                window.location.href="../Mainpage/mainMenu.html";
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="centerBox">
+            <div class="childContainer borderDefault">
+                <div>
+                    <h1> LabTimeSync </h1>
+                </div>
+                <hr class="borderDefault">
+                <div>
+                    <form>
+                        <input class="inputBox" type="text" placeholder="Username"></input>
+                        <input class="inputBox" type="password" placeholder="Password"> </input> 
+                        <input class="button" type="button" value="Log in" onclick="redirectMain()">
+                        <div class="">
+                            <h4> Remember me on future logins <input type="checkbox"></input></h4>
+                            
+                        </div>
+                        
+                    </form>
+                </div>
+                <hr class="borderDefault">
+                <h4> Don't have an account? <a href="register.html"> Sign up</a></h4>
+                <hr class="borderDefault">
+            </div>
+        </div>
+    </body>
+
+</html>

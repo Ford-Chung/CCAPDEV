@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<head>
+    <title>Reservation</title>
+    <link href="modal.css" rel="stylesheet">
+    <script defer src="modal.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <style>
+        body{
+            background-color: darkslategray;
+        }
+
+        main {
+            display: grid;
+            place-items: center;
+        }
+
+        .bg img {
+            width: 100%;
+            position: absolute;
+            z-index: -1;
+            opacity: .2;
+        }
+
+        .room-container {
+            display: grid;
+            padding: 30px;
+            width: 85%;
+            height: 70vh;
+            
+            background-color: hsla(204, 24%, 35%, 0.767);
+            border: 1px solid hsla(180, 24%, 35%, 0.765);
+            justify-content: center;
+            align-content: center;
+            border-radius: 30px;
+            grid-template-columns: repeat(3, 1fr);
+            grid-column-gap: 2%;
+        }
+
+        .column{
+            background-color: #2e3047c1;
+            width: 100%;
+            height: 70vh;
+            border-radius: 30px;
+        }
+        
+
+        main h1{
+            color: white;
+            font-size: 40px;
+            padding: 10px;
+            font-style: sans-serif;
+        }
+
+        .tag {
+            justify-self: center;
+            color: white;
+            padding-bottom: 10px;
+            font-size: 20px;
+            font-style: sans-serif;
+        }
+
+        .column{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-column-gap: 5%;
+            justify-items: center;
+            align-items: center;
+            padding: 2%;
+        }
+
+        .row {
+            background-color: #3BBA9C;
+            height: 70px;
+            border-radius: 20px;
+            width: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .row:hover {
+            background-color: #3bba9ccd;
+        }
+
+
+        .filter {
+            margin-top: 5%;
+            color: white;
+            font-size: 20px;
+            background-color: #2e8a74;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .filter-container{
+            display: flex;
+            justify-content: space-around;
+        }
+        
+    </style>
+    <script>
+        function limitDate(){
+            // Get the input element
+            var dateInput = document.getElementById('date-input');
+
+            // Calculate the minimum and maximum dates
+            var minDate = new Date();
+            var maxDate = new Date();
+            maxDate.setDate(maxDate.getDate() + 6);
+
+            // Format the dates in YYYY-MM-DD format
+            var minDateString = minDate.toISOString().slice(0,10);
+            var maxDateString = maxDate.toISOString().slice(0,10);
+
+            // Set the min and max attributes of the input
+            dateInput.setAttribute('min', minDateString);
+            dateInput.setAttribute('max', maxDateString);
+
+        }
+
+        
+
+        // Function to generate time options
+        function generateTimeOptions() {
+            // Get the select element
+            var timeSelect = document.getElementById('timeSelect');
+            var startHour = 9; // Start hour (9:00 am)
+            var endHour = 17;  // End hour (5:00 pm)
+            
+            for (var hour = startHour; hour < endHour; hour++) {
+                for (var minute = 0; minute < 60; minute += 30) {
+                    // Format the time
+                    var hourString = ('0' + hour).slice(-2);
+                    var minuteString = ('0' + minute).slice(-2);
+                    var time = hourString + ':' + minuteString;
+
+                    // Create an option element
+                    var option = document.createElement('option');
+                    option.value = time;
+                    option.textContent = time + ' - ' + (hour + Math.floor(minute / 30)) + ':' + ('0' + ((minute + 30) % 60)).slice(-2);
+                    
+                    // Add the option to the select element
+                    timeSelect.appendChild(option);
+                }
+            }
+        }
+
+        function generateBlocks(columnId){
+            let container = document.getElementById(columnId);
+
+            for(let i = 1; i <= 12; i++){
+                let blocks = document.createElement("button");
+                blocks.setAttribute("class", "row");
+                let temp = "" + columnId + "S" + i;
+                blocks.setAttribute("id", temp); 
+                blocks.setAttribute("data-modal-target", "#modalA");
+                
+                blocks.textContent = temp;
+                container.appendChild(blocks);
+                
+            }
+            
+        }
+
+
+
+        $(function(){
+            $("#nav-placeholder").load("../navbar/navbar.html");
+            $("#modal-placeholder").load("modal.html");
+          });
+  
+
+  
+          window.onload = function() {
+              generateBlocks('C1');
+              generateBlocks('C2');
+              generateBlocks('C3');
+              limitDate();
+              generateTimeOptions();
+          };
+
+
+    </script>
+
+</head>
+<body>
+    <div class="bg">
+        <img src="../Image/bg.jpg">
+    </div>
+    <header>
+        <div id="nav-placeholder">
+            
+        </div>
+    </header>
+
+    <div id="modal-placeholder">
+
+    </div>
+
+    <div id="overlay"></div>
+
+    <main>
+        <div class="filter">
+            
+            <div class="filter-container">
+                <div class="date-container">
+                    <label for="date-input">Date: </label>
+                    <input type="date" id="date-input" name="date">
+                </div>
+
+                <div class="timeframe-container">
+                    <label for="timeSelect">TimeRange: </label>
+                    <select id="timeSelect">
+                        <!-- Options will be generated dynamically here -->
+                    </select>   
+                </div>
+
+            </div>
+        </div>
+    
+        <h1>Room A</h1>
+        <div class="room-container">
+            <div class="tag">Column 1</div>
+            <div class="tag">Column 2</div>
+            <div class="tag">Column 3</div>
+            <div class="column" id="C1">
+                <!-- Empty div for blocks -->
+            </div>
+            <div class="column" id="C2">
+                <!-- Empty div for blocks -->
+            </div>
+            <div class="column" id="C3">
+                <!-- Empty div for blocks -->
+            </div>
+        </div>  
+    </main>
+
+
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Modal</title>
+  <link href="modal.css" rel="stylesheet">
+  <script defer src="modal.js"></script>
+</head>
+<body>  
+    <div class="modal" id="modalA">
+      <div class="modal-header">
+        <div id="title" class="text">Available</div>
+        <div id="status" class="text">Available</div>
+        <div id="xcontainer"><button data-close-button class="close-button">&times;</button></div>
+      </div>
+      <div class="contentA">
+        <div class="modal-body">
+          <div class="date text">Date: 2024-2-12</div>
+          <div class="time text">Time: 9:00-9:30</div>
+          <div class="user-input-container">
+            <input type="checkbox" id="anon">
+            <label for="anon" class="text">Reserve Anonymously</label>
+          </div>
+          <div class="reserve-button-container"><button data-reserve-button id="reserve">Reserve</button></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal" id="modalB">
+      <div class="modal-header">
+        <div id="title" class="text">Reserved</div>
+        <div id="status" class="text">Reserved</div>
+        <div id="xcontainer"></div><button data-close-button class="close-button">&times;</button>
+      </div>
+      <div class="content">
+        <div class="modal-body">
+          <div class="date text">Date: 2024-2-12</div>
+          <div class="time text">Time: 9:00-9:30</div>
+          <div class="reserver-details">
+              <div class="name-placeholder text">Reserver Name: </div>
+              <div class="reserver-name"><a class="text" href="../Profile/profile.html" >Bruce Wayne</a></div>
+          </div>
+          <div><button data-reserve-button id="close">Close</button></div>
+        </div>
+      </div>
+
+    </div>
+    <div id="overlay"></div>
+</body>
+</html>
