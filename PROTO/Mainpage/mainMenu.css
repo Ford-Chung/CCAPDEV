@@ -1,6 +1,10 @@
 
 .flexParent{
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 aside{
@@ -45,10 +49,6 @@ aside{
     border: 1px solid #1e2020
 }
 
-form{
-    padding-left:25%;
-    display: flex;
-}
 
 .clickableImage{
     width:60px;
@@ -77,6 +77,8 @@ form{
 header{
     padding-top: .5%;
     padding-bottom: .5%;
+    border-bottom:1px solid #55565f;
+    box-shadow: #1e2020;
 }
 
 .image-container {
@@ -99,92 +101,120 @@ header{
     display: block;
 }
 
-.calendar{
-    width: 15%;
-    min-width: 300px;
-    height:auto;
+.laboratoryContainer{
+    margin: 1% 10% 0% 10%;
+    width: 40%;
+    border: 1px solid #55565f;
+    border-radius: 15px;
+    display: block;
+    padding-left: 2%;
+    box-shadow: 0 4px 8px rgba(.5, .5, .5, 0.5); /* Box shadow */
+}
+.laboratoryContainer h1{
+    font-size: 5vh;
+}
+
+.laboratoryContainer h2{
+    color:rgb(210, 223, 223);
+}
+
+.laboratoryDetailsContainer{
     display: flex;
-    flex-direction: column;
-    padding: 5px;
-    background: #fff;
+    justify-content: left;
+}
+.laboratoryContainer:hover{
+    cursor: pointer;
+}
+
+.laboratoryDetails{
+    display: block;
+    text-wrap: nowrap;
+    width: 50%;
+    margin: 2.5%;
+}
+
+.heading{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin: 2.5%;
+    margin-bottom: 0%;
+}
+
+.button {
+    background-color: #707793; 
+    border: 1px solid #1e2020;
+    color: white;
+    padding: 7.5px 1%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s; 
+    margin: 5px;
+}
+
+.searchFeaturesContainer{
+    margin-left: 20%;
+    margin-right: 20%;
+    width: 50%;
+    border: 2px solid #55565f;
+    border-top: 0px;
+    display: flex;
+    justify-content: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Box shadow */
+}
+
+.flexContainer{
+    display: flex;
+    margin-top:4%;
+}
+
+aside {
+    display: block;
+    width: 20%;
+    height: 100vh; 
+    background-color: #2E3047;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    padding: 1%;
+    z-index: -1;
+}
+
+.searchFilterContainer{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.searchFilterContainer{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding:2.5%;
     border-radius: 10px;
 }
-
-.calendarHeader{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding:10px;
-}
-
-.calendarHeader button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 50%;
-    background-color: #fff;
+.searchFilterContainer :hover{
     cursor: pointer;
-    width: 40px;
-    height: 40px;
-    box-shadow: 0 0 4px rgba(0,0,0,0.2);
-}
-.days{
-    display: grid;
-    grid-template-columns: repeat(7,1fr);
-}
-.day{
-    text-align: center;
-    padding: 5px;
-    font-size: 100%;
-}
-.dates{
-    display:grid;
-    grid-template-columns: repeat(7,1fr);
-    gap: 5px;
 }
 
-.date{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
-
+.selected{
+    background-color: #55565f;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.date.active{
-    background-color: #3BBA9C;
+.filterIcons{
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    margin-right: 10px;
 }
 
-.laboratoryContainer{
-    width: 100%;
-    margin-left:5%;
-    margin-right: 5%;
+aside hr{
+    margin: 0px 0px 10px;
 }
-
-.timeBar {
-    display: grid;
-    grid-template-columns: repeat(25, 0.5fr);
-    border: 1px solid black;
-    padding: 0;
-    margin: 0;
-}
-
-.timeBar > * {
-    white-space: nowrap;
-}
-
-.timeHeader{
-    padding: 0px;
-    margin: 0px;
-}
-
-.timeBox{
-    height:20px;
-}
-
 
 

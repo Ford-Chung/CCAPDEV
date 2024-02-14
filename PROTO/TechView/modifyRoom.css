@@ -1,7 +1,10 @@
 *{
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    
+}
+
+h1{
+    font-size: unset;
 }
 
 .bg img {
@@ -28,7 +31,7 @@ body{
     align-items: center;
 }
 
-main{
+.mod-container{
     display: grid;
     place-content: center;
     width: 100%;
@@ -41,9 +44,13 @@ main{
     align-items: center;
 }
 
-#modify-Maintitle, .modify-titles{
+#modify-Maintitle h1, .modify-titles{
     color: white;
     font-style: sans-serif;
+}
+
+#modify-Maintitle h1{
+    font-size: 2em;
 }
 
 
@@ -51,7 +58,7 @@ main{
     font-size: larger;
 }
 
-input, select{
+.mod-container input, .mod-container input, .mod-container input, .delete-timeslots select{
     margin: 10px;
 }
 
@@ -79,11 +86,13 @@ input, select{
     align-items: center;
 }
 
-button{
+.mod-container button{
     border-radius: 6px;
     background-color: #55c4aa;
     border: none;
     height: 20px;
+    width: max-content;
+    padding: 3px;
 }
 
 button:hover, #saveAll:hover{
