@@ -11,10 +11,28 @@
     border: 1px solid black;
     border-radius: 10px;
     z-index: 10;
-    background-color: white;
+    background-color: #2E3047;
     width: 500px;
     max-width: 80%;
+    height: 45vh;
   }
+
+  #status, #xcontainer{
+    width: 33%;
+  }
+
+  #title{
+    width: 33%;
+  }
+
+  #status {
+    text-align: center;
+  }
+
+  #xcontainer{
+    text-align: right;
+  }
+
   
   .modal.active {
     transform: translate(-50%, -50%) scale(1);
@@ -66,3 +84,57 @@
   .modal-body div {
     padding: 10px;
   }
+
+  .reserver-details {
+    display: flex;
+  }
+
+  .text {
+    color: white;
+    font-style: sans-serif;
+    padding: 10px;
+    margin: 10px;
+  }
+
+
+.close-button{
+  color: white;
+}
+
+.contentA {
+  display: flex;
+  flex-direction: column;
+}
+
+#reserve {
+  background-color: #8afbbf8a;
+  width: 100px;
+  height: 35px;
+  border-radius: 20px;
+  color: white;
+}
+
+.reserve-button-container{
+  position: absolute;
+  bottom: 0px;
+  margin-bottom: 10px;
+}
+
+
+
+.name-placeholder{
+  margin: 0;
+}
+
+
+#close {
+  background-color: #8afbbf8a;
+  width: 100px;
+  height: 35px;
+  border-radius: 20px;
+  color: white;
+}
+
+.reserved{
+  color: white;
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Modify Room</title>
+    <link href="modifyRoom.css" rel="stylesheet">
+    <script src="../jquery-3.7.1.min.js"></script>
+    <script>
+        function redirectRoom(){
+            window.location.href =  "roomTech.html"
+        }
+        $(function(){
+            $("#nav-placeholder").load("../navbar/navbar.html");
+            $("#modal-placeholder").load("modalTech.html");
+          });
+  
+
+  
+          window.onload = function() {
+              generateBlocks('C1');
+              generateBlocks('C2');
+              generateBlocks('C3');
+              limitDate();
+              generateTimeOptions();
+              changeAvailability("C1S1");
+              changeAvailability("C1S2");
+              changeAvailability("C1S4");
+              changeAvailability("C2S3");
+              changeAvailability("C2S9");   
+          };
+
+    </script>
+</head>
+<body>
+    <div class="bg">
+        <img src="../Image/computerLab.jpg">
+    </div>
+    <header>
+        <div id="nav-placeholder">
+            
+        </div>
+    </header>
+    <main>
+        <div class="modification-wrap">
+            <div class="head-container">
+                <div class="back" onclick="redirectRoom()"><img src="../Image/back.png"></div>
+                <div id="modify-Maintitle"><h1>Modify Room Availability</h1></div>
+            </div>
+            <div class="unavail-dates">
+                <div><label class="modify-titles" for>Disable Date</label></div>
+                <div><input type="date" id="unavail-dates"></div>
+                <div><button>Disable</button></div>
+            </div>
+            <div class="avail-dates">
+                <div><label class="modify-titles" for>Enable A date</label></div>
+                <div><input type="date" id="unavail-dates"></div>
+                <div><button>Enable</button></div>
+            </div>
+            <div class="add-timeslots">
+                <div><label class="modify-titles" for>Add time Slots</label></div>
+                <div><input type="time" id="add-time"></div>
+                <div><button>Add</button></div>
+            </div>
+            <div class="delete-timeslots">
+                <div><label class="modify-titles" for>Delete Time Slots</label></div>
+                <div><select id="timeSelect">
+                        <!-- Options will be generated dynamically here -->
+                    <option value="09:00">09:00 - 9:30</option>
+                    <option value="09:30">09:30 - 10:00</option>
+                    <option value="10:00">10:00 - 10:30</option>
+                    <option value="10:30">10:30 - 11:00</option>
+                    <option value="11:00">11:00 - 11:30</option>
+                    <option value="11:30">11:30 - 12:00</option>
+                    <option value="12:00">12:00 - 12:30</option>
+                    <option value="12:30">12:30 - 13:00</option>
+                    <option value="13:00">13:00 - 13:30</option>
+                    <option value="13:30">13:30 - 14:00</option>
+                    <option value="14:00">14:00 - 14:30</option>
+                    <option value="14:30">14:30 - 15:00</option>
+                    <option value="15:00">15:00 - 15:30</option>
+                    <option value="15:30">15:30 - 16:00</option>
+                    <option value="16:00">16:00 - 16:30</option>
+                    <option value="16:30">16:30 - 17:00</option>
+                </select></div>
+                <div><button>Delete</button></div>
+            </div>
+            <div class="save-container"><button id="saveAll">Save Changes</button></div>
+        </div>
+    </main>
+</body>
+</html>

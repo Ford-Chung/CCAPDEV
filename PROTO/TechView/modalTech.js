@@ -23,7 +23,7 @@ function handleButtonClick(event) {
     }
     openModal(modal);
   } else {
-    addAttReserve(id);
+    removeReserve(id);
     const modalId = "#modalB";
     const modal = document.querySelector(modalId);
     // Change title when button is clicked
@@ -32,12 +32,18 @@ function handleButtonClick(event) {
       title.textContent = id; // Change this to the desired title
     }
     openModal(modal);
+    
   }
 
 }
 
 function addAttReserve(id){
   let button = document.getElementById("reserve");
+  button.setAttribute("onclick", 'changeAvailability("' + id + '")');
+}
+
+function removeReserve(id){
+  let button = document.getElementById("close");
   button.setAttribute("onclick", 'changeAvailability("' + id + '")');
 }
 
@@ -62,6 +68,14 @@ document.addEventListener('click', event => {
   }
 });
 
+document.addEventListener('click', event => {
+  const closeButton = event.target.closest('[data-cancel-button]');
+  if (closeButton) {
+    const modal = closeButton.closest('.modal');
+    closeModal(modal);
+
+  }
+});
 // Event listener for closeModalButtons
 document.addEventListener('click', event => {
   const closeButton = event.target.closest('[data-close-button]');
@@ -85,15 +99,15 @@ function closeModal(modal) {
 
 function changeAvailability(id){
   let block = document.getElementById(id);
-  block.classList.add('reserved');
-  if (block.style.backgroundColor === "rgba(230, 38, 38, 0.865)") {
+  
+  if (block.classList.contains('reserved')) {
       // If red, change to original color
+      block.classList.remove('reserved');
       block.style.backgroundColor = "";
   } else {
       // If not red, change to red
+      block.classList.add('reserved');
       block.style.backgroundColor = "rgba(230, 38, 38, 0.865)";
   }
 }
-
-
 
