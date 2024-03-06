@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="/common/profile.css">
+
+<main>
+        <img id="prof-pic" src="/images/pfps/{{user.pfp}}">
+        <h1 id="name">{{user.username}}</h1>
+        <p id="bio">{{user.bio}}</p>
+        <div id="prof-buttons-div">
+            <form action="edit-profile" method="get">
+                <button type="submit">Edit profile</button>
+            </form>
+            <button type="button" class="delete" onclick="confirmDelProf();">Delete profile</button>
+        </div>
+        <h2>Current Reservations:</h2>
+        <details>
+            <summary>G301A - Feb. 1, 2024 10:00-12:00</summary>
+            <p>Laboratory: G301A</p>
+            <p>Seat Number: C1S1</p>
+            <p>Reservation: February 1, 2024 10:00-12:00</p>
+            <p>Requested: January 29, 2024 23:17</p>
+            <div id="resv-buttons-div">
+                <a href="../ReservePage/studentView1.html">
+                    <button type="button">Edit Reservation</button>
+                </a>
+                <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
+            </div>
+        </details>
+        <details>
+            <summary>G301B - Feb. 2, 2024 11:00-12:00</summary>
+            <p>Laboratory: G301B</p>
+            <p>Seat Number: C1S1</p>
+            <p>Reservation: February 2, 2024 11:00-12:00</p>
+            <p>Requested: January 29, 2024 23:18</p>
+            <div id="resv-buttons-div">
+                <a href="../ReservePage/studentView1.html">
+                    <button type="button">Edit Reservation</button>
+                </a>
+                <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
+            </div>
+        </details>
+        <details>
+            <summary>G304B - Feb. 3, 2024 11:00-13:00</summary>
+            <p>Laboratory: G304B</p>
+            <p>Seat Number: C1S1</p>
+            <p>Reservation: February 3, 2024 11:00-13:00</p>
+            <p>Requested: January 29, 2024 23:19</p>
+            <div id="resv-buttons-div">
+                <a href="../ReservePage/studentView1.html">
+                    <button type="button">Edit Reservation</button>
+                </a>
+                <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
+            </div>
+        </details>
+        <details>
+            <summary>G301A - Feb. 4, 2024 14:00-15:00</summary>
+            <p>Laboratory: G301A</p>
+            <p>Seat Number: C1S1</p>
+            <p>Reservation: February 4, 2024 14:00-15:00</p>
+            <p>Requested: January 29, 2024 23:20</p>
+            <div id="resv-buttons-div">
+                <a href="../ReservePage/studentView1.html">
+                    <button type="button">Edit Reservation</button>
+                </a>
+                <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
+            </div>
+        </details>
+        <details>
+            <summary>G301B - Feb. 5, 2024 16:00-18:00</summary>
+            <p>Laboratory: G301B</p>
+            <p>Seat Number: C1S1</p>
+            <p>Reservation: February 5, 2024 16:00-18:00</p>
+            <p>Requested: February 3, 2024 23:17</p>
+            <div id="resv-buttons-div">
+                <a href="../ReservePage/studentView1.html">
+                    <button type="button">Edit Reservation</button>
+                </a>
+                <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
+            </div>
+        </details>
+        <div class="confirm" id="del-prof">
+            <p class="message" id="del-prof-msg">Confirm delete profile?</p>
+            <button class="delete" id="del-prof-btn">Proceed</button>
+            <button id="save-prof-btn">Cancel</button>
+        </div>
+        <div class="confirm" id="del-resv">
+            <p class="message" id="del-resv-msg">Confirm delete reservation?</p>
+            <button class="delete" id="del-resv-btn">Proceed</button>
+            <button id="save-resv-btn">Cancel</button>
+        </div>
+    </main>
