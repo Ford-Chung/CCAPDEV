@@ -54,11 +54,10 @@ function getUser(userEmail, userPassword) {
 module.exports.getUser = getUser;
 
 
-function addUser(userEmail, userPassword, userVPassword,isTechnician){
+function addUser(userEmail, userName, userPassword, userVPassword,isTechnician){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colUsers);
     searchQuery = {email: userEmail};
-
     return new Promise((resolve, reject) => {
         col.findOne(searchQuery).then(function(val){
             if (val != null){
@@ -74,7 +73,10 @@ function addUser(userEmail, userPassword, userVPassword,isTechnician){
                 const info = {
                     email: userEmail,
                     password: userPassword,
-                    isTechnician: isTechnician
+                    isTechnician: isTechnician,
+                    pfp: 'amogus.png',
+                    username: userName,
+                    bio: ""
                 };
                 col.insertOne(info).then(function(res){
                 }).catch(errorFn);
@@ -154,8 +156,65 @@ module.exports.isRegisteredUser = isRegisteredUser;
 
 /*************************************************************/
 
+function changeUsername(email,username){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colUsers);
 
+    const updateQuery = { email : email};
+    const updateValues = { $set: {username : username}};
 
+    return new Promise((resolve,reject) =>{
+        col.updateOne(updateQuery,updateValues).then(function(res){
+            if(res['modifiedCount'] > 0){
+                resolve(true);
+            } else{
+                resolve(false);
+            }
+
+        });
+    });
+}
+module.exports.changeUsername = changeUsername;
+
+function getUserByEmail(userEmail) {
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colUsers);
+    searchQuery = { email: userEmail };
+
+    return new Promise((resolve, reject) => {
+        col.findOne(searchQuery).then(function (val) {
+            if (val != null) {
+                resolve(val);
+            } else {
+                resolve(null);
+            }
+        }).catch(reject);
+    });
+}
+module.exports.getUserByEmail = getUserByEmail;
+
+function changePassword(userEmail,password,vpassword){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colUsers);
+
+    const updateQuery = { email: userEmail };
+    const updateValues = { $set: {password : password}};
+
+    return new Promise((resolve, reject) => {
+        if(password === vpassword){
+            col.updateOne(updateQuery,updateValues).then(function(res){
+                if(res['modifiedCount'] > 0){
+                    resolve(true);
+                } else{
+                    resolve(false);
+                }
+            });
+        } else{
+            resolve(false);
+        }
+    })
+}
+module.exports.changePassword = changePassword;
 
 
 function finalClose(){

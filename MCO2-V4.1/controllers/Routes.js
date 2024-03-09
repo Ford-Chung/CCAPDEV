@@ -65,11 +65,12 @@ server.post('/password_checker', function(req, resp){
 // CHECK-REGISTER check if register info is valid, success => redirects to login, failure => rerender page
 server.post('/register-checker', function(req, resp){
     var userEmail  = String(req.body.email);
+    var userName  = String(req.body.username);
     var userPassword = String(req.body.password);
     var userVPassword = String(req.body.vpassword);
     var isTechnician = String(req.body.isTechnician);
 
-    responder.addUser(userEmail, userPassword, userVPassword,isTechnician)
+    responder.addUser(userEmail, userName, userPassword, userVPassword,isTechnician)
     .then(result => {
         console.log(result);
         if (result == "Success!"){
@@ -244,9 +245,56 @@ server.get('/public-profile/:id/', function(req, resp) {
     });
 })
 
+server.post('/change_username', function(req, resp){
+    var username  = String(req.body.username);
+    var email = curUserData.email;
+    console.log(username)
+    console.log(email)
+
+    responder.changeUsername(curUserData.email,req.body.username)
+    .then(booleanValue=>{
+        if(booleanValue == true){
+            console.log("UsernameChangeSuccess");
+            responder.getUserByEmail(email)
+            .then(user=>{
+                curUserData = user;
+            })
+            resp.send({username : username});
+            console.log("TESTER!" + curUserData);
+        } else{
+            console.log("UsernameChangeFail");
+        }
+    })
+});
+
+server.post('/change_password', function(req, resp){
+
+    var password = String(req.body.password);
+    var vpassword = String(req.body.vpassword);
+
+    responder.changePassword(curUserData.email,req.body.password,req.body.vpassword)
+    .then(booleanValue =>{
+        if(booleanValue == true){
+            console.log("PasswordChangeSuccess");
+            resp.send({message : "Password Change Success!"});
+        } else{
+            console.log("PasswordChangeFail");
+            resp.send({message : "Password Change Failed!"});
+        }
+    });
+});
 
 }
 
 /******************************************************************************** */
+
+
+
+
+
+
+
+
+
 
 module.exports.add = add;
