@@ -54,14 +54,33 @@ for(var i=0; i<controllers.length; i++){
   controller.add(server);
 }
 
+Handlebars.registerHelper('isStringInArray', function(value, array, options) {
+  if (!Array.isArray(array)) {
+      // If array is not defined or not an array, return false
+      return options.inverse(this);
+  }
+
+  
+
+  if (array.includes(value)) {
+      return options.fn(this);
+  } else {
+      return options.inverse(this);
+  }
+});
+
+Handlebars.registerHelper('concat', function() {
+  // Retrieve all arguments passed to the helper
+  var args = Array.prototype.slice.call(arguments, 0, -1);
+  
+  // Join all arguments into a single string
+  return args.join('');
+});
 
 
 
 
-
-
-
-const port = process.env.PORT | 3000;
+const port = process.env.PORT | 4000;
 server.listen(port, function(){
     console.log('Listening at port '+port);
 });

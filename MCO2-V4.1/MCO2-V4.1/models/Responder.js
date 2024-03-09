@@ -9,6 +9,7 @@ const mongoClient = new MongoClient(databaseURL);
 const databaseName = "REServerDB";
 const colUsers = "users";
 const colLabs = "labs";
+const colReservation = "reservation";
 
 
 function errorFn(err){
@@ -28,6 +29,8 @@ mongoClient.connect().then(function(con){
   dbo.createCollection(colUsers)
     .then(successFn).catch(errorFn);
     dbo.createCollection(colLabs)
+    .then(successFn).catch(errorFn);
+    dbo.createCollection(colReservation)
     .then(successFn).catch(errorFn);
 }).catch(errorFn);
 
@@ -191,6 +194,23 @@ function getUserByEmail(userEmail) {
 }
 module.exports.getUserByEmail = getUserByEmail;
 
+function getUserByName(name) {
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colUsers);
+    searchQuery = { name: name };
+
+    return new Promise((resolve, reject) => {
+        col.findOne(searchQuery).then(function (val) {
+            if (val != null) {
+                resolve(val);
+            } else {
+                resolve(null);
+            }
+        }).catch(reject);
+    });
+}
+module.exports.getUserByName = getUserByName;
+
 function changePassword(userEmail,password,vpassword){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colUsers);
@@ -250,6 +270,66 @@ function getLabByName(labName){
     });
 }
 module.exports.getLabByName = getLabByName;
+
+        //save name of the one who reserved
+        //save the time
+        //save the seat
+        //save the room
+        //save the time frame
+        //anon
+function addReservation(date, name, time, seat, room, timeFrame){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colReservation);
+
+    const info = {
+        date: date,
+        name: name.username,
+        time: time,
+        seat: seat,
+        room: room,
+        timeFrame: timeFrame
+      };
+      
+      col.insertOne(info).then(function(res){
+        console.log('reservation created');
+      }).catch(errorFn);
+}
+module.exports.addReservation = addReservation;
+
+
+function getReservedYours(rooms, name){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colReservation);
+
+    return new Promise((resolve, reject) => {
+        const cursor = col.find({ name: name.username, room: rooms.roomNum}); // Filter by roomNum
+
+        cursor.toArray().then(function(vals){
+            resolve(vals);
+        }).catch(errorFn);
+        
+    });
+}
+module.exports.getReservedYours = getReservedYours;
+
+function getReservedAll(rooms){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colReservation);
+
+    return new Promise((resolve, reject) => {
+        const cursor = col.find({ room: rooms.roomNum}); // Filter by roomNum
+
+        cursor.toArray().then(function(vals){
+            resolve(vals);
+        }).catch(errorFn);
+        
+    });
+}
+module.exports.getReservedAll = getReservedAll;
+
+
+
+
 
 
 function finalClose(){

@@ -22,14 +22,27 @@
 
             </div>
         </div>
-    
+
+
         
         <div class="room-container">
-
         {{#nestedLoop lab.numCols}}
             <div class="column" id="C{{outerIndex}}">
+
                 {{#times ../lab.seats}}
-                    <button class="row" id="C{{../outerIndex}}  S{{this}}">C{{../outerIndex}}S{{this}}</button>
+                    {{#isStringInArray (concat "C" ../outerIndex "S" this) ../../reserved}}
+                        {{!-- if it is reserved --}}
+                        {{#isStringInArray (concat "C" ../outerIndex "S" this) ../../userRes}}
+                            <button class="row reserved" data-modal-target="#modalD"id="C{{../outerIndex}}S{{this}}">C{{../outerIndex}}S{{this}}</button>
+                        {{else}}
+                            <button class="row reserved" data-modal-target="#modalB"id="C{{../outerIndex}}S{{this}}">C{{../outerIndex}}S{{this}}</button>
+                        {{/isStringInArray}}
+                        
+                    {{else}}
+                        <!-- This block will be rendered if "C2S2" is not found in roomReservations -->
+                        <button class="row" data-modal-target="#modalA"id="C{{../outerIndex}}S{{this}}">C{{../outerIndex}}S{{this}}</button>
+                    {{/isStringInArray}}
+                    
                 {{/times}}
             </div>
         {{/nestedLoop}}

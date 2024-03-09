@@ -1,5 +1,6 @@
 //Routes
 const responder = require('../models/Responder');
+const fs = require('fs');
 
 
 function add(server){
@@ -9,6 +10,7 @@ function add(server){
 let labPtr = -1;
 let seenLabs = [];
 let curUserData;
+let curUserMail;
 
 // LOGIN load login page 
 server.get('/', function(req, resp){
@@ -90,29 +92,31 @@ server.post('/register-checker', function(req, resp){
 
 
 // CHECK-LOGIN check if login info is valid, success => redirects to main page, failure => rerender page
-server.post('/login-checker', function(req, resp) {
-    let userEmail = req.body.email;
-    let userPassword = req.body.password;
+    server.post('/login-checker', function(req, resp) {
+        let userEmail = req.body.email;
+        let userPassword = req.body.password;
+        curUserMail = req.body.email;
 
-    responder.getUser(userEmail, userPassword)
-    .then(user => {
-        if (user != null){
-            curUserData = user;
-            resp.redirect('/mainMenu');
-        } else {
-            console.log('Email and password don\'t match.');
-            resp.render('login',{
-                layout: 'loginIndex',
-                title: 'Login Page',
-                errMsg: 'Email and password don\'t match'
-              });
-        }             
-    })
-    .catch(error => {
-        console.error(error);
+        responder.getUser(userEmail, userPassword)
+        .then(user => {
+            if (user != null){
+                
+                curUserData = user;
+                resp.redirect('/mainMenu');
+            } else {
+                console.log('Email and password don\'t match.');
+                resp.render('login',{
+                    layout: 'loginIndex',
+                    title: 'Login Page',
+                    errMsg: 'Email and password don\'t match'
+                });
+            }             
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
     });
-
-});
 
 // PROFILE 
 server.get('/profile', function(req, resp) {
@@ -289,16 +293,47 @@ server.post('/change_password', function(req, resp){
 server.get('/labs/:id/', function(req, resp) {
     console.log('LAB ID OF ' + req.params.id + '!!!!');
 
+    let roomReservations = [];
+    let room = [];
+
+    console.log("mail: " + curUserMail)
 
     responder.getLabById(req.params.id)
     .then(curLab => {
-        console.log(curLab);
-        resp.render('lab-view',{
-            layout: 'labIndex',
-            title: 'Lab View',
-            user: curUserData,
-            lab: curLab     
+        responder.getUserByEmail(curUserMail)
+        .then(name => {
+            responder.getReservedYours(curLab, name)
+            .then(reserveUser => {
+                    responder.getReservedAll(curLab)
+                    .then(reserveList => {
+                    // Access the resolved data here and extract room values
+                    reserveList = reserveList.map(entry => entry.seat);
+                    room = reserveList.map(entry => entry.room);
+                    
+                    reserveUser = reserveUser.map(entry => entry.seat);
+                    roomUser = reserveUser.map(entry => entry.room);
+                    console.log(reserveUser);
+
+                    resp.render('lab-view', {
+                        layout: 'labIndex',
+                        title: 'Lab View',
+                        user: curUserData,
+                        lab: curLab,
+                        reserved: reserveList,
+                        userRes: reserveUser
+                    });
+
+
+                })
+
+            })
+
+        })
+        .catch(error => {
+            // Handle errors if the promise is rejected
+            console.error("Error occurred:", error);
         });
+
 
     })
     .catch(error => {
@@ -311,13 +346,7 @@ server.post('/labdetails', function(req, resp){
 
     responder.getLabByName(req.body.roomNum)
     .then(curLab => {
-        console.log(curLab);
-        resp.render('lab-view',{
-            layout: 'labIndex',
-            title: 'Lab View',
-            user: curUserData,
-            lab: curLab     
-        });
+        resp.send({lab: curLab});
 
     })
     .catch(error => {
@@ -326,6 +355,37 @@ server.post('/labdetails', function(req, resp){
 
     
 });
+
+server.post('/reserve', function(req, resp){
+    //date
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const date = `${year}-${month}-${day}`;
+
+    //time
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+    const time = `${hours}:${minutes}:${seconds}`;
+
+    console.log(curUserMail);
+    responder.getUserByEmail(curUserMail)
+    .then(user=>{
+    
+    var seat  = String(req.body.seat);
+    var room  = String(req.body.room);
+    var timeFrame  = "900-930";
+    console.log(user);
+
+
+    responder.addReservation(date, user, time, seat, room, timeFrame)
+    })
+    resp.send({status: "reserved"});
+    
+});
+
 
 // ADD NEW LINES BELOW HERE
 
