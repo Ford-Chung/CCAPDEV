@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="profile.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="nav-placeholder">
+        
+    </div>
+    <main>
+        <img id="prof-pic" src="../Image/amogus.png">
+        <h1 id="name">Sussus Amogus</h1>
+        <p id="bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt nulla imperdiet tempus molestie. Sed maximus, velit ac fringilla auctor, est erat lobortis dolor, hendrerit pellentesque neque sapien lacinia erat. Nulla molestie dui felis, et consequat nunc viverra ac. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla facilisis diam ut imperdiet efficitur. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer blandit nunc eu ipsum molestie porta. Suspendisse finibus ex nec enim commodo ullamcorper. Phasellus et aliquam magna.</p>
+        <div id="prof-buttons-div">
+            <a href="edit-profile.html">
+                <button type="button">Edit profile</button>
+            </a>
+            <button type="button" class="delete" onclick="confirmDelProf();">Delete profile</button>
+        </div>
+        <h2>Current Reservations:</h2>
+        <details>
+            <summary>Feb. 5, 2024 10:00-12:00</summary>
+            <p>Laboratory: 1</p>
+            <p>Seat Number: 20</p>
+            <p>Reservation: February 5, 2024 10:00-12:00</p>
+            <p>Requested: February 3, 2024 23:17</p>
+            <div id="resv-buttons-div">
+                <a onclick="window.open('../EditReservation/reserve_general.html')">
+                    <button type="button">Edit Reservation</button>
+                </a>
+                <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
+            </div>
+        </details>
+        <details>
+            <summary>Feb. 10, 2024 17:00-18:00</summary>
+            <p>Laboratory: 2</p>
+            <p>Seat Number: 20</p>
+            <p>Reservation: February 8, 2024 10:00-12:00</p>
+            <p>Requested: February 3, 2024 23:17</p>
+            <div id="resv-buttons-div">
+                <a onclick="window.open('../EditReservation/reserve_general.html')">
+                    <button type="button">Edit Reservation</button>
+                </a>
+                <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
+            </div>
+        </details>
+        <div class="confirm" id="del-prof">
+            <p class="message" id="del-prof-msg">Confirm delete profile?</p>
+            <button class="delete" id="del-prof-btn">Proceed</button>
+            <button id="save-prof-btn">Cancel</button>
+        </div>
+        <div class="confirm" id="del-resv">
+            <p class="message" id="del-resv-msg">Confirm delete reservation?</p>
+            <button class="delete" id="del-resv-btn">Proceed</button>
+            <button id="save-resv-btn">Cancel</button>
+        </div>
+    </main>
+    
+    <script>
+        $(function(){
+            $("#nav-placeholder").load("../navbar/navbar.html");
+        });
+        </script>
+    <script src="profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<head>
+    <title>Reservation</title>
+    <link href="modal.css" rel="stylesheet">
+    <link href="studentView1.css" rel="stylesheet">
+    <script defer src="modal.js"></script>
+    <script src="../jquery-3.7.1.min.js"></script>
+
+    <script>
+        function limitDate(){
+            // Get the input element
+            var dateInput = document.getElementById('date-input');
+
+            // Calculate the minimum and maximum dates
+            var minDate = new Date();
+            var maxDate = new Date();
+            maxDate.setDate(maxDate.getDate() + 6);
+
+            // Format the dates in YYYY-MM-DD format
+            var minDateString = minDate.toISOString().slice(0,10);
+            var maxDateString = maxDate.toISOString().slice(0,10);
+
+            // Set the min and max attributes of the input
+            dateInput.setAttribute('min', minDateString);
+            dateInput.setAttribute('max', maxDateString);
+
+        }
+
+        
+
+        // Function to generate time options
+        function generateTimeOptions() {
+            // Get the select element
+            var timeSelect = document.getElementById('timeSelect');
+            var startHour = 9; // Start hour (9:00 am)
+            var endHour = 17;  // End hour (5:00 pm)
+            
+            for (var hour = startHour; hour < endHour; hour++) {
+                for (var minute = 0; minute < 60; minute += 30) {
+                    // Format the time
+                    var hourString = ('0' + hour).slice(-2);
+                    var minuteString = ('0' + minute).slice(-2);
+                    var time = hourString + ':' + minuteString;
+
+                    // Create an option element
+                    var option = document.createElement('option');
+                    option.value = time;
+                    option.textContent = time + ' - ' + (hour + Math.floor(minute / 30)) + ':' + ('0' + ((minute + 30) % 60)).slice(-2);
+                    
+                    // Add the option to the select element
+                    timeSelect.appendChild(option);
+                }
+            }
+        }
+
+        function generateBlocks(columnId){
+            let container = document.getElementById(columnId);
+
+            for(let i = 1; i <= 10; i++){
+                let blocks = document.createElement("button");
+                blocks.setAttribute("class", "row");
+                let temp = "" + columnId + "S" + i;
+                blocks.setAttribute("id", temp); 
+                blocks.setAttribute("data-modal-target", "#modalA");
+                
+                blocks.textContent = temp;
+                container.appendChild(blocks);
+                
+            }
+            
+        }
+
+        function goback(){
+            window.location.href="../ReserveGeneral/reserve_general.html";
+        }
+
+
+
+        $(function(){
+            $("#nav-placeholder").load("../navbar/navbar.html");
+            $("#modal-placeholder").load("modal.html");
+          });
+  
+
+  
+          window.onload = function() {
+              generateBlocks('C1');
+              generateBlocks('C2');
+              generateBlocks('C3');
+              limitDate();
+              generateTimeOptions();
+              changeAvailability("C1S1");
+              changeAvailability("C1S2");
+              changeAvailability("C1S4");
+              changeAvailability("C2S3");
+              changeAvailability("C2S9");
+          };
+
+
+    </script>
+
+</head>
+<body>
+    <div class="bg">
+        <img src="../Image/computerLab.jpg">
+    </div>
+    <header>
+        <div id="nav-placeholder">
+            
+        </div>
+    </header>
+
+    <div id="modal-placeholder">
+
+    </div>
+
+    <div id="overlay"></div>
+
+    <main>
+        <div class="filter">
+            
+            <div class="filter-container">
+                <div class="back" onclick="goback()">
+                    <img src="../Image/back.png">
+                </div>
+                <div class="roomID">
+                    <h1>Room G301A</h1>
+                </div>
+                <div class="date-container">
+                    <label for="date-input">Date: </label>
+                    <input type="date" id="date-input" name="date">
+                </div>
+
+                <div class="timeframe-container">
+                    <label for="timeSelect">TimeSlots: </label>
+                    <select id="timeSelect">
+                        <!-- Options will be generated dynamically here -->
+                    </select>   
+                </div>
+
+            </div>
+        </div>
+    
+        
+        <div class="room-container">
+            <div class="column" id="C1">
+                <!-- Empty div for blocks -->
+            </div>
+            <div class="column" id="C2">
+                <!-- Empty div for blocks -->
+            </div>
+            <div class="column" id="C3">
+                <!-- Empty div for blocks -->
+            </div>
+        </div>  
+
+    </main>
+
+
+
+</body>
+</html>
