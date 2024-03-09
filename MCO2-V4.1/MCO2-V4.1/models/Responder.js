@@ -122,7 +122,6 @@ module.exports.getAllUsers = getAllUsers;
 function getUserbyId(userId) {
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colUsers);
-    console.log(typeof(userId));
     searchQuery = { _id: new ObjectId(userId) };
 
     return new Promise((resolve, reject) => {
@@ -154,7 +153,6 @@ function isRegisteredUser(inputEmail){
 }
 module.exports.isRegisteredUser = isRegisteredUser;
 
-/*************************************************************/
 
 function changeUsername(email,username){
     const dbo = mongoClient.db(databaseName);
@@ -215,6 +213,43 @@ function changePassword(userEmail,password,vpassword){
     })
 }
 module.exports.changePassword = changePassword;
+
+
+function getLabById(labId){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colLabs);
+    searchQuery = { _id: new ObjectId(labId) };
+
+    return new Promise((resolve, reject) => {
+        col.findOne(searchQuery).then(function (val) {
+            if (val != null) {
+                resolve(val);
+            } else {
+                resolve(null);
+            }
+        }).catch(reject);
+    });
+}
+module.exports.getLabById = getLabById;
+
+/*************************************************************/
+function getLabByName(labName){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colLabs);
+
+    searchQuery = { roomNum: labName };
+
+    return new Promise((resolve, reject) => {
+        col.findOne(searchQuery).then(function (val) {
+            if (val != null) {
+                resolve(val);
+            } else {
+                resolve(null);
+            }
+        }).catch(reject);
+    });
+}
+module.exports.getLabByName = getLabByName;
 
 
 function finalClose(){

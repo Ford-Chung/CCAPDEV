@@ -1,3 +1,7 @@
+$(document).ready(function(){
+  console.log($(roomNum).textContent());
+  $.post('/labdetails', {roomNum: $(roomNum).textContent()})
+});
 const overlay = document.getElementById('overlay');
 let idA;
 

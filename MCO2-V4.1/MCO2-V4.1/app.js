@@ -18,8 +18,33 @@ server.engine('hbs', handlebars.engine({
 server.use(express.static('public'));
 
 
+const Handlebars = require('handlebars');
+
+Handlebars.registerHelper('times', function(n, block) {
+  var accum = '';
+  for(var i = 1; i <= n; ++i)
+      accum += block.fn(i);
+  return accum;
+});
 
 
+// Register the nested loop helper
+Handlebars.registerHelper('nestedLoop', function(count, options) {
+  var ret = "";
+
+  // Validate input
+  if (typeof count !== 'number' || count < 0) {
+      throw new Error("Invalid input: Count must be a non-negative number");
+  }
+
+  // Outer loop
+  for (var i = 1; i <= count; i++) {
+      // Pass outer loop index to inner loop
+      ret += options.fn({ outerIndex: i });
+  }
+
+  return ret;
+});
 
 
 // CONTROLLER 
@@ -36,7 +61,7 @@ for(var i=0; i<controllers.length; i++){
 
 
 
-const port = process.env.PORT | 9090;
+const port = process.env.PORT | 3000;
 server.listen(port, function(){
     console.log('Listening at port '+port);
 });

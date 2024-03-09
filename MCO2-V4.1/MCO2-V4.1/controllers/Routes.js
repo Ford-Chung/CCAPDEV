@@ -128,8 +128,6 @@ server.get('/profile', function(req, resp) {
 // MAIN MENU 
 server.get('/mainMenu', function(req, resp) {
 
-    console.log(curUserData);
-    
     // get lab data for display
     responder.getLabs()
     .then(labData => {
@@ -245,6 +243,7 @@ server.get('/public-profile/:id/', function(req, resp) {
     });
 })
 
+// CHANGE USERNAME
 server.post('/change_username', function(req, resp){
     var username  = String(req.body.username);
     var email = curUserData.email;
@@ -267,6 +266,7 @@ server.post('/change_username', function(req, resp){
     })
 });
 
+// CHANGE PASSWORD
 server.post('/change_password', function(req, resp){
 
     var password = String(req.body.password);
@@ -284,17 +284,58 @@ server.post('/change_password', function(req, resp){
     });
 });
 
+
+// LAB VIEW
+server.get('/labs/:id/', function(req, resp) {
+    console.log('LAB ID OF ' + req.params.id + '!!!!');
+
+
+    responder.getLabById(req.params.id)
+    .then(curLab => {
+        console.log(curLab);
+        resp.render('lab-view',{
+            layout: 'labIndex',
+            title: 'Lab View',
+            user: curUserData,
+            lab: curLab     
+        });
+
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+})
+
+server.post('/labdetails', function(req, resp){
+
+    responder.getLabByName(req.body.roomNum)
+    .then(curLab => {
+        console.log(curLab);
+        resp.render('lab-view',{
+            layout: 'labIndex',
+            title: 'Lab View',
+            user: curUserData,
+            lab: curLab     
+        });
+
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+    
+});
+
+// ADD NEW LINES BELOW HERE
+
+
+
+
+
+
+
+/************************no need to edit past this point********************************* */
 }
-
-/******************************************************************************** */
-
-
-
-
-
-
-
-
-
 
 module.exports.add = add;
