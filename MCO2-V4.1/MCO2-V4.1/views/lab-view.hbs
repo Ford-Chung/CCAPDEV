@@ -32,12 +32,12 @@
                 {{#times ../lab.seats}}
                     {{#isStringInArray (concat "C" ../outerIndex "S" this) ../../reserved}}
                         {{!-- if it is reserved --}}
-                        {{#isStringInArray (concat "C" ../outerIndex "S" this) ../../userRes}}
+                        {{!-- {{#isStringInArray (concat "C" ../outerIndex "S" this) ../../userRes}}
                             <button class="row reserved" data-modal-target="#modalD"id="C{{../outerIndex}}S{{this}}">C{{../outerIndex}}S{{this}}</button>
                         {{else}}
                             <button class="row reserved" data-modal-target="#modalB"id="C{{../outerIndex}}S{{this}}">C{{../outerIndex}}S{{this}}</button>
-                        {{/isStringInArray}}
-                        
+                        {{/isStringInArray}} --}}
+                        <button class="row reserved" data-modal-target="#modalD"id="C{{../outerIndex}}S{{this}}">C{{../outerIndex}}S{{this}}</button>
                     {{else}}
                         <!-- This block will be rendered if "C2S2" is not found in roomReservations -->
                         <button class="row" data-modal-target="#modalA"id="C{{../outerIndex}}S{{this}}">C{{../outerIndex}}S{{this}}</button>

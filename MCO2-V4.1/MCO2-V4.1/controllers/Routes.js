@@ -312,7 +312,6 @@ server.get('/labs/:id/', function(req, resp) {
                     
                     reserveUser = reserveUser.map(entry => entry.seat);
                     roomUser = reserveUser.map(entry => entry.room);
-                    console.log(reserveUser);
 
                     resp.render('lab-view', {
                         layout: 'labIndex',
@@ -320,7 +319,7 @@ server.get('/labs/:id/', function(req, resp) {
                         user: curUserData,
                         lab: curLab,
                         reserved: reserveList,
-                        userRes: reserveUser
+                        userRes: reserveUser,
                     });
 
 
@@ -356,6 +355,54 @@ server.post('/labdetails', function(req, resp){
     
 });
 
+
+server.post("/modal", function(req, resp){
+    responder.getLabByName(req.body.roomNum)
+    .then(curLab => {
+        console.log(curLab);
+        responder.getReservedAll(curLab)
+        .then(reservations =>{
+            responder.getUserByEmail(curUserMail)
+            .then(user => {
+                console.log(reservations);
+
+                let modal = 'A';
+                let name;
+                
+                for(let i = 0; i < reservations.length; i++){
+                    //if current seat is reserved
+                    if(reservations[i]["seat"] == String(req.body.seat)){
+                        
+                        name = reservations[i].name;
+
+                        //if cur user is the one that reserved
+                        if(reservations[i].email == user.email){
+                            //if anonymous
+                            if(reservations[i].anon){
+                                modal = 'E';
+                            }else{
+                                modal = 'D';
+                            }
+                        }else{
+                            if(reservations[i].anon){
+                                modal = 'C';
+                            }else{
+                                modal = 'B';
+                            }
+                        }
+                    }
+                }
+
+                resp.send({modal, name});
+            })
+
+
+        })
+
+    })
+    
+});
+
 server.post('/reserve', function(req, resp){
     //date
     const currentDate = new Date();
@@ -370,17 +417,16 @@ server.post('/reserve', function(req, resp){
     const seconds = String(currentDate.getSeconds()).padStart(2, '0');
     const time = `${hours}:${minutes}:${seconds}`;
 
-    console.log(curUserMail);
     responder.getUserByEmail(curUserMail)
     .then(user=>{
     
     var seat  = String(req.body.seat);
     var room  = String(req.body.room);
     var timeFrame  = "900-930";
-    console.log(user);
+    var anon = req.body.anon == 'true';
 
 
-    responder.addReservation(date, user, time, seat, room, timeFrame)
+    responder.addReservation(date, user, time, seat, room, timeFrame, anon)
     })
     resp.send({status: "reserved"});
     

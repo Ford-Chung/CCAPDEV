@@ -11,20 +11,45 @@ $(document).ready(function(){
             for(let i = 1; i <= data.lab.numCols; i++){
               for(let j = 1; j <= data.lab.seats; j++){
                 $("#C"+i+"S"+j).click(function(){
-                  const button = event.target.closest('button[data-modal-target]');
-                  const modalId = button.getAttribute('data-modal-target');
-                  const modal = document.querySelector(modalId);
+
+                  //current room
                   room = $("#roomNum").text();
-                  idA = modalId;
-                  $(modalId).show();
+                  let modal;
+                  id = "C"+i+"S"+j;
 
-                  const title = modal.querySelector('.modal-header #title');
+                  $.post('/modal', {seat: "C"+i+"S" + j, roomNum: room}, function(data, status){
+                    if(status==="success"){
+                      
+                      //modal type
+                      idA = "#modal"+data.modal;
 
-                  id = button.getAttribute('id');
+                      modal = document.querySelector(idA);
+                      console.log(modal);
 
-                  if (title) {
-                    title.textContent = id; 
-                  }
+                                        
+                      $(idA).show();
+
+                      const title = modal.querySelector('.modal-header #title');
+                      
+                      
+                      
+
+                      if(data.modal != 'A' && (data.modal == 'D' || data.modal == 'B')){
+                          const name = modal.querySelector('.content #reserver-name');
+                          name.textContent = data.name;
+                      }
+
+                      if(data.modal == 'E'){
+                        const name = modal.querySelector('.content .name-placeholder');
+                        name.textContent = "Reserver Name: Anonymous ( " + data.name + " )";
+                      }
+
+                      if (title) {
+                        title.textContent = "C"+i+"S" + j; 
+                      }
+
+                    }
+                  });
 
 
 
@@ -41,11 +66,14 @@ $(document).ready(function(){
   });
 
   $("#reserve").click(function(){
-    $.post('../reserve', {room: room, seat: id}, 
+    let res = document.getElementById("anon").checked;
+
+    $.post('../reserve', {room: room, seat: id, anon: res}, 
     function(data, status){
       if(status === 'success'){
         if(data.status === "reserved"){
           let block = document.getElementById(id);
+  
           block.classList.add('reserved');
           $(idA).hide();
         }
@@ -55,6 +83,12 @@ $(document).ready(function(){
   });
 
 
-
+  function process(){
+    let res = document.getElementById("anon").checked;
+    
+    if(res){
+      document.getElementById(idA).classList.add("anon");
+    }
+  }
 
 });

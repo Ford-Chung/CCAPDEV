@@ -277,17 +277,19 @@ module.exports.getLabByName = getLabByName;
         //save the room
         //save the time frame
         //anon
-function addReservation(date, name, time, seat, room, timeFrame){
+function addReservation(date, name, time, seat, room, timeFrame, anon){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colReservation);
 
     const info = {
         date: date,
         name: name.username,
+        email: name.email,
         time: time,
         seat: seat,
         room: room,
-        timeFrame: timeFrame
+        timeFrame: timeFrame,
+        anon: anon
       };
       
       col.insertOne(info).then(function(res){
