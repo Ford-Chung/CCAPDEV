@@ -79,7 +79,7 @@ Handlebars.registerHelper('concat', function() {
 
 
 
-const port = process.env.PORT | 4000;
+const port = process.env.PORT | 3000;
 server.listen(port, function(){
     console.log('Listening at port '+port);
 });

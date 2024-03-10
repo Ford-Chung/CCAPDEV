@@ -19,7 +19,23 @@ main {
     opacity: .1;
 }
 
-
+.room-container {
+    margin: 2%;
+    display: grid;
+    padding: 30px;
+    width: 95%;
+    height: 75vh;
+    background-color: transparent;
+    backdrop-filter: blur(6px);
+    border: 1px solid hsla(180, 24%, 35%, 0.765);
+    justify-content: center;
+    align-content: center;
+    border-radius: 30px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 2%;
+    justify-content: space-between;
+    align-content: space-around
+}
 
 .column{
     backdrop-filter: blur(100%);
@@ -74,6 +90,7 @@ main h1{
     background-color: rgba(230, 38, 38, 0.865);
 }
 
+
 .filter {
     margin-top: 5%;
     color: white;
@@ -108,7 +125,6 @@ main h1{
     align-self: center;
 }
 
-
 #date-input{
     border-radius: 10px;
     height: 30px;
@@ -117,7 +133,6 @@ main h1{
     text-align: center;
     margin: 5px;
 }
-
 
 select{
     border-radius: 10px;
@@ -130,5 +145,58 @@ select{
 }
 
 
+.user-input-container .text{
+    margin: 0;
+}
 
 
+.logs-container{
+    width: 70%;
+    height: 30vh;
+    border: 1px solid rgb(255, 255, 255);
+    background-color: transparent;
+    backdrop-filter: blur(6px);
+    margin: 10px;
+    overflow: auto;
+}
+
+.log-table, th, tr{
+    width: 100%;
+    border: 1px solid white;
+}
+
+th.logDateTime{
+    width: 20%;
+}
+
+th.logName{
+    width: 30%;
+}
+
+th.logActions, .logSeat, .logDate, .logTime{
+    width: 10%;
+}
+
+th, td{
+    color: white;
+}
+
+
+#modifyRoom{
+    border-radius: 6px;
+    background-color: #55c4aa;
+    border: none;   
+    height: 30px;
+    width: 300px;
+    color: white;
+    font-weight: bold;
+    font-size: large;
+}
+
+.modify-container{
+    margin: 20px;
+}
+
+.table-title{
+    text-align: center;
+}

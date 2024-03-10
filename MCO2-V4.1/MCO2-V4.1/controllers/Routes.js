@@ -330,16 +330,29 @@ server.get('/labs/:id/', function(req, resp) {
 
                             console.log(reserveList);
 
-                            resp.render('lab-view', {
-                                layout: 'labIndex',
-                                title: 'Lab View',
-                                user: curUserData,
-                                lab: curLab,
-                                reserved: reserveList,
-                                userRes: reserveUser,
-                                dateData: dateData,
-                                date: getCurrentDate()
-                            });
+                            if(name.isTechnician){
+                                resp.render('lab-view-tech', {
+                                    layout: 'labIndex-tech',
+                                    title: 'Lab View Tech',
+                                    user: curUserData,
+                                    lab: curLab,
+                                    reserved: reserveList,
+                                    userRes: reserveUser,
+                                    dateData: dateData,
+                                    date: getCurrentDate()
+                                });
+                            }else{
+                                resp.render('lab-view', {
+                                    layout: 'labIndex',
+                                    title: 'Lab View',
+                                    user: curUserData,
+                                    lab: curLab,
+                                    reserved: reserveList,
+                                    userRes: reserveUser,
+                                    dateData: dateData,
+                                    date: getCurrentDate()
+                                });
+                            }
                         })
                     })
                 })
@@ -377,7 +390,7 @@ server.post("/modal", function(req, resp){
     responder.getLabByName(req.body.roomNum)
     .then(curLab => {
         console.log(curLab);
-        responder.getReservedAll(curLab, getCurrentDate(), req.body.timeFrame)
+        responder.getReservedAll(curLab, req.body.date, req.body.timeFrame)
         .then(reservations =>{
             responder.getUserByEmail(curUserMail)
             .then(user => {
@@ -410,7 +423,13 @@ server.post("/modal", function(req, resp){
                     }
                 }
 
-                resp.send({modal, name});
+                
+                responder.getUserByName(name)
+                .then(user2 => {
+                    console.log(user2);
+                    resp.send({modal, name, user: user2});
+
+                })
             })
 
 

@@ -200,7 +200,7 @@ module.exports.getUserByEmail = getUserByEmail;
 function getUserByName(name) {
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colUsers);
-    searchQuery = { name: name };
+    searchQuery = { username: name };
 
     return new Promise((resolve, reject) => {
         col.findOne(searchQuery).then(function (val) {
