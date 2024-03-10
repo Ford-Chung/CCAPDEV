@@ -10,6 +10,7 @@ const databaseName = "REServerDB";
 const colUsers = "users";
 const colLabs = "labs";
 const colReservation = "reservation";
+const colSchedule = "schedule";
 
 
 function errorFn(err){
@@ -31,6 +32,8 @@ mongoClient.connect().then(function(con){
     dbo.createCollection(colLabs)
     .then(successFn).catch(errorFn);
     dbo.createCollection(colReservation)
+    .then(successFn).catch(errorFn);
+    dbo.createCollection(colSchedule)
     .then(successFn).catch(errorFn);
 }).catch(errorFn);
 
@@ -253,6 +256,7 @@ function getLabById(labId){
 module.exports.getLabById = getLabById;
 
 /*************************************************************/
+/**RESERVATION RELATED FUNCTIONS AND LABORATORY */
 function getLabByName(labName){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colLabs);
@@ -277,19 +281,20 @@ module.exports.getLabByName = getLabByName;
         //save the room
         //save the time frame
         //anon
-function addReservation(date, name, time, seat, room, timeFrame, anon){
+function addReservation(date, name, bookDate, seat, room, timeFrame, anon){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colReservation);
 
     const info = {
-        date: date,
+        dateTime: date,
         name: name.username,
         email: name.email,
-        time: time,
+        bookDate: bookDate,
         seat: seat,
         room: room,
         timeFrame: timeFrame,
-        anon: anon
+        anon: anon,
+        status: "active"
       };
       
       col.insertOne(info).then(function(res){
@@ -314,12 +319,13 @@ function getReservedYours(rooms, name){
 }
 module.exports.getReservedYours = getReservedYours;
 
-function getReservedAll(rooms){
+function getReservedAll(rooms, date, timeFrame){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colReservation);
 
+
     return new Promise((resolve, reject) => {
-        const cursor = col.find({ room: rooms.roomNum}); // Filter by roomNum
+        const cursor = col.find({ room: rooms.roomNum, status: "active", bookDate: date, timeFrame: timeFrame}); 
 
         cursor.toArray().then(function(vals){
             resolve(vals);
@@ -330,7 +336,28 @@ function getReservedAll(rooms){
 module.exports.getReservedAll = getReservedAll;
 
 
+/**Time slots or Schedule functions */
 
+//Date
+// time frame
+// reserved
+// free
+
+function getTimeslots(lab, date, timeFrame){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colSchedule);
+
+    return new Promise((resolve, reject) => {
+        const cursor = col.find({roomNum: lab.roomNum, date: date, timeFrame: timeFrame}); //get all timeslots in a specific room and date
+
+        cursor.toArray().then(function(vals){
+            resolve(vals);
+        }).catch(errorFn);
+        
+    });
+}
+
+module.exports.getTimeslots = getTimeslots;
 
 
 

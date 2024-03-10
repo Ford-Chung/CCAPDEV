@@ -15,7 +15,7 @@
     background-color: #2E3047;
     width: 500px;
     max-width: 80%;
-    height: 45vh;
+    height: 50vh;
   }
 
   #status, #xcontainer{
@@ -126,7 +126,7 @@
 }
 
 
-#close, #cancel, #cancel2 {
+.close, .cancel {
   background-color: #8afbbf8a;
   width: 100px;
   height: 35px;

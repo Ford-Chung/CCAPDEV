@@ -1,4 +1,5 @@
 //Routes
+const { timeEnd } = require('console');
 const responder = require('../models/Responder');
 const fs = require('fs');
 
@@ -11,6 +12,7 @@ let labPtr = -1;
 let seenLabs = [];
 let curUserData;
 let curUserMail;
+let curLabId;
 
 // LOGIN load login page 
 server.get('/', function(req, resp){
@@ -292,7 +294,7 @@ server.post('/change_password', function(req, resp){
 // LAB VIEW
 server.get('/labs/:id/', function(req, resp) {
     console.log('LAB ID OF ' + req.params.id + '!!!!');
-
+    curLabId = req.params.id;
     let roomReservations = [];
     let room = [];
 
@@ -302,36 +304,51 @@ server.get('/labs/:id/', function(req, resp) {
     .then(curLab => {
         responder.getUserByEmail(curUserMail)
         .then(name => {
-            responder.getReservedYours(curLab, name)
-            .then(reserveUser => {
-                    responder.getReservedAll(curLab)
-                    .then(reserveList => {
-                    // Access the resolved data here and extract room values
-                    reserveList = reserveList.map(entry => entry.seat);
-                    room = reserveList.map(entry => entry.room);
-                    
-                    reserveUser = reserveUser.map(entry => entry.seat);
-                    roomUser = reserveUser.map(entry => entry.room);
+            responder.getTimeslots(curLab, getCurrentDate())
+            .then(dateData => {
 
-                    resp.render('lab-view', {
-                        layout: 'labIndex',
-                        title: 'Lab View',
-                        user: curUserData,
-                        lab: curLab,
-                        reserved: reserveList,
-                        userRes: reserveUser,
-                    });
+                dateData = sortByStartTime(dateData);
+
+                let timeFrame;
+
+                if(dateData.length != 0){
+                    timeFrame = dateData[0].timeStart + "-" + dateData[0].timeEnd;
+                } 
+
+                responder.getReservedYours(curLab, name, timeFrame)
+                .then(reserveUser => {
+                        responder.getReservedAll(curLab, getCurrentDate(), timeFrame)
+                        .then(reserveList => {
+                            // Access the resolved data here and extract room values
+                            reserveList = reserveList.map(entry => entry.seat);
+                            room = reserveList.map(entry => entry.room);
+                            
+                            //for the current user reservation
+                            reserveUser = reserveUser.map(entry => entry.seat);
+                            roomUser = reserveUser.map(entry => entry.room);
 
 
+                            console.log(reserveList);
+
+                            resp.render('lab-view', {
+                                layout: 'labIndex',
+                                title: 'Lab View',
+                                user: curUserData,
+                                lab: curLab,
+                                reserved: reserveList,
+                                userRes: reserveUser,
+                                dateData: dateData,
+                                date: getCurrentDate()
+                            });
+                        })
+                    })
                 })
 
             })
-
-        })
-        .catch(error => {
-            // Handle errors if the promise is rejected
-            console.error("Error occurred:", error);
-        });
+            .catch(error => {
+                // Handle errors if the promise is rejected
+                console.error("Error occurred:", error);
+            });
 
 
     })
@@ -360,7 +377,7 @@ server.post("/modal", function(req, resp){
     responder.getLabByName(req.body.roomNum)
     .then(curLab => {
         console.log(curLab);
-        responder.getReservedAll(curLab)
+        responder.getReservedAll(curLab, getCurrentDate(), req.body.timeFrame)
         .then(reservations =>{
             responder.getUserByEmail(curUserMail)
             .then(user => {
@@ -404,12 +421,8 @@ server.post("/modal", function(req, resp){
 });
 
 server.post('/reserve', function(req, resp){
-    //date
     const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    const date = `${year}-${month}-${day}`;
+    const date = getCurrentDate();
 
     //time
     const hours = String(currentDate.getHours()).padStart(2, '0');
@@ -422,20 +435,108 @@ server.post('/reserve', function(req, resp){
     
     var seat  = String(req.body.seat);
     var room  = String(req.body.room);
-    var timeFrame  = "900-930";
+    var timeFrame  = String(req.body.timeFrame);
     var anon = req.body.anon == 'true';
+    var resDate = req.body.date;
 
 
-    responder.addReservation(date, user, time, seat, room, timeFrame, anon)
+    responder.addReservation(date+ "|" +time, user, resDate, seat, room, timeFrame, anon)
     })
     resp.send({status: "reserved"});
     
 });
 
+server.post('/dateChange', function(req, resp){
+    let roomReservations = [];
+    let room = [];
+    let timeFrame;
+
+    console.log("Inmail: " + req.body.timeFrame)
+
+    responder.getLabById(curLabId)
+    .then(curLab => {
+        responder.getUserByEmail(curUserMail)
+        .then(name => {
+            responder.getTimeslots(curLab, req.body.date)
+            .then(dateData => {
+                dateData = sortByStartTime(dateData);
+
+                if(dateData.length != 0){
+                    if(req.body.changed == 1){
+                        timeFrame = dateData[0].timeStart + "-" + dateData[0].timeEnd;
+                    }else {
+                        timeFrame = req.body.timeFrame;
+                    }
+                }
+
+                console.log(dateData);
+
+                responder.getReservedYours(curLab, name, timeFrame)
+                .then(reserveUser => {
+                        responder.getReservedAll(curLab, String(req.body.date), timeFrame)
+                        .then(reserveList => { 
+                            // Access the resolved data here and extract room values
+                            reserveList = reserveList.map(entry => entry.seat);
+                            room = reserveList.map(entry => entry.room);
+
+                            //for the current user reservation
+                            reserveUser = reserveUser.map(entry => entry.seat);
+                            roomUser = reserveUser.map(entry => entry.room);
+                            
+                            // console.log("daf");
+                            // console.log(dateData);
+                            // console.log("daf");
+
+                            resp.send({
+                                user: curUserData,
+                                lab: curLab,
+                                reserved: reserveList,
+                                userRes: reserveUser,
+                                dateData: dateData,
+                                date: req.body.date
+                            });
+                        })
+                })
+
+            })
+
+        })
+        .catch(error => {
+            // Handle errors if the promise is rejected
+            console.error("Error occurred:", error);
+        });
+
+
+    })
+    .catch(error => {
+        console.error(error);
+    });
+});
+
 
 // ADD NEW LINES BELOW HERE
 
+function getCurrentDate(){
+    //date
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const date = `${year}-${month}-${day}`;
 
+    return date;
+}
+
+
+function sortByStartTime(array) {
+    return array.sort((a, b) => {
+        const timeA = new Date(`1970-01-01T${a.timeStart}`);
+        const timeB = new Date(`1970-01-01T${b.timeStart}`);
+        if (timeA < timeB) return -1;
+        if (timeA > timeB) return 1;
+        return 0;
+    });
+}
 
 
 

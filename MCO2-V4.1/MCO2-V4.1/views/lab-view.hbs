@@ -10,13 +10,16 @@
                 </div>
                 <div class="date-container">
                     <label for="date-input">Date: </label>
-                    <input type="date" id="date-input" name="date">
+                    <input type="date" id="date-input" name="date" value="{{date}}">
                 </div>
 
                 <div class="timeframe-container">
                     <label for="timeSelect">TimeSlots: </label>
                     <select id="timeSelect">
                         <!-- Options will be generated dynamically here -->
+                        {{#each dateData}}
+                            <option value="{{timeStart}}-{{timeEnd}}">{{timeStart}} - {{timeEnd}} :: Available: {{available}}</option>
+                        {{/each}}
                     </select>   
                 </div>
 
@@ -26,26 +29,23 @@
 
         
         <div class="room-container">
-        {{#nestedLoop lab.numCols}}
-            <div class="column" id="C{{outerIndex}}">
+        {{#if dateData.length}}
+            {{#nestedLoop lab.numCols}}
+                <div class="column" id="C{{outerIndex}}">
 
-                {{#times ../lab.seats}}
-                    {{#isStringInArray (concat "C" ../outerIndex "S" this) ../../reserved}}
-                        {{!-- if it is reserved --}}
-                        {{!-- {{#isStringInArray (concat "C" ../outerIndex "S" this) ../../userRes}}
-                            <button class="row reserved" data-modal-target="#modalD"id="C{{../outerIndex}}S{{this}}">C{{../outerIndex}}S{{this}}</button>
+                    {{#times ../lab.seats}}
+                        {{#isStringInArray (concat "C" ../outerIndex "S" this) ../../reserved}}
+                            <button class="row reserved" id="C{{../outerIndex}}S{{this}}">C{{../outerIndex}}S{{this}}</button>
                         {{else}}
-                            <button class="row reserved" data-modal-target="#modalB"id="C{{../outerIndex}}S{{this}}">C{{../outerIndex}}S{{this}}</button>
-                        {{/isStringInArray}} --}}
-                        <button class="row reserved" data-modal-target="#modalD"id="C{{../outerIndex}}S{{this}}">C{{../outerIndex}}S{{this}}</button>
-                    {{else}}
-                        <!-- This block will be rendered if "C2S2" is not found in roomReservations -->
-                        <button class="row" data-modal-target="#modalA"id="C{{../outerIndex}}S{{this}}">C{{../outerIndex}}S{{this}}</button>
-                    {{/isStringInArray}}
-                    
-                {{/times}}
-            </div>
-        {{/nestedLoop}}
+                            <button class="row" id="C{{../outerIndex}}S{{this}}">C{{../outerIndex}}S{{this}}</button>
+                        {{/isStringInArray}}
+                        
+                    {{/times}}
+                </div>
+            {{/nestedLoop}}
+            {{else}}
+        {{/if}}
+        
 
             
         </div>  

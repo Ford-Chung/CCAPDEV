@@ -1,0 +1,66 @@
+[{
+  "_id": {
+    "$oid": "65ed6d2661c68a1abe6817f0"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-11",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 20,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65ed6d2661c68a1abe6817f1"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-11",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65ed6d2661c68a1abe6817f2"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-11",
+  "timeStart": "13:00",
+  "timeEnd": "13:30",
+  "available": 20,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65ed6d2661c68a1abe6817f3"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-11",
+  "timeStart": "15:00",
+  "timeEnd": "15:30",
+  "available": 20,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65eddd1561c68a1abe68182f"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-10",
+  "timeStart": "15:00",
+  "timeEnd": "15:30",
+  "available": 20,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65eddf3761c68a1abe681835"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-10",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 20,
+  "reserved": 0
+}]

@@ -1,0 +1,84 @@
+[{
+  "_id": {
+    "$oid": "65edbae4161a7a068131a3ed"
+  },
+  "dateTime": "2024-03-10|21:51:32",
+  "name": "user",
+  "email": "email",
+  "bookDate": "2024-03-10",
+  "seat": "C2S1",
+  "room": "G301B",
+  "timeFrame": "09:00-09:30",
+  "anon": false,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "65edc8bc3f71e9bb698f9812"
+  },
+  "dateTime": "2024-03-10|22:50:36",
+  "name": "user",
+  "email": "email",
+  "bookDate": "2024-03-10",
+  "seat": "C2S2",
+  "room": "G301B",
+  "timeFrame": "09:00-09:30",
+  "anon": false,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "65edc8ce3f71e9bb698f9813"
+  },
+  "dateTime": "2024-03-10|22:50:54",
+  "name": "user",
+  "email": "email",
+  "bookDate": "2024-03-10",
+  "seat": "C2S5",
+  "room": "G301B",
+  "timeFrame": "09:00-09:30",
+  "anon": false,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "65eddaff200aff5c86820240"
+  },
+  "dateTime": "2024-03-11|00:08:31",
+  "name": "user",
+  "email": "email",
+  "bookDate": "2024-03-11",
+  "seat": "C2S2",
+  "room": "G301B",
+  "timeFrame": "09:00-09:30",
+  "anon": false,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "65eddb00200aff5c86820241"
+  },
+  "dateTime": "2024-03-11|00:08:32",
+  "name": "user",
+  "email": "email",
+  "bookDate": "2024-03-11",
+  "seat": "C2S6",
+  "room": "G301B",
+  "timeFrame": "09:00-09:30",
+  "anon": false,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "65eddb3e200aff5c86820243"
+  },
+  "dateTime": "2024-03-11|00:09:34",
+  "name": "user",
+  "email": "email",
+  "bookDate": "2024-03-11",
+  "seat": "C1S2",
+  "room": "G301B",
+  "timeFrame": "09:00-09:30",
+  "anon": false,
+  "status": "active"
+}]
