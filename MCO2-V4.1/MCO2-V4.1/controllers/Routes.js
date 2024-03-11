@@ -381,8 +381,6 @@ server.post('/labdetails', function(req, resp){
     .catch(error => {
         console.error(error);
     });
-
-    
 });
 
 
@@ -413,6 +411,12 @@ server.post("/modal", function(req, resp){
                             }else{
                                 modal = 'D';
                             }
+                        }else if(reservations[i].isWalkin){
+                            if(reservations[i].anon){
+                                modal = 'C';
+                            }else{
+                                modal = 'F';
+                            }
                         }else{
                             if(reservations[i].anon){
                                 modal = 'C';
@@ -431,12 +435,59 @@ server.post("/modal", function(req, resp){
 
                 })
             })
-
-
         })
-
     })
-    
+});
+
+
+server.post("/modalTech", function(req, resp){
+    responder.getLabByName(req.body.roomNum)
+    .then(curLab => {
+        console.log(curLab);
+        responder.getReservedAll(curLab, req.body.date, req.body.timeFrame)
+        .then(reservations =>{
+            responder.getUserByEmail(curUserMail)
+            .then(user => {
+
+                let modal = 'A';
+                let name;
+                
+                for(let i = 0; i < reservations.length; i++){
+                    //if current seat is reserved
+                    if(reservations[i]["seat"] == String(req.body.seat)){
+                        
+                        name = reservations[i].name;
+
+                        //if cur user is tech user
+                        if(reservations[i].isWalkin){
+                            //if anonymous
+                            if(reservations[i].anon){
+                                modal = 'E';
+                            }else{
+                                modal = 'D';
+                            }
+                        }else{
+                            if(reservations[i].anon){
+                                modal = 'C';
+                            }else{
+                                modal = 'B';
+                            }
+                        }
+                    }
+                }
+
+                console.log(modal);
+
+                
+                responder.getUserByName(name)
+                .then(user2 => {
+                    console.log(user2);
+                    resp.send({modal, name, user: user2});
+
+                })
+            })
+        })
+    })
 });
 
 server.post('/reserve', function(req, resp){
@@ -457,9 +508,14 @@ server.post('/reserve', function(req, resp){
     var timeFrame  = String(req.body.timeFrame);
     var anon = req.body.anon == 'true';
     var resDate = req.body.date;
+    var walkin = user.isTechnician;
 
-
-    responder.addReservation(date+ "|" +time, user, resDate, seat, room, timeFrame, anon)
+    if(walkin){
+        responder.addReservation(date+ "|" +time, req.body.name, req.body.email, resDate, seat, room, timeFrame, anon, walkin)
+    }else{
+        responder.addReservation(date+ "|" +time, user.username, user.email, resDate, seat, room, timeFrame, anon, walkin)
+    }
+    
     })
     resp.send({status: "reserved"});
     

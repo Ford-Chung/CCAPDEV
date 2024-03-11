@@ -73,8 +73,6 @@ function updateValues(call){
   var selectedDate = $("#date-input").val();
   var selectedOption = $("#timeSelect").find("option:selected").val();
 
-  console.log(selectedOption);
-
   $.post('../dateChange', {date: selectedDate, timeFrame: selectedOption, changed: call}, function(data, status){
     if(status === 'success'){
       let templateHTML;
@@ -166,6 +164,11 @@ function loadClicks(cols, seats){
                 const name = modal.querySelector('.content #reserver-name');
                 name.textContent = data.name;
                 name.href =  `/public-profile/` + data.user['_id'];
+            }
+
+            if(data.modal == 'F'){
+              const name = modal.querySelector('.content #reserver-name');
+              name.textContent = data.name;
             }
 
             if(data.modal == 'E'){

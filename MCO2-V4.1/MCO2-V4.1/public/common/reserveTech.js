@@ -34,10 +34,21 @@ $(document).ready(function(){
 
 
   $("#reserve").click(function(){
+    //get time and date selected
     var selectedOption = $("#timeSelect").find("option:selected").val();
     let res = document.getElementById("anon").checked;
     var selectedDate = $('#date-input').val();
-    $.post('../reserve', {room: room, seat: id, anon: res, date: selectedDate, timeFrame: selectedOption}, 
+
+    //get name and email of the walkin student
+    var name = $("#reserved-name").val();
+    var email = $("#reserved-email").val();
+
+    if (name.trim() === '' || email.trim() === '') {
+      alert('Name and Email fields are required!');
+      return;
+  }
+
+    $.post('../reserve', {room: room, seat: id, anon: res, date: selectedDate, timeFrame: selectedOption, email, name}, 
     function(data, status){
       if(status === 'success'){
         if(data.status === "reserved"){
@@ -52,6 +63,7 @@ $(document).ready(function(){
     });
     
   });
+
 
   $("#overlay").click(function(){
     $(idA).hide();
@@ -142,11 +154,17 @@ function loadClicks(cols, seats){
         let modal;
         id = "C"+i+"S"+j;
 
-        $.post('/modal', {seat: "C"+i+"S" + j, roomNum: room, date: selectedDate, timeFrame: selectedOption}, function(data, status){
+        $.post('/modalTech', {seat: "C"+i+"S" + j, roomNum: room, date: selectedDate, timeFrame: selectedOption}, function(data, status){
           if(status==="success"){
-            
+            let modalType = 'A';
             //modal type
-            idA = "#modal"+data.modal;
+            if(data.modal == 'C' || data.modal == 'B'){
+              modalType = 'B';
+            }
+            if(data.modal == 'E' || data.modal == 'D'){
+              modalType = 'C';
+            }
+            idA = "#modal"+modalType;
 
             modal = document.querySelector(idA);
                               
@@ -162,16 +180,20 @@ function loadClicks(cols, seats){
             timePlaceholder.textContent = "Time: " + selectedOption; 
             
 
-            if(data.modal != 'A' && (data.modal == 'D' || data.modal == 'B')){
+            if(modalType == 'B'){
                 const name = modal.querySelector('.content #reserver-name');
                 name.textContent = data.name;
                 name.href =  `/public-profile/` + data.user['_id'];
             }
 
-            if(data.modal == 'E'){
-              const name = modal.querySelector('.content .name-placeholder');
-              name.textContent = "Reserver Name: Anonymous ( " + data.name + " )";
-              name.href =  `/public-profile/` + data.user['_id'];
+            if(modalType=='C'){
+              const name = modal.querySelector('.content #reserver-name');
+              if(data.modal == 'E'){
+                name.textContent = "Anonymous"
+              }else{
+                name.textContent = data.name;
+              }
+              
             }
 
             if (title) {

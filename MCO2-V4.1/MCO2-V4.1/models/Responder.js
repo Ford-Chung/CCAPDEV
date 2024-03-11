@@ -281,20 +281,21 @@ module.exports.getLabByName = getLabByName;
         //save the room
         //save the time frame
         //anon
-function addReservation(date, name, bookDate, seat, room, timeFrame, anon){
+function addReservation(date, name, email, bookDate, seat, room, timeFrame, anon, walkin){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colReservation);
 
     const info = {
         dateTime: date,
-        name: name.username,
-        email: name.email,
+        name: name,
+        email: email,
         bookDate: bookDate,
         seat: seat,
         room: room,
         timeFrame: timeFrame,
         anon: anon,
-        status: "active"
+        status: "active",
+        isWalkin: walkin
       };
       
       col.insertOne(info).then(function(res){
@@ -309,7 +310,7 @@ function getReservedYours(rooms, name){
     const col = dbo.collection(colReservation);
 
     return new Promise((resolve, reject) => {
-        const cursor = col.find({ name: name.username, room: rooms.roomNum}); // Filter by roomNum
+        const cursor = col.find({ email: name.email, room: rooms.roomNum}); // Filter by roomNum
 
         cursor.toArray().then(function(vals){
             resolve(vals);
