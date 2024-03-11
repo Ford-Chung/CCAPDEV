@@ -1,8 +1,7 @@
 //Routes
-const { timeEnd } = require('console');
+const { timeEnd, info } = require('console');
 const responder = require('../models/Responder');
 const fs = require('fs');
-
 
 
 function dateToVerbose(inputDate){
@@ -45,12 +44,6 @@ function separateDateAndTime(dateTimeString) {
     const formattedTime = `${hours}:${minutes}`;
     return formattedTime;
   }
-
-
-
-
-
-
 
 
 function add(server){
@@ -171,6 +164,7 @@ server.post('/register-checker', function(req, resp){
 
 // PROFILE 
 server.get('/profile', function(req, resp) {
+    
     responder.getReservedOfPerson(curUserData.email)
     .then(myReserves => {
 
@@ -194,6 +188,8 @@ server.get('/profile', function(req, resp) {
     .catch(error => {
         console.error(error);
     });
+
+
 
 
     
@@ -387,40 +383,42 @@ server.get('/labs/:id/', function(req, resp) {
                 .then(reserveUser => {
                         responder.getReservedAll(curLab, getCurrentDate(), timeFrame)
                         .then(reserveList => {
-                            // Access the resolved data here and extract room values
-                            reserveList = reserveList.map(entry => entry.seat);
-                            room = reserveList.map(entry => entry.room);
+                            responder.getReservedAll2(curLab, getCurrentDate())
+                            .then(reserveListAll => {
+                                // Access the resolved data here and extract room values
+                                reserveList = reserveList.map(entry => entry.seat);
+                                room = reserveList.map(entry => entry.room);
+                                
+                                //for the current user reservation
+                                reserveUser = reserveUser.map(entry => entry.seat);
+                                roomUser = reserveUser.map(entry => entry.room);
+
+                                if(name.isTechnician){
+                                    resp.render('lab-view-tech', {
+                                        layout: 'labIndex-tech',
+                                        title: 'Lab View Tech',
+                                        user: curUserData,
+                                        lab: curLab,
+                                        reserved: reserveList,
+                                        userRes: reserveUser,
+                                        dateData: dateData,
+                                        date: getCurrentDate(),
+                                        resData: reserveListAll
+                                    });
+                                }else{
+                                    resp.render('lab-view', {
+                                        layout: 'labIndex',
+                                        title: 'Lab View',
+                                        user: curUserData,
+                                        lab: curLab,
+                                        reserved: reserveList,
+                                        userRes: reserveUser,
+                                        dateData: dateData,
+                                        date: getCurrentDate()
+                                    });
+                                }
+                            })
                             
-                            //for the current user reservation
-                            reserveUser = reserveUser.map(entry => entry.seat);
-                            roomUser = reserveUser.map(entry => entry.room);
-
-
-                            console.log(reserveList);
-
-                            if(name.isTechnician){
-                                resp.render('lab-view-tech', {
-                                    layout: 'labIndex-tech',
-                                    title: 'Lab View Tech',
-                                    user: curUserData,
-                                    lab: curLab,
-                                    reserved: reserveList,
-                                    userRes: reserveUser,
-                                    dateData: dateData,
-                                    date: getCurrentDate()
-                                });
-                            }else{
-                                resp.render('lab-view', {
-                                    layout: 'labIndex',
-                                    title: 'Lab View',
-                                    user: curUserData,
-                                    lab: curLab,
-                                    reserved: reserveList,
-                                    userRes: reserveUser,
-                                    dateData: dateData,
-                                    date: getCurrentDate()
-                                });
-                            }
                         })
                     })
                 })
@@ -583,9 +581,24 @@ server.post('/reserve', function(req, resp){
     }else{
         responder.addReservation(date+ "|" +time, user.username, user.email, resDate, seat, room, timeFrame, anon, walkin)
     }
+
+    let obj = {
+        dateTime: date+ "|" +time,
+        name: req.body.name,
+        email: req.body.email,
+        bookDate: resDate,
+        seat: seat,
+        room: room,
+        timeFrame: timeFrame,
+        anon: anon,
+        status: "active",
+        isWalkin: walkin
+      };
+
+      resp.send({status: "reserved", reserve: obj});
     
     })
-    resp.send({status: "reserved"});
+    
     
 });
 
@@ -618,26 +631,38 @@ server.post('/dateChange', function(req, resp){
                 .then(reserveUser => {
                         responder.getReservedAll(curLab, String(req.body.date), timeFrame)
                         .then(reserveList => { 
-                            // Access the resolved data here and extract room values
-                            reserveList = reserveList.map(entry => entry.seat);
-                            room = reserveList.map(entry => entry.room);
+                            responder.getReservedAll2(curLab, String(req.body.date), timeFrame)
+                            .then(reserveListAll => {
+                                // Access the resolved data here and extract room values
+                                reserveList = reserveList.map(entry => entry.seat);
+                                room = reserveList.map(entry => entry.room);
 
-                            //for the current user reservation
-                            reserveUser = reserveUser.map(entry => entry.seat);
-                            roomUser = reserveUser.map(entry => entry.room);
-                            
-                            // console.log("daf");
-                            // console.log(dateData);
-                            // console.log("daf");
+                                //for the current user reservation
+                                reserveUser = reserveUser.map(entry => entry.seat);
+                                roomUser = reserveUser.map(entry => entry.room);
+                                
 
-                            resp.send({
-                                user: curUserData,
-                                lab: curLab,
-                                reserved: reserveList,
-                                userRes: reserveUser,
-                                dateData: dateData,
-                                date: req.body.date
-                            });
+                                if(name.isTechnician){
+                                    resp.send({
+                                        user: curUserData,
+                                        lab: curLab,
+                                        reserved: reserveList,
+                                        userRes: reserveUser,
+                                        dateData: dateData,
+                                        date: req.body.date,
+                                        resData: reserveListAll
+                                    });
+                                }else{
+                                    resp.send({
+                                        user: curUserData,
+                                        lab: curLab,
+                                        reserved: reserveList,
+                                        userRes: reserveUser,
+                                        dateData: dateData,
+                                        date: req.body.date
+                                    });
+                                }
+                            })
                         })
                 })
 

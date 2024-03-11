@@ -336,12 +336,14 @@ function getReservedAll(rooms, date, timeFrame){
 }
 module.exports.getReservedAll = getReservedAll;
 
-function getReservedOfPerson (personEmail) {
+
+function getReservedAll2(rooms, date){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colReservation);
 
+
     return new Promise((resolve, reject) => {
-        const cursor = col.find({ email: personEmail}); 
+        const cursor = col.find({ room: rooms.roomNum, bookDate: date}); 
 
         cursor.toArray().then(function(vals){
             resolve(vals);
@@ -349,8 +351,7 @@ function getReservedOfPerson (personEmail) {
         
     });
 }
-module.exports.getReservedOfPerson = getReservedOfPerson;
-
+module.exports.getReservedAll2 = getReservedAll2;
 
 
 /**Time slots or Schedule functions */
@@ -375,6 +376,24 @@ function getTimeslots(lab, date, timeFrame){
 }
 
 module.exports.getTimeslots = getTimeslots;
+
+function getReservedOfPerson (personEmail) {
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colReservation);
+
+    return new Promise((resolve, reject) => {
+        const cursor = col.find({ email: personEmail}); 
+
+        cursor.toArray().then(function(vals){
+            resolve(vals);
+        }).catch(errorFn);
+        
+    });
+}
+module.exports.getReservedOfPerson = getReservedOfPerson;
+
+
+
 
 
 

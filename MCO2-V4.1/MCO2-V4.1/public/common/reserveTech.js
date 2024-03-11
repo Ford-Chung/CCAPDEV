@@ -58,6 +58,21 @@ $(document).ready(function(){
           $(idA).hide();
           let overlay = document.getElementById("overlay");
           overlay.classList.remove('active');
+
+          //add new log
+          let logData =  `                    
+          <tr>
+          <td class="logDateTime">`+ data.reserve.dateTime +`</td>
+          <td class="logName">`+ data.reserve.name +`</td>
+          <td class="logActions">Reserved</td>
+          <td class="logSeat">`+ data.reserve.seat +`</td>
+          <td class="logDate">`+ data.reserve.bookDate +`</td>
+          <td class="logTime">`+ data.reserve.timeFrame +`</td>
+          <td class="logEmail">`+ data.reserve.email +`</td>
+          </tr>`
+
+          var logTable = $("#log-table").html($("#log-table").html() + logData);
+
         }
       }
     });
@@ -124,6 +139,40 @@ function updateValues(call){
 
         templateHTML += "</div>";
         slots += templateHTML;
+
+
+        //load log datas
+        let logData = ` 
+        <thead>               
+          <tr>
+          <th class="logDateTime">Date and Time</th>
+          <th class="logName">Name</th>
+          <th class="logActions">Actions</th>
+          <th class="logSeat">Seat</th>
+          <th class="logDate">Date</th>
+          <th class="logTime">Time-slot</th>
+          <th class="logEmail">Email</th>
+      </tr> </thead> <tbody>`;
+
+        for(let i = 0; i < data.resData.length; i++){
+          logData +=  `                    
+            <tr>
+            <td class="logDateTime">`+ data.resData[i].dateTime +`</td>
+            <td class="logName">`+ data.resData[i].name +`</td>
+            <td class="logActions">Reserved</td>
+            <td class="logSeat">`+ data.resData[i].seat +`</td>
+            <td class="logDate">`+ data.resData[i].bookDate +`</td>
+            <td class="logTime">`+ data.resData[i].timeFrame +`</td>
+            <td class="logEmail">`+ data.resData[i].email +`</td>
+            </tr>`
+        }
+
+        logData += `</tbody>`
+        
+
+        var logTable = $("#log-table").html(logData);
+
+        console.log(logTable);
         
       }
 
