@@ -305,12 +305,12 @@ function addReservation(date, name, email, bookDate, seat, room, timeFrame, anon
 module.exports.addReservation = addReservation;
 
 
-function getReservedYours(rooms, name){
+function getReservedYours(rooms, name, timeFrame){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colReservation);
 
     return new Promise((resolve, reject) => {
-        const cursor = col.find({ email: name.email, room: rooms.roomNum}); // Filter by roomNum
+        const cursor = col.find({ email: name.email, room: rooms.roomNum, timeFrame: timeFrame}); // Filter by roomNum
 
         cursor.toArray().then(function(vals){
             resolve(vals);
@@ -335,6 +335,22 @@ function getReservedAll(rooms, date, timeFrame){
     });
 }
 module.exports.getReservedAll = getReservedAll;
+
+function getReservedOfPerson (personEmail) {
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colReservation);
+
+    return new Promise((resolve, reject) => {
+        const cursor = col.find({ email: personEmail}); 
+
+        cursor.toArray().then(function(vals){
+            resolve(vals);
+        }).catch(errorFn);
+        
+    });
+}
+module.exports.getReservedOfPerson = getReservedOfPerson;
+
 
 
 /**Time slots or Schedule functions */

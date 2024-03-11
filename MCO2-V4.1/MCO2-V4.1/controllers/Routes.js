@@ -4,6 +4,55 @@ const responder = require('../models/Responder');
 const fs = require('fs');
 
 
+
+function dateToVerbose(inputDate){
+    const dateObject = new Date(inputDate);
+
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const verboseDate = dateObject.toLocaleString('en-US', options);
+    
+    return verboseDate;
+
+}
+
+function dateToShortVerbose(inputDate){
+    const dateObject = new Date(inputDate);
+
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const verboseDate = dateObject.toLocaleString('en-US', options);
+
+    return verboseDate;
+}
+
+
+function separateDateAndTime(dateTimeString) {
+    const [datePart, timePart] = dateTimeString.split('|');
+    const dateObject = new Date(datePart);
+  
+    const formattedDate = dateObject.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+  
+    const formattedTime = timePart.split(':').slice(0, 2).join(':'); // Removing seconds
+  
+    return { formattedDate, formattedTime };
+  }
+
+  function removeSeconds(timeString) {
+    const [hours, minutes, seconds] = timeString.split(':');
+    const formattedTime = `${hours}:${minutes}`;
+    return formattedTime;
+  }
+
+
+
+
+
+
+
+
 function add(server){
 
 /******************insert controller code in this area, preferably new code goes at the bottom**************** */
@@ -122,12 +171,31 @@ server.post('/register-checker', function(req, resp){
 
 // PROFILE 
 server.get('/profile', function(req, resp) {
-    
-    resp.render('profile',{
-        layout: 'profileIndex',
-        title: 'Profile',
-        user: curUserData
+    responder.getReservedOfPerson(curUserData.email)
+    .then(myReserves => {
+
+        for (let i = 0; i < myReserves.length; i++){
+            myReserves[i].bookDateVerbose = dateToVerbose(myReserves[i].bookDate);
+            myReserves[i].bookDateShortVerbose = dateToShortVerbose(myReserves[i].bookDate);
+            let dateAndTime = separateDateAndTime(myReserves[i].dateTime);
+            myReserves[i].dateLogged = dateToVerbose(dateAndTime.formattedDate);
+            myReserves[i].timeLogged = removeSeconds(dateAndTime.formattedTime);
+        }
+
+
+        resp.render('profile',{
+            layout: 'profileIndex',
+            title: 'Profile',
+            user: curUserData,
+            reserves: myReserves
+        });
+       
+    })
+    .catch(error => {
+        console.error(error);
     });
+
+
     
 });
 
