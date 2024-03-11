@@ -393,13 +393,13 @@ function getReservedOfPerson (personEmail) {
 module.exports.getReservedOfPerson = getReservedOfPerson;
 
 // this currently just has username and password, change in the future to include pic and bio
-function updateProfile (userEmail, userName, passWord) {
+function updateProfile (userEmail, userName, passWord, userBio) {
 
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colUsers);
   
     const updateQuery = { email: userEmail};
-    const updateValues = { $set: { username: userName, password: passWord } };
+    const updateValues = { $set: { username: userName, password: passWord, bio: userBio } };
 
 
     return new Promise((resolve, reject) => {
