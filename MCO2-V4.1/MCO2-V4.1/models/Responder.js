@@ -392,27 +392,32 @@ function getReservedOfPerson (personEmail) {
 }
 module.exports.getReservedOfPerson = getReservedOfPerson;
 
-// this currently just has username and password, change in the future to include pic and bio
+// this currently just has username, password and bio, change in the future to include pic
+// also changes the user param in reservations collection
 function updateProfile (userEmail, userName, passWord, userBio) {
 
     const dbo = mongoClient.db(databaseName);
-    const col = dbo.collection(colUsers);
+    const colUser = dbo.collection(colUsers);
+    const colReserve = dbo.collection(colReservation);
+
   
     const updateQuery = { email: userEmail};
     const updateValues = { $set: { username: userName, password: passWord, bio: userBio } };
+    const updateValuesReserves = { $set: { name: userName} };
 
 
     return new Promise((resolve, reject) => {
-        col.updateOne(updateQuery, updateValues).then(function(res){
-            console.log('Update successful');
-            console.log('Inside: '+JSON.stringify(res));
-            resolve();
-    
+        colUser.updateOne(updateQuery, updateValues).then(function(res){
+
+            colReserve.updateMany(updateQuery, updateValuesReserves).then(function(res){
+                console.log('Update successful');
+                console.log('Inside: '+JSON.stringify(res));
+                resolve();
+        
+              }).catch(errorFn);
+
           }).catch(errorFn);
     });
-
-
-
 
 
 }
