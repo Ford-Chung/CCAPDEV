@@ -1,13 +1,5 @@
 $(document).ready(function(){
-    $("#newUsernameContainer").toggle()
-    $("#newPasswordContainer").toggle()
-    $("#changeUsernameButton").click(function(){
-        $("#newUsernameContainer").toggle()
-    });
 
-    $("#changePasswordButton").click(function(){
-        $("#newPasswordContainer").toggle()
-    });
 
     $("#saveNewUsernameButton").click(function(){
         $.post('change_username',

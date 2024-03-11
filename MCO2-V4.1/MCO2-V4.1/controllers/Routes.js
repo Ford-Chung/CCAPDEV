@@ -313,48 +313,6 @@ server.get('/public-profile/:id/', function(req, resp) {
     });
 })
 
-// CHANGE USERNAME
-server.post('/change_username', function(req, resp){
-    var username  = String(req.body.username);
-    var email = curUserData.email;
-    console.log(username)
-    console.log(email)
-
-    responder.changeUsername(curUserData.email,req.body.username)
-    .then(booleanValue=>{
-        if(booleanValue == true){
-            console.log("UsernameChangeSuccess");
-            responder.getUserByEmail(email)
-            .then(user=>{
-                curUserData = user;
-            })
-            resp.send({username : username});
-            console.log("TESTER!" + curUserData);
-        } else{
-            console.log("UsernameChangeFail");
-        }
-    })
-});
-
-// CHANGE PASSWORD
-server.post('/change_password', function(req, resp){
-
-    var password = String(req.body.password);
-    var vpassword = String(req.body.vpassword);
-
-    responder.changePassword(curUserData.email,req.body.password,req.body.vpassword)
-    .then(booleanValue =>{
-        if(booleanValue == true){
-            console.log("PasswordChangeSuccess");
-            resp.send({message : "Password Change Success!"});
-        } else{
-            console.log("PasswordChangeFail");
-            resp.send({message : "Password Change Failed!"});
-        }
-    });
-});
-
-
 // LAB VIEW
 server.get('/labs/:id/', function(req, resp) {
     console.log('LAB ID OF ' + req.params.id + '!!!!');
@@ -705,6 +663,30 @@ function sortByStartTime(array) {
         return 0;
     });
 }
+
+
+server.post('/save-profile', function(req, resp){
+    console.log("SAVING INFO");
+
+    responder.updateProfile(curUserData.email, req.body.username, req.body.password)
+    .then(whatever => {
+
+        responder.getUserByEmail(curUserData.email)
+        .then(user => {
+            curUserData = user;
+            resp.send("<script>alert('Profile saved successfully!'); window.location.href = '/profile';</script>");
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+});
 
 
 
