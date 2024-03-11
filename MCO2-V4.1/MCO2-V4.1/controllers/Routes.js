@@ -75,8 +75,6 @@ server.get('/register', function(req, resp){
 // Ajax that checks if the email is already registered by another user.
 server.post('/email_checker', function(req, resp){
     var email  = String(req.body.email);
-    console.log("CONTROL-EMAIL INPUT " + email);
-    console.log("CONTROL-EMAIL LENGTH " + email.length)
 
     responder.isRegisteredUser(email)
     .then(booleanValue => {
@@ -96,9 +94,6 @@ server.post('/email_checker', function(req, resp){
 server.post('/password_checker', function(req, resp){
     var password  = String(req.body.password);
     var vpassword = String(req.body.vpassword);
-    console.log("PASSWORD " + password)
-    console.log("PASSWORDV " + vpassword)
-    console.log("CONTROL-PASSWORD MATCH " + password === vpassword)
 
     if(password === vpassword){
         resp.send({match : 1})
@@ -118,7 +113,6 @@ server.post('/register-checker', function(req, resp){
 
     responder.addUser(userEmail, userName, userPassword, userVPassword,isTechnician)
     .then(result => {
-        console.log(result);
         if (result == "Success!"){
             resp.redirect('/');
         } else {
@@ -148,7 +142,6 @@ server.post('/register-checker', function(req, resp){
                 curUserData = user;
                 resp.redirect('/mainMenu');
             } else {
-                console.log('Email and password don\'t match.');
                 resp.render('login',{
                     layout: 'loginIndex',
                     title: 'Login Page',
@@ -294,7 +287,6 @@ server.post('/load-people', function(req, resp){
 
 // PUBLIC PROFILE
 server.get('/public-profile/:id/', function(req, resp) {
-    console.log('PUBLIC PROFILE OF ' + req.params.id + '!!!!')
     responder.getUserbyId(req.params.id)
     .then(userPublic => {
         if (userPublic.email == curUserData.email){
@@ -312,6 +304,45 @@ server.get('/public-profile/:id/', function(req, resp) {
         console.error(error);
     });
 })
+
+// CHANGE USERNAME
+server.post('/change_username', function(req, resp){
+    var username  = String(req.body.username);
+    var email = curUserData.email;
+
+    responder.changeUsername(curUserData.email,req.body.username)
+    .then(booleanValue=>{
+        if(booleanValue == true){
+            console.log("UsernameChangeSuccess");
+            responder.getUserByEmail(email)
+            .then(user=>{
+                curUserData = user;
+            })
+            resp.send({username : username});
+        } else{
+            console.log("UsernameChangeFail");
+        }
+    })
+});
+
+// CHANGE PASSWORD
+server.post('/change_password', function(req, resp){
+
+    var password = String(req.body.password);
+    var vpassword = String(req.body.vpassword);
+
+    responder.changePassword(curUserData.email,req.body.password,req.body.vpassword)
+    .then(booleanValue =>{
+        if(booleanValue == true){
+            console.log("PasswordChangeSuccess");
+            resp.send({message : "Password Change Success!"});
+        } else{
+            console.log("PasswordChangeFail");
+            resp.send({message : "Password Change Failed!"});
+        }
+    });
+});
+
 
 // LAB VIEW
 server.get('/labs/:id/', function(req, resp) {
@@ -411,12 +442,10 @@ server.post('/labdetails', function(req, resp){
 server.post("/modal", function(req, resp){
     responder.getLabByName(req.body.roomNum)
     .then(curLab => {
-        console.log(curLab);
         responder.getReservedAll(curLab, req.body.date, req.body.timeFrame)
         .then(reservations =>{
             responder.getUserByEmail(curUserMail)
             .then(user => {
-                console.log(reservations);
 
                 let modal = 'A';
                 let name;
@@ -454,7 +483,6 @@ server.post("/modal", function(req, resp){
                 
                 responder.getUserByName(name)
                 .then(user2 => {
-                    console.log(user2);
                     resp.send({modal, name, user: user2});
 
                 })
@@ -467,7 +495,6 @@ server.post("/modal", function(req, resp){
 server.post("/modalTech", function(req, resp){
     responder.getLabByName(req.body.roomNum)
     .then(curLab => {
-        console.log(curLab);
         responder.getReservedAll(curLab, req.body.date, req.body.timeFrame)
         .then(reservations =>{
             responder.getUserByEmail(curUserMail)
@@ -500,12 +527,9 @@ server.post("/modalTech", function(req, resp){
                     }
                 }
 
-                console.log(modal);
-
                 
                 responder.getUserByName(name)
                 .then(user2 => {
-                    console.log(user2);
                     resp.send({modal, name, user: user2});
 
                 })
@@ -565,7 +589,6 @@ server.post('/dateChange', function(req, resp){
     let room = [];
     let timeFrame;
 
-    console.log("Inmail: " + req.body.timeFrame)
 
     responder.getLabById(curLabId)
     .then(curLab => {
@@ -582,8 +605,6 @@ server.post('/dateChange', function(req, resp){
                         timeFrame = req.body.timeFrame;
                     }
                 }
-
-                console.log(dateData);
 
                 responder.getReservedYours(curLab, name, timeFrame)
                 .then(reserveUser => {
@@ -640,6 +661,33 @@ server.post('/dateChange', function(req, resp){
 });
 
 
+server.get('/modifyLab', function(req, resp){
+    responder.getLabById(curLabId)
+    .then(curLab => {
+        responder.getTimeslots(curLab, getCurrentDate())
+        .then(dateData => {
+            resp.render('modifyLab', {
+                layout: 'modifyLabIndex',
+                title: 'Modify Laboratory',
+                date: getCurrentDate(),
+                timeFrame: dateData
+            });
+        })
+    })
+
+
+});
+
+
+server.post('/changeModifyLab', function(req, resp){
+    responder.getLabById(curLabId)
+    .then(curLab => {
+        responder.getTimeslots(curLab, req.body.date)
+        .then(dateData => {
+            resp.send({dateData: dateData});
+        })
+    })
+});
 // ADD NEW LINES BELOW HERE
 
 function getCurrentDate(){
@@ -686,8 +734,6 @@ server.post('/save-profile', function(req, resp){
     });
 
 });
-
-
 
 
 

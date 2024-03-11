@@ -392,8 +392,7 @@ function getReservedOfPerson (personEmail) {
 }
 module.exports.getReservedOfPerson = getReservedOfPerson;
 
-// this currently just has username, password and bio, change in the future to include pic
-// also changes the user param in reservations collection
+// this currently just has username and password, change in the future to include pic and bio
 function updateProfile (userEmail, userName, passWord, userBio) {
 
     const dbo = mongoClient.db(databaseName);
@@ -422,8 +421,6 @@ function updateProfile (userEmail, userName, passWord, userBio) {
 
 }
 module.exports.updateProfile = updateProfile;
-
-
 
 
 
