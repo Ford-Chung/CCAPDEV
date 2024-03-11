@@ -63,4 +63,37 @@
   "timeEnd": "09:30",
   "available": 20,
   "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65ef067861c68a1abe681886"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-11",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 20,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65ef068d61c68a1abe681887"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-12",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 20,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65ef0c58a7d8ebfb5822d327"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-12",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 20,
+  "reserved": 0
 }]
