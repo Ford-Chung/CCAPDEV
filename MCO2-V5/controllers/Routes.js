@@ -37,13 +37,14 @@ function separateDateAndTime(dateTimeString) {
     const formattedTime = timePart.split(':').slice(0, 2).join(':'); // Removing seconds
   
     return { formattedDate, formattedTime };
-  }
+}
 
-  function removeSeconds(timeString) {
+function removeSeconds(timeString) {
     const [hours, minutes, seconds] = timeString.split(':');
     const formattedTime = `${hours}:${minutes}`;
     return formattedTime;
-  }
+}
+
 
 
 function add(server){
@@ -804,7 +805,7 @@ server.post('/save-profile', function(req, resp){
         responder.getUserByEmail(curUserData.email)
         .then(user => {
             curUserData = user;
-            resp.send("<script>alert('Profile saved successfully!'); window.location.href = '/profile';</script>");
+            resp.redirect('/profile')
         })
         .catch(error => {
             console.error(error);
@@ -837,6 +838,16 @@ server.post('/searchFunction', function (req, resp) {
             console.error(error);
             resp.status(500).send('Internal Server Error');
         });
+});
+
+server.get('/editReservation', function (req, resp) {
+    responder.getLabByName(req.query.roomNum)
+    .then(lab => {
+        resp.redirect('/labs/' + lab._id);            
+    })
+    .catch(error => {
+        console.error(error);
+    });
 });
 
 

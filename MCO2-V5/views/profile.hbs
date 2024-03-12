@@ -22,9 +22,11 @@
             <p>Reservation: {{bookDateVerbose}} {{timeFrame}}</p>
             <p>Requested: {{dateLogged}} {{timeLogged}}</p>
             <div id="resv-buttons-div">
-                <a href="../ReservePage/studentView1.html">
-                    <button type="button">Edit Reservation</button>
-                </a>
+
+                <form action="/editReservation" method="get">
+                    <button type="submit" value="{{room}}" name="roomNum" id="roomNum">Edit Reservation</button>
+                </form>
+
                 <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
             </div>
         </details>
