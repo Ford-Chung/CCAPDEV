@@ -14,12 +14,12 @@
   background-color: #2E3047;
   width: 500px;
   max-width: 80%;
-  height: 50vh;
+  height: 350px;
   display: none;
 }
 
 #modalA{
-  height: 63vh;
+  height: 450px;
 }
 
 #status, #xcontainer{

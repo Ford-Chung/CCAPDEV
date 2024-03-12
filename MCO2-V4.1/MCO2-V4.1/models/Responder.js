@@ -285,24 +285,71 @@ function addReservation(date, name, email, bookDate, seat, room, timeFrame, anon
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colReservation);
 
-    const info = {
-        dateTime: date,
-        name: name,
-        email: email,
-        bookDate: bookDate,
-        seat: seat,
-        room: room,
-        timeFrame: timeFrame,
-        anon: anon,
-        status: "active",
-        isWalkin: walkin
-      };
-      
-      col.insertOne(info).then(function(res){
-        console.log('reservation created');
-      }).catch(errorFn);
+    getLabByName(room)
+    .then(lab =>{
+
+        getSchedule(room, bookDate, timeFrame)
+        .then(schedule => {
+
+            updateReservationSched(room, bookDate, timeFrame, schedule.available, schedule.reserved)
+            .then(result => {
+                
+                
+            const info = {
+                dateTime: date,
+                name: name,
+                email: email,
+                bookDate: bookDate,
+                seat: seat,
+                room: room,
+                timeFrame: timeFrame,
+                anon: anon,
+                status: "active",
+                isWalkin: walkin
+            };
+            
+            col.insertOne(info).then(function(res){
+                console.log('reservation created');
+            }).catch(errorFn);
+
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }).catch(error => {
+        console.error(error);
+    });
+
+
 }
 module.exports.addReservation = addReservation;
+
+
+function getSchedule(room, date, timeFrame) {
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colSchedule);
+
+    const [startTime, endTime] = timeFrame.split('-');
+
+    searchQuery = {roomNum: room, date: date, timeStart: startTime, timeEnd: endTime};
+
+    return new Promise((resolve, reject) => {
+        col.findOne(searchQuery).then(function (val) {
+            if (val != null) {
+                resolve(val);
+            } else {
+                resolve(null);
+            }
+        }).catch(reject);
+    });
+}
+module.exports.getUserbyId = getUserbyId;
+
 
 
 function getReservedYours(rooms, name, timeFrame){
@@ -371,7 +418,28 @@ function getTimeslots(lab, date, timeFrame){
         cursor.toArray().then(function(vals){
             resolve(vals);
         }).catch(errorFn);
-        
+    });
+}
+
+function updateReservationSched(room, date, timeFrame, available, reserved){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colSchedule);
+
+    const [startTime, endTime] = timeFrame.split('-');
+
+    const updateQuery = {roomNum: room, date: date, timeStart: startTime, timeEnd: endTime};
+    const updateValues = { $set: {available : available-1, reserved: reserved+1}};
+
+
+    return new Promise((resolve,reject) =>{
+        col.updateOne(updateQuery,updateValues).then(function(res){
+            if(res['modifiedCount'] > 0){
+                resolve(true);
+            } else{
+                resolve(false);
+            }
+
+        });
     });
 }
 

@@ -51,6 +51,26 @@ $(document).ready(function(){
       }
     });
     
+
+    $.post('../getTimeFrames', {date: selectedDate},
+    function(data, status){
+      if(status ==='success'){
+        let dateopt = '';
+        var selectedTime = $("#timeSelect").find("option:selected").val();
+        console.log(data.dateData);
+    
+        for(let i = 0; i < data.dateData.length; i++){
+          if(selectedTime == data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd){
+            dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + (data.dateData[i].available - 1) + "</option>";
+
+          }else{
+            dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + data.dateData[i].available + "</option>";
+          }
+        }
+        $("#timeSelect").html(dateopt);
+        $("#timeSelect").val(selectedTime);
+      }
+    });
   });
 
   $("#overlay").click(function(){

@@ -2,11 +2,11 @@
   "_id": {
     "$oid": "65e62a10f22f5092157bf8e1"
   },
-  "email": "email",
+  "email": "peter_parker@dlsu.edu.ph",
   "password": "pass",
   "isTechnician": false,
   "pfp": "amogus.png",
-  "username": "user",
+  "username": "Peter Parker",
   "bio": "placeholder bio"
 },
 {
@@ -66,45 +66,12 @@
 },
 {
   "_id": {
-    "$oid": "65ed3211ef3829e2d4500593"
-  },
-  "email": "krozo",
-  "password": "1234",
-  "isTechnician": false,
-  "pfp": "amogus.png",
-  "username": "krozo",
-  "bio": ""
-},
-{
-  "_id": {
-    "$oid": "65ed431872cf2581b7c40c0e"
-  },
-  "email": "dogo",
-  "password": "1234",
-  "isTechnician": false,
-  "pfp": "amogus.png",
-  "username": "dogo",
-  "bio": ""
-},
-{
-  "_id": {
     "$oid": "65edf545a9d98eb1dd3a43b3"
   },
-  "email": "krozo2",
+  "email": "tech@dlsu.edu.ph",
   "password": "pass",
-  "isTechnician": false,
-  "pfp": "amogus.png",
-  "username": "krozo2",
-  "bio": ""
-},
-{
-  "_id": {
-    "$oid": "65edf5b4a9d98eb1dd3a43b4"
-  },
-  "email": "ford",
-  "password": "1234",
   "isTechnician": true,
   "pfp": "amogus.png",
-  "username": "ford",
+  "username": "Technician",
   "bio": ""
 }]

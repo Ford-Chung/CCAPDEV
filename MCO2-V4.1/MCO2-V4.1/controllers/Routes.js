@@ -486,9 +486,21 @@ server.post("/modal", function(req, resp){
                     resp.send({modal, name, user: user2});
 
                 })
+                .catch(error => {
+                    console.error(error);
+                });
             })
+            .catch(error => {
+                console.error(error);
+            });
         })
+        .catch(error => {
+            console.error(error);
+        });
     })
+    .catch(error => {
+        console.error(error);
+    });
 });
 
 
@@ -533,9 +545,21 @@ server.post("/modalTech", function(req, resp){
                     resp.send({modal, name, user: user2});
 
                 })
+                .catch(error => {
+                    console.error(error);
+                });
             })
+            .catch(error => {
+                console.error(error);
+            });
         })
+        .catch(error => {
+            console.error(error);
+        });
     })
+    .catch(error => {
+        console.error(error);
+    });
 });
 
 server.post('/reserve', function(req, resp){
@@ -564,25 +588,47 @@ server.post('/reserve', function(req, resp){
         responder.addReservation(date+ "|" +time, user.username, user.email, resDate, seat, room, timeFrame, anon, walkin)
     }
 
-    let obj = {
-        dateTime: date+ "|" +time,
-        name: req.body.name,
-        email: req.body.email,
-        bookDate: resDate,
-        seat: seat,
-        room: room,
-        timeFrame: timeFrame,
-        anon: anon,
-        status: "active",
-        isWalkin: walkin
-      };
+        let obj = {
+            dateTime: date+ "|" +time,
+            name: req.body.name,
+            email: req.body.email,
+            bookDate: resDate,
+            seat: seat,
+            room: room,
+            timeFrame: timeFrame,
+            anon: anon,
+            status: "active",
+            isWalkin: walkin,
+        };
 
-      resp.send({status: "reserved", reserve: obj});
-    
+        resp.send({status: "reserved", reserve: obj});
+                
     })
+    .catch(error => {
+        console.error(error);
+    });
+
     
     
 });
+
+server.post('/getTimeFrames', function(req, resp){
+    responder.getLabById(curLabId)
+    .then(curLab => {
+        responder.getTimeslots(curLab, req.body.date)
+        .then(dateData => { 
+            resp.send({dateData : dateData});
+                
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    })
+    .catch(error => {
+        console.error(error);
+    });
+})
 
 server.post('/dateChange', function(req, resp){
     let roomReservations = [];
@@ -642,10 +688,22 @@ server.post('/dateChange', function(req, resp){
                                     });
                                 }
                             })
+                            .catch(error => {
+                                console.error(error);
+                            });
                         })
+                        .catch(error => {
+                            console.error(error);
+                        });
                 })
+                .catch(error => {
+                    console.error(error);
+                });
 
             })
+            .catch(error => {
+                console.error(error);
+            });
 
         })
         .catch(error => {
@@ -673,7 +731,13 @@ server.get('/modifyLab', function(req, resp){
                 timeFrame: dateData
             });
         })
+        .catch(error => {
+            console.error(error);
+        });
     })
+    .catch(error => {
+        console.error(error);
+    });
 
 
 });
@@ -686,7 +750,13 @@ server.post('/changeModifyLab', function(req, resp){
         .then(dateData => {
             resp.send({dateData: dateData});
         })
+        .catch(error => {
+            console.error(error);
+        });
     })
+    .catch(error => {
+        console.error(error);
+    });
 });
 // ADD NEW LINES BELOW HERE
 
