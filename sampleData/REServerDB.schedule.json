@@ -1,0 +1,1650 @@
+[{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbad0"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-11",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbad1"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-11",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbad2"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-11",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbad3"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-11",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbad4"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-11",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbad5"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-11",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbad6"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-11",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbad7"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-11",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbad8"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-11",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbad9"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-11",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbada"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-11",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbadb"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-11",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbadc"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-11",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbadd"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-11",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbade"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-11",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbadf"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-11",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbae0"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-11",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbae1"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-11",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbae2"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-11",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbae3"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-11",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbae4"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-11",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbae5"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-11",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbae6"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-11",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbae7"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-11",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbae8"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-11",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbae9"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-11",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaea"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-11",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaeb"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-11",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaec"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-11",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaed"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-11",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaee"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-12",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 35,
+  "reserved": 1
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaef"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-12",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaf0"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-12",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaf1"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-12",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaf2"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-12",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaf3"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-12",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaf4"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-12",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 29,
+  "reserved": 1
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaf5"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-12",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaf6"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-12",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaf7"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-12",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaf8"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-12",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaf9"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-12",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbafa"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-12",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 23,
+  "reserved": 1
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbafb"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-12",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbafc"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-12",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbafd"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-12",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbafe"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-12",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbaff"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-12",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb00"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-12",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 26,
+  "reserved": 1
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb01"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-12",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb02"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-12",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb03"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-12",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb04"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-12",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb05"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-12",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb06"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-12",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 35,
+  "reserved": 1
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb07"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-12",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb08"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-12",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb09"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-12",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb0a"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-12",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb0b"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-12",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb0c"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-13",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb0d"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-13",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb0e"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-13",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb0f"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-13",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb10"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-13",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb11"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-13",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb12"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-13",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb13"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-13",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb14"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-13",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb15"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-13",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb16"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-13",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb17"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-13",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb18"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-13",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb19"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-13",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb1a"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-13",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb1b"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-13",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb1c"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-13",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb1d"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-13",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb1e"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-13",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb1f"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-13",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb20"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-13",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb21"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-13",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb22"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-13",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb23"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-13",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb24"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-13",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb25"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-13",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb26"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-13",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb27"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-13",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb28"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-13",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb29"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-13",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb2a"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-14",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb2b"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-14",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb2c"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-14",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb2d"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-14",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb2e"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-14",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb2f"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-14",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb30"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-14",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb31"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-14",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb32"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-14",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb33"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-14",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb34"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-14",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb35"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-14",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb36"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-14",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb37"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-14",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb38"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-14",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb39"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-14",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb3a"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-14",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb3b"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-14",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb3c"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-14",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb3d"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-14",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb3e"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-14",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb3f"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-14",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb40"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-14",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb41"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-14",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb42"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-14",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb43"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-14",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb44"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-14",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb45"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-14",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb46"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-14",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb47"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-14",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb48"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-15",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb49"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-15",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb4a"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-15",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb4b"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-15",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb4c"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-15",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb4d"
+  },
+  "roomNum": "G301A",
+  "date": "2024-03-15",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb4e"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-15",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb4f"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-15",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb50"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-15",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb51"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-15",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb52"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-15",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb53"
+  },
+  "roomNum": "G301B",
+  "date": "2024-03-15",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 30,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb54"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-15",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb55"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-15",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb56"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-15",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb57"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-15",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb58"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-15",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb59"
+  },
+  "roomNum": "G302A",
+  "date": "2024-03-15",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 24,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb5a"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-15",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb5b"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-15",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb5c"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-15",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb5d"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-15",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb5e"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-15",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb5f"
+  },
+  "roomNum": "G302B",
+  "date": "2024-03-15",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 27,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb60"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-15",
+  "timeStart": "09:00",
+  "timeEnd": "09:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb61"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-15",
+  "timeStart": "09:30",
+  "timeEnd": "10:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb62"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-15",
+  "timeStart": "10:00",
+  "timeEnd": "10:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb63"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-15",
+  "timeStart": "10:30",
+  "timeEnd": "11:00",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb64"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-15",
+  "timeStart": "11:00",
+  "timeEnd": "11:30",
+  "available": 36,
+  "reserved": 0
+},
+{
+  "_id": {
+    "$oid": "65effb252cbb8d22e00cbb65"
+  },
+  "roomNum": "G303A",
+  "date": "2024-03-15",
+  "timeStart": "11:30",
+  "timeEnd": "12:00",
+  "available": 36,
+  "reserved": 0
+}]
