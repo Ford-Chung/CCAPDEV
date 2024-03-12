@@ -12,6 +12,12 @@ Sample Data
 2. Run the app.js first to load the name of the collection
 3. import each files based on names
 4. refresh the page to show updated values
+5. Structure of the database should look something like this:
+     - REServerDB
+        - labs
+        - reservation
+        - schedule
+        - users
 
 Samle data locations
 1. All sample datas are located in the date 2024-03-12 of each lab
