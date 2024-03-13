@@ -39,6 +39,14 @@ mongoClient.connect().then(function(con){
 
 
 
+/*****************misc functions****************** */
+
+function isValidEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@dlsu\.edu\.ph$/;
+    return emailRegex.test(email);
+}
+
+
 /******response functions to interact with database**********/
 
 
@@ -66,10 +74,13 @@ function addUser(userEmail, userName, userPassword, userVPassword,isTechnician){
     searchQuery = {email: userEmail};
     return new Promise((resolve, reject) => {
         col.findOne(searchQuery).then(function(val){
+            
             if (val != null){
                 resolve('Email already in use.');
             } else if (userPassword != userVPassword){
                 resolve('Passwords do not match.');
+            } else if (!isValidEmail(userEmail)){
+                resolve('Invalid DLSU email format.');
             } else {
                 if(isTechnician === 'on'){
                     isTechnician = true;

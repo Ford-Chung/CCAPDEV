@@ -45,6 +45,10 @@ function removeSeconds(timeString) {
     return formattedTime;
 }
 
+function isValidEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@dlsu\.edu\.ph$/;
+    return emailRegex.test(email);
+}
 
 
 function add(server){
@@ -57,6 +61,7 @@ let curUserData;
 let curUserMail;
 let curLabId;
 let searchQuery;
+
 
 // LOGIN load login page 
 server.get('/', function(req, resp){
@@ -78,12 +83,17 @@ server.get('/register', function(req, resp){
 server.post('/email_checker', function(req, resp){
     var email  = String(req.body.email);
 
+    if (!isValidEmail(email)){
+        resp.send({taken : 2});
+        return;
+    }
+
     responder.isRegisteredUser(email)
     .then(booleanValue => {
         if (booleanValue){
-            resp.send({taken : 1})
+            resp.send({taken : 1});
         } else {
-            resp.send({taken : 0})
+            resp.send({taken : 0});
         }             
     })
     .catch(error => {
@@ -118,6 +128,7 @@ server.post('/register-checker', function(req, resp){
         if (result == "Success!"){
             resp.redirect('/');
         } else {
+
             resp.render('register',{
                 layout: 'registerIndex',
                 title: 'Register Page',
@@ -159,6 +170,11 @@ server.post('/register-checker', function(req, resp){
 
 // PROFILE 
 server.get('/profile', function(req, resp) {
+
+    if (curUserData == null){
+        resp.redirect('/');
+        return;
+    }
     
     responder.getReservedOfPerson(curUserData.email)
     .then(myReserves => {
@@ -187,6 +203,12 @@ server.get('/profile', function(req, resp) {
 
 // MAIN MENU 
 server.get('/mainMenu', function(req, resp) {
+
+    if (curUserData == null){
+        resp.redirect('/');
+        return;
+    }
+    
     if(req.query.labs != null){
         let labs = [];
         labs = JSON.parse(req.query.labs);
@@ -271,6 +293,12 @@ server.post('/backBtn', function(req, resp) {
 
 // EDIT-PROFILE
 server.get('/edit-profile', function(req, resp) {
+
+    if (curUserData == null){
+        resp.redirect('/');
+        return;
+    }
+    
     resp.render('edit-profile',{
         layout: 'profileIndex',
         title: 'Edit Profile',
@@ -301,6 +329,13 @@ server.post('/load-people', function(req, resp){
 
 // PUBLIC PROFILE
 server.get('/public-profile/:id/', function(req, resp) {
+
+    if (curUserData == null){
+        resp.redirect('/');
+        return;
+    }
+
+
     responder.getUserbyId(req.params.id)
     .then(userPublic => {
         if (userPublic.email == curUserData.email){
@@ -360,6 +395,12 @@ server.post('/change_password', function(req, resp){
 
 // LAB VIEW
 server.get('/labs/:id/', function(req, resp) {
+
+    if (curUserData == null){
+        resp.redirect('/');
+        return;
+    }
+
     console.log('LAB ID OF ' + req.params.id + '!!!!');
     curLabId = req.params.id;
     let roomReservations = [];
@@ -734,6 +775,12 @@ server.post('/dateChange', function(req, resp){
 
 
 server.get('/modifyLab', function(req, resp){
+
+    if (curUserData == null){
+        resp.redirect('/');
+        return;
+    }
+
     responder.getLabById(curLabId)
     .then(curLab => {
         responder.getTimeslots(curLab, getCurrentDate())
@@ -841,6 +888,12 @@ server.post('/searchFunction', function (req, resp) {
 });
 
 server.get('/editReservation', function (req, resp) {
+
+    if (curUserData == null){
+        resp.redirect('/');
+        return;
+    }
+
     responder.getLabByName(req.query.roomNum)
     .then(lab => {
         resp.redirect('/labs/' + lab._id);            
@@ -848,6 +901,11 @@ server.get('/editReservation', function (req, resp) {
     .catch(error => {
         console.error(error);
     });
+});
+
+server.get('/logout', function (req, resp) {
+    curUserData = null;
+    resp.redirect('/');
 });
 
 

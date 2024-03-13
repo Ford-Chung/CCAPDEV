@@ -25,10 +25,13 @@ $(document).ready(function(){
     $(idA).hide();
   });
 
-  $("cancel").click(function(){
+  $(".cancel").click(function(){
+    /*
     let overlay = document.getElementById("overlay");
     overlay.classList.remove('active');
     $(idA).hide();
+    */
+    alert("To be implemented phase 3.");
   });
 
 
