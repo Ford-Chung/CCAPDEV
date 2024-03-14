@@ -3,6 +3,7 @@
     font-family: Arial, Helvetica, sans-serif;
     
 }
+
 body{
     background-color: #2E3047;
 }
@@ -19,8 +20,6 @@ main {
     opacity: .1;
 }
 
-
-
 .column{
     backdrop-filter: blur(100%);
     background-color: #2e8a746d;
@@ -29,7 +28,6 @@ main {
     border-radius: 30px;
 }
 
-
 main h1{
     color: white;
     font-size: 20px;
@@ -37,7 +35,6 @@ main h1{
     font-style: sans-serif;
     text-align: left;
 }
-
 
 .column{
     display: grid;
@@ -74,6 +71,10 @@ main h1{
     background-color: rgba(230, 38, 38, 0.865);
 }
 
+.reserved:hover {
+    background-color: #e03f3f;
+}
+
 .filter {
     margin-top: 5%;
     color: white;
@@ -91,6 +92,7 @@ main h1{
 .back img {
     width: 30%;
 }
+
 .back{
     display: flex;
     width: 100px;
@@ -101,13 +103,13 @@ main h1{
 .room-id{
     width: 20%;
 }
+
 .date-container, .timeframe-container{
     width: 35%;
     text-align: center;
     justify-self: center;
     align-self: center;
 }
-
 
 #date-input{
     border-radius: 10px;
@@ -118,7 +120,6 @@ main h1{
     margin: 5px;
 }
 
-
 select{
     border-radius: 10px;
     height: 30px;
@@ -128,7 +129,3 @@ select{
     margin: 5px;
     font-weight: 100;
 }
-
-
-
-
