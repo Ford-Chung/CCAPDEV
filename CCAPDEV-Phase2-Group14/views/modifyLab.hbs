@@ -11,8 +11,10 @@
 
         <div class="add-timeslots">
             <div><label class="modify-titles" for>Add time Slots</label></div>
-            <div><input type="time" id="add-time"></div>
-            <div><button onclick="alert('To be implemented in Phase 3')">Add</button></div>
+            <label class="modify-titles" for="start-time">Time is a constant 30 mins:</label>
+            <input type="time" id="start-time" name="start-time" required><br><br>
+
+            <div><button id='add'>Add</button></div>
         </div>
         <div class="delete-timeslots">  
             <div><label class="modify-titles" for>Delete Time Slots</label></div>
@@ -22,8 +24,7 @@
                     <option value="{{timeStart}}-{{timeEnd}}">{{timeStart}} - {{timeEnd}}</option>
                 {{/each}}
             </select></div>
-            <div><button onclick="alert('To be implemented in Phase 3')">Delete</button></div>
+            <div><button id="delete">Delete</button></div>
         </div>
-        <div class="save-container"><button onclick="alert('To be implemented in Phase 3')" id="saveAll">Save Changes</button></div>
     </div>
 </main>

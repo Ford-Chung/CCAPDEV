@@ -431,6 +431,21 @@ function getTimeslots(lab, date, timeFrame){
         }).catch(errorFn);
     });
 }
+module.exports.getTimeslots = getTimeslots;
+
+function getAllTimeSlots(){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colSchedule);
+
+    return new Promise((resolve, reject) => {
+        const cursor = col.find({}); //get all timeslots in a specific room and date
+
+        cursor.toArray().then(function(vals){
+            resolve(vals);
+        }).catch(errorFn);
+    });
+}
+module.exports.getAllTimeSlots = getAllTimeSlots;
 
 function updateReservationSched(room, date, timeFrame, available, reserved){
     const dbo = mongoClient.db(databaseName);
@@ -454,14 +469,14 @@ function updateReservationSched(room, date, timeFrame, available, reserved){
     });
 }
 
-module.exports.getTimeslots = getTimeslots;
+module.exports.updateReservationSched = updateReservationSched;
 
 function getReservedOfPerson (personEmail) {
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colReservation);
 
     return new Promise((resolve, reject) => {
-        const cursor = col.find({ email: personEmail}); 
+        const cursor = col.find({ email: personEmail, status: 'active'}); 
 
         cursor.toArray().then(function(vals){
             resolve(vals);
@@ -532,8 +547,93 @@ function userSearch(searchString) {
 
 module.exports.userSearch = userSearch;
 
+function removeReservation(date, timeFrame, seat, room){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colReservation);
+
+    const searchQuery = {seat, bookDate: date, room, timeFrame, status: "active"}
+    const updateValues = { $set: { status: "cancelled" } };
+
+    getSchedule(room, date, timeFrame)
+    .then(schedule => {
+
+        removeReservationSched(room, date, timeFrame, schedule.available, schedule.reserved)
+        .then(result => {
+
+        })
+    })
+
+    return new Promise((resolve, reject) => {
+        col.updateOne(searchQuery, updateValues).then(function(res){
+            resolve(res);
+        }).catch(errorFn);
+    });
 
 
+}
+module.exports.removeReservation = removeReservation;
+
+function removeReservationSched(room, date, timeFrame, available, reserved){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colSchedule);
+
+    const [startTime, endTime] = timeFrame.split('-');
+
+    const updateQuery = {roomNum: room, date: date, timeStart: startTime, timeEnd: endTime};
+    const updateValues = { $set: {available : available+1, reserved: reserved-1}};
+
+
+    return new Promise((resolve,reject) =>{
+        col.updateOne(updateQuery,updateValues).then(function(res){
+            if(res['modifiedCount'] > 0){
+                resolve(true);
+            } else{
+                resolve(false);
+            }
+
+        });
+    });
+}
+
+module.exports.removeReservationSched = removeReservationSched;
+
+function addSchedule(timeStart, timeEnd, date, roomNum, available){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colSchedule);
+
+    const info = {
+        roomNum,
+        date,
+        timeStart,
+        timeEnd,
+        available,
+        reserved: 0
+    }
+
+    col.insertOne(info).then(function(res){
+        console.log('Schedule created');
+    }).catch(errorFn);
+}
+module.exports.addSchedule = addSchedule;
+
+function removeTimeFrame(timeStart, timeEnd, date, roomNum){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colSchedule);
+    const col2 = dbo.collection(colReservation);
+    const searchQuery = {timeStart, timeEnd, roomNum, date};
+    const searchQuery2 = {timeFrame: timeStart + "-" + timeEnd, room:roomNum, bookDate: date};
+
+    const updateVal = {$set: { status: "cancelled" }};
+
+    col.deleteMany(searchQuery).then(function(res){
+        console.log("successfully Deleted TimeFrame");
+        col2.updateMany(searchQuery2, updateVal).then(function(upRes){
+            console.log("successfully updated TimeFrame");
+        });
+
+    }).catch(errorFn);
+}
+module.exports.removeTimeFrame = removeTimeFrame;
 
 function finalClose(){
     console.log('Close connection at the end!');

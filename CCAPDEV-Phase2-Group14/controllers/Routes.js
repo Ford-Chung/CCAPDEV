@@ -903,10 +903,97 @@ server.get('/editReservation', function (req, resp) {
     });
 });
 
+
+server.post('/removeReservation', function (req, resp) {
+    responder.removeReservation(req.body.date, req.body.timeFrame, req.body.seat, req.body.room)
+    .then(result =>{
+        console.log('success update reservation');
+        resp.send({stats: 'success'});
+    })
+    .catch(error => {
+        console.error(error);
+    });
+});
+
+
 server.get('/logout', function (req, resp) {
     curUserData = null;
     resp.redirect('/');
 });
+
+server.post('/addTimeFrame', function(req, resp){
+    const date = req.body.date;
+    const timeStart = req.body.timeStart;
+    const timeEnd = req.body.timeEnd;
+
+    var valid = true;
+
+
+    responder.getLabById(curLabId)
+    .then(curLab => {
+        responder.getAllTimeSlots().then(function(timeSlots){
+
+            for(let i = 0; i < timeSlots.length; i++){
+                
+                if(isTimeOutsideFrame(timeStart, timeSlots[i].timeStart, timeSlots[i].timeEnd)){
+                    valid = false;
+                }
+            }
+
+            if(valid){
+                responder.addSchedule(timeStart, timeEnd, date, curLab.roomNum, curLab.seats * curLab.numCols)
+                resp.send({stat: "success"});
+            }else{
+                resp.send({stat: "fail"});
+            }
+        })
+
+
+
+    })
+
+
+});
+
+server.post("/deleteTimeFrame", function(req, resp){
+    const date = req.body.date;
+    const timeStart = req.body.timeStart;
+    const timeEnd = req.body.timeEnd;
+
+    responder.getLabById(curLabId)
+    .then(curLab => {
+        responder.removeTimeFrame(timeStart, timeEnd, date, curLab.roomNum);
+        resp.send({stat: "success"});
+    })
+
+});
+
+function isTimeOutsideFrame(time, startTime, endTime) {
+    // Parse the given time, start time, and end time
+    var timeParts = time.split(":");
+    var timeHours = parseInt(timeParts[0]);
+    var timeMinutes = parseInt(timeParts[1]);
+    
+    var startParts = startTime.split(":");
+    var startHours = parseInt(startParts[0]);
+    var startMinutes = parseInt(startParts[1]);
+    
+    var endParts = endTime.split(":");
+    var endHours = parseInt(endParts[0]);
+    var endMinutes = parseInt(endParts[1]);
+    
+    // Convert all times to minutes for easier comparison
+    var currentTimeInMinutes = timeHours * 60 + timeMinutes;
+    var startTimeInMinutes = startHours * 60 + startMinutes;
+    var endTimeInMinutes = endHours * 60 + endMinutes;
+    
+    // Check if the given time falls within the time frame
+    if (startTimeInMinutes <= currentTimeInMinutes && currentTimeInMinutes <= endTimeInMinutes) {
+        return true; // Time falls within the frame
+    } else {
+        return false; // Time falls outside the frame
+    }
+}
 
 
 /************************no need to edit past this point********************************* */

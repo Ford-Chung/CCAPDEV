@@ -132,7 +132,7 @@ margin: 0;
 }
 
 
-#close {
+#close, .cancel {
 background-color: #8afbbf8a;
 width: 100px;
 height: 40px;

@@ -25,10 +25,41 @@ $(document).ready(function(){
     $(idA).hide();
   });
 
-  $("cancel").click(function(){
-    let overlay = document.getElementById("overlay");
-    overlay.classList.remove('active');
-    $(idA).hide();
+$(".cancel").click(function(){
+    //get the needed values
+    var selectedOption = $("#timeSelect").find("option:selected").val();
+    var selectedDate = $('#date-input').val();
+    
+
+    $.post('../removeReservation', {room: room, seat: id, date: selectedDate, timeFrame: selectedOption}, 
+    function(data, status){
+      if(status==='success'){
+        $('#'+id).removeClass('reserved');
+        overlay.classList.remove('active');
+        $(idA).hide();
+      }
+    });
+
+
+    $.post('../getTimeFrames', {date: selectedDate},
+    function(data, status){
+      if(status ==='success'){
+        let dateopt = '';
+        var selectedTime = $("#timeSelect").find("option:selected").val();
+        console.log(data.dateData);
+    
+        for(let i = 0; i < data.dateData.length; i++){
+          if(selectedTime == data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd){
+            dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + (data.dateData[i].available) + "</option>";
+
+          }else{
+            dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + data.dateData[i].available + "</option>";
+          }
+        }
+        $("#timeSelect").html(dateopt);
+        $("#timeSelect").val(selectedTime);
+      }
+    });
   });
 
 
@@ -66,7 +97,7 @@ $(document).ready(function(){
           <tr>
           <td class="logDateTime">`+ data.reserve.dateTime +`</td>
           <td class="logName">`+ data.reserve.name +`</td>
-          <td class="logActions">Reserved</td>
+          <td class="logActions">`+ data.reserve.status +`</td>
           <td class="logSeat">`+ data.reserve.seat +`</td>
           <td class="logDate">`+ data.reserve.bookDate +`</td>
           <td class="logTime">`+ data.reserve.timeFrame +`</td>
