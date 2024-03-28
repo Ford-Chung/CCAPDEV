@@ -64,24 +64,27 @@ $(document).ready(function(){
     function add30Minutes(timeString) {
         // Split the time string by ":"
         var timeParts = timeString.split(":");
-        
+    
         // Parse hours and minutes
         var hours = parseInt(timeParts[0]);
         var minutes = parseInt(timeParts[1]);
-        
+    
         // Add 30 minutes
         minutes += 30;
-        
+    
         // Check if minutes exceed 60
         if (minutes >= 60) {
             // Adjust hours and minutes
             hours += Math.floor(minutes / 60);
             minutes %= 60;
         }
-        
+    
+        // Check if hours exceed 24 (Military time)
+        hours %= 24;
+    
         // Format the adjusted time
-        var adjustedTime = hours + ":" + (minutes < 10 ? '0' : '') + minutes;
-        
+        var adjustedTime = (hours < 10 ? '0' : '') + hours + ":" + (minutes < 10 ? '0' : '') + minutes;
+    
         return adjustedTime;
     }
 

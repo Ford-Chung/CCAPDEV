@@ -968,6 +968,67 @@ server.post("/deleteTimeFrame", function(req, resp){
 
 });
 
+
+server.post('/loadReserve', function(req, resp){
+    const time = req.body.time;
+    const date = req.body.date;
+
+    responder.getLabById(curLabId).then(function(lab){
+
+        responder.getReservedAll(lab, date, time).then(function(reservation){
+            resp.send({reservation});
+
+
+        })
+
+    })
+});
+
+
+//automatic completed a reservation if its pass the endtime
+function completeReservation(){
+    responder.getReservationDB().then(function(reservations){
+        for(let i = 0; i < reservations.length; i++){   
+            let time = reservations[i].timeFrame.split("-");
+
+            if(isDateTimeEarlierThanNow(reservations[i].bookDate, time[1])){
+
+                if(reservations[i].status === 'active'){
+                    responder.completeReservation(reservations[i].bookDate, reservations[i].timeFrame, reservations[i].seat, reservations[i].room).then(function(val){
+
+                    })
+                }
+
+            }
+        }
+    })
+    
+}
+setInterval(completeReservation, 10000);
+
+
+server.post('/checkReserve', function(req, resp){
+    responder.getLabById(curLabId)
+    .then(curLab => {
+        responder.getStatusSeat(curLab.roomNum, req.body.seat, req.body.timeFrame, req.body.date).then(function(result){
+            if(result == null){
+                resp.send({status: 'avail'});
+            }else{
+                resp.send({status: 'unavail'})
+            }
+        })
+    })
+});
+
+
+function isDateTimeEarlierThanNow(dateString, timeString) {
+    var [hours, minutes] = timeString.split(':').map(Number);
+    var [year, month, day] = dateString.split('-').map(Number);
+    var dateTimeToCheck = new Date(year, month - 1, day, hours, minutes);
+    var currentDate = new Date();
+    return dateTimeToCheck < currentDate;
+}
+
 function isTimeOutsideFrame(time, startTime, endTime) {
     // Parse the given time, start time, and end time
     var timeParts = time.split(":");

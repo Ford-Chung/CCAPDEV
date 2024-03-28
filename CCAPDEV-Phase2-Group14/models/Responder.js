@@ -384,7 +384,7 @@ function getReservedAll(rooms, date, timeFrame){
 
 
     return new Promise((resolve, reject) => {
-        const cursor = col.find({ room: rooms.roomNum, status: "active", bookDate: date, timeFrame: timeFrame}); 
+        const cursor = col.find({ room: rooms.roomNum, $or: [{status: "active"}, {status: "completed"}], bookDate: date, timeFrame: timeFrame}); 
 
         cursor.toArray().then(function(vals){
             resolve(vals);
@@ -573,6 +573,23 @@ function removeReservation(date, timeFrame, seat, room){
 }
 module.exports.removeReservation = removeReservation;
 
+function completeReservation(date, timeFrame, seat, room){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colReservation);
+
+    const searchQuery = {seat, bookDate: date, room, timeFrame, status: "active"}
+    const updateValues = { $set: { status: "completed" } };
+
+    return new Promise((resolve, reject) => {
+        col.updateOne(searchQuery, updateValues).then(function(res){
+            resolve(res);
+        }).catch(errorFn);
+    });
+
+
+}
+module.exports.completeReservation = completeReservation;
+
 function removeReservationSched(room, date, timeFrame, available, reserved){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colSchedule);
@@ -634,6 +651,40 @@ function removeTimeFrame(timeStart, timeEnd, date, roomNum){
     }).catch(errorFn);
 }
 module.exports.removeTimeFrame = removeTimeFrame;
+
+function getReservationDB(){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colReservation);
+
+    return new Promise((resolve, reject) => {
+        const cursor = col.find({status: 'active'});
+        cursor.toArray().then(function(vals){
+            resolve(vals);
+        }).catch(errorFn);
+        
+    });
+}
+
+module.exports.getReservationDB = getReservationDB;
+
+function getStatusSeat(room, seat, timeFrame, date){
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colReservation);
+
+    const searchQuery = {room, timeFrame, seat, bookDate: date};
+
+    return new Promise((resolve, reject) => {
+        col.findOne(searchQuery).then(function (val) {
+            if (val != null) {
+                resolve(val);
+            } else {
+                resolve(null);
+            }
+        }).catch(reject);
+    });
+    
+}
+module.exports.getStatusSeat = getStatusSeat;
 
 function finalClose(){
     console.log('Close connection at the end!');
