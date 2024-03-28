@@ -3,6 +3,51 @@ $(document).ready(function(){
   const overlay = document.getElementById('overlay');
   var id;
   var room;
+
+  //reload content of page 
+  function loadData(){
+    var selectedDate = $("#date-input").val();
+    var selectedOption = $("#timeSelect").find("option:selected").val();
+
+    $.post('../loadReserve', {date: selectedDate, time:selectedOption}, 
+    function(data, status){
+      if(status==='success'){
+        //getall timeframe
+        //get lab details
+        //reload the slots
+
+        for(let i = 0; i < data.reservation.length; i++){
+          if(!($('#'+data.reservation[i].seat).hasClass('reserved'))){
+            $('#'+data.reservation[i].seat).addClass('reserved');
+          }
+        }
+      }
+    });
+
+    
+    $.post('../getTimeFrames', {date: selectedDate},
+    function(data, status){
+      if(status ==='success'){
+        let dateopt = '';
+        var selectedTime = $("#timeSelect").find("option:selected").val();
+
+        for(let i = 0; i < data.dateData.length; i++){
+          if(selectedTime == data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd){
+            dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + (data.dateData[i].available) + "</option>";
+
+          }else{
+            dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + data.dateData[i].available + "</option>";
+          }
+        }
+        $("#timeSelect").html(dateopt);
+        $("#timeSelect").val(selectedTime);
+      }
+    });
+  }
+
+  setInterval(loadData, 10000);
+
+
   
   //initiate click actions 
   $.post('/labdetails', {roomNum: $(roomNum).text()}, 
@@ -46,7 +91,6 @@ $(".cancel").click(function(){
       if(status ==='success'){
         let dateopt = '';
         var selectedTime = $("#timeSelect").find("option:selected").val();
-        console.log(data.dateData);
     
         for(let i = 0; i < data.dateData.length; i++){
           if(selectedTime == data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd){
@@ -62,7 +106,15 @@ $(".cancel").click(function(){
     });
   });
 
-
+  function isDateTimeEarlierThanNow(dateString, timeString) {
+    
+    var time = timeString.split("-");
+    var [hours, minutes] = time[0].split(':').map(Number);
+    var [year, month, day] = dateString.split('-').map(Number);
+    var dateTimeToCheck = new Date(year, month - 1, day, hours, minutes);
+    var currentDate = new Date();
+    return dateTimeToCheck < currentDate;
+}
 
   $("#reserve").click(function(){
     //get time and date selected
@@ -79,63 +131,75 @@ $(".cancel").click(function(){
     if (name.trim() === '' || email.trim() === '') {
       alert('Name and Email fields are require!');
       return;
-  }
+    }
 
-    $.post('../reserve', {room: room, seat: id, anon: res, date: selectedDate, timeFrame: selectedOption, email, name}, 
-    function(data, status){
-      if(status === 'success'){
-        if(data.status === "reserved"){
-          let block = document.getElementById(id);
-  
-          block.classList.add('reserved');
-          $(idA).hide();
-          let overlay = document.getElementById("overlay");
-          overlay.classList.remove('active');
+    if(isDateTimeEarlierThanNow(String(selectedDate), selectedOption)){
+      alert("Cannot Reserve, the Reservation time is already Done.");
+      return;
+    }
 
-          //add new log
-          let logData =  `                    
-          <tr>
-          <td class="logDateTime">`+ data.reserve.dateTime +`</td>
-          <td class="logName">`+ data.reserve.name +`</td>
-          <td class="logActions">`+ data.reserve.status +`</td>
-          <td class="logSeat">`+ data.reserve.seat +`</td>
-          <td class="logDate">`+ data.reserve.bookDate +`</td>
-          <td class="logTime">`+ data.reserve.timeFrame +`</td>
-          <td class="logEmail">`+ data.reserve.email +`</td>
-          </tr>`
+    $.post("../checkReserve", {timeFrame: selectedOption, date: selectedDate, seat: id}, 
+      function(data, status){
+        if(status==='success'){
+          if(data.status === 'avail'){
 
-          var logTable = $("#log-table").html($("#log-table").html() + logData);
+              $.post('../reserve', {room: room, seat: id, anon: res, date: selectedDate, timeFrame: selectedOption, email, name}, 
+              function(data, status){
+                if(status === 'success'){
+                  if(data.status === "reserved"){
+                    let block = document.getElementById(id);
+            
+                    block.classList.add('reserved');
+                    $(idA).hide();
+                    let overlay = document.getElementById("overlay");
+                    overlay.classList.remove('active');
 
-        }
-      }
-    });
+                    //add new log
+                    let logData =  `                    
+                    <tr>
+                    <td class="logDateTime">`+ data.reserve.dateTime +`</td>
+                    <td class="logName">`+ data.reserve.name +`</td>
+                    <td class="logActions">`+ data.reserve.status +`</td>
+                    <td class="logSeat">`+ data.reserve.seat +`</td>
+                    <td class="logDate">`+ data.reserve.bookDate +`</td>
+                    <td class="logTime">`+ data.reserve.timeFrame +`</td>
+                    <td class="logEmail">`+ data.reserve.email +`</td>
+                    </tr>`
+
+                    var logTable = $("#log-table").html($("#log-table").html() + logData);
+
+                  }
+                }
+              });
 
 
-    
+              
 
-    $.post('../getTimeFrames', {date: selectedDate},
-    function(data, status){
-      if(status ==='success'){
-        let dateopt = '';
-        var selectedTime = $("#timeSelect").find("option:selected").val();
-        console.log(data.dateData);
-    
-        for(let i = 0; i < data.dateData.length; i++){
-          if(selectedTime == data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd){
-            dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + (data.dateData[i].available - 1) + "</option>";
+              $.post('../getTimeFrames', {date: selectedDate},
+              function(data, status){
+                if(status ==='success'){
+                  let dateopt = '';
+                  var selectedTime = $("#timeSelect").find("option:selected").val();
+              
+                  for(let i = 0; i < data.dateData.length; i++){
+                    if(selectedTime == data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd){
+                      dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + (data.dateData[i].available - 1) + "</option>";
+
+                    }else{
+                      dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + data.dateData[i].available + "</option>";
+                    }
+                  }
+                  $("#timeSelect").html(dateopt);
+                  $("#timeSelect").val(selectedTime);
+                }
+
+              })
 
           }else{
-            dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + data.dateData[i].available + "</option>";
+            alert('Slot is already Taken.');
           }
         }
-        $("#timeSelect").html(dateopt);
-        $("#timeSelect").val(selectedTime);
-      }
-
-    })
-
-    
- 
+      }); 
   });
 
 
@@ -159,7 +223,6 @@ function updateValues(call){
   var selectedDate = $("#date-input").val();
   var selectedOption = $("#timeSelect").find("option:selected").val();
 
-  console.log(selectedOption);
 
   $.post('../dateChange', {date: selectedDate, timeFrame: selectedOption, changed: call}, function(data, status){
     if(status === 'success'){
@@ -206,7 +269,7 @@ function updateValues(call){
           <tr>
           <th class="logDateTime">Date and Time</th>
           <th class="logName">Name</th>
-          <th class="logActions">Actions</th>
+          <th class="logActions">Status</th>
           <th class="logSeat">Seat</th>
           <th class="logDate">Date</th>
           <th class="logTime">Time-slot</th>
@@ -218,7 +281,7 @@ function updateValues(call){
             <tr>
             <td class="logDateTime">`+ data.resData[i].dateTime +`</td>
             <td class="logName">`+ data.resData[i].name +`</td>
-            <td class="logActions">Reserved</td>
+            <td class="logActions">`+ data.resData[i].status +`</td>
             <td class="logSeat">`+ data.resData[i].seat +`</td>
             <td class="logDate">`+ data.resData[i].bookDate +`</td>
             <td class="logTime">`+ data.resData[i].timeFrame +`</td>
@@ -230,8 +293,6 @@ function updateValues(call){
         
 
         var logTable = $("#log-table").html(logData);
-
-        console.log(logTable);
         
       }
 

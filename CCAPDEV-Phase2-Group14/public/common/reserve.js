@@ -3,6 +3,50 @@ $(document).ready(function(){
   const overlay = document.getElementById('overlay');
   var id;
   var room;
+
+  //reload content of page 
+  function loadData(){
+    var selectedDate = $("#date-input").val();
+    var selectedOption = $("#timeSelect").find("option:selected").val();
+
+    $.post('../loadReserve', {date: selectedDate, time:selectedOption}, 
+    function(data, status){
+      if(status==='success'){
+        //getall timeframe
+        //get lab details
+        //reload the slots
+
+        for(let i = 0; i < data.reservation.length; i++){
+          if(!($('#'+data.reservation[i].seat).hasClass('reserved'))){
+            $('#'+data.reservation[i].seat).addClass('reserved');
+          }
+        }
+      }
+    });
+
+    
+    $.post('../getTimeFrames', {date: selectedDate},
+    function(data, status){
+      if(status ==='success'){
+        let dateopt = '';
+        var selectedTime = $("#timeSelect").find("option:selected").val();
+    
+        for(let i = 0; i < data.dateData.length; i++){
+          if(selectedTime == data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd){
+            dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + (data.dateData[i].available) + "</option>";
+
+          }else{
+            dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + data.dateData[i].available + "</option>";
+          }
+        }
+        $("#timeSelect").html(dateopt);
+        $("#timeSelect").val(selectedTime);
+      }
+    });
+  }
+
+  setInterval(loadData, 10000);
+
   
   //initiate click actions 
   $.post('/labdetails', {roomNum: $(roomNum).text()}, 
@@ -37,7 +81,7 @@ $(document).ready(function(){
         $('#'+id).removeClass('reserved');
         overlay.classList.remove('active');
         $(idA).hide();
-      }
+      } 
     });
 
 
@@ -46,7 +90,6 @@ $(document).ready(function(){
       if(status ==='success'){
         let dateopt = '';
         var selectedTime = $("#timeSelect").find("option:selected").val();
-        console.log(data.dateData);
     
         for(let i = 0; i < data.dateData.length; i++){
           if(selectedTime == data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd){
@@ -62,46 +105,73 @@ $(document).ready(function(){
     });
   });
 
-
+  function isDateTimeEarlierThanNow(dateString, timeString) {
+    
+    var time = timeString.split("-");
+    var [hours, minutes] = time[0].split(':').map(Number);
+    var [year, month, day] = dateString.split('-').map(Number);
+    var dateTimeToCheck = new Date(year, month - 1, day, hours, minutes);
+    var currentDate = new Date();
+    return dateTimeToCheck < currentDate;
+}
 
   $("#reserve").click(function(){
-    var selectedOption = $("#timeSelect").find("option:selected").val();
+    let selectedOption = $("#timeSelect").find("option:selected").val();
     let res = document.getElementById("anon").checked;
-    var selectedDate = $('#date-input').val();
-    $.post('../reserve', {room: room, seat: id, anon: res, date: selectedDate, timeFrame: selectedOption}, 
-    function(data, status){
-      if(status === 'success'){
-        if(data.status === "reserved"){
-          let block = document.getElementById(id);
-  
-          block.classList.add('reserved');
-          $(idA).hide();
-          let overlay = document.getElementById("overlay");
-          overlay.classList.remove('active');
-        }
-      }
-    });
-    
+    let selectedDate = $('#date-input').val();
 
-    $.post('../getTimeFrames', {date: selectedDate},
-    function(data, status){
-      if(status ==='success'){
-        let dateopt = '';
-        var selectedTime = $("#timeSelect").find("option:selected").val();
-        console.log(data.dateData);
-    
-        for(let i = 0; i < data.dateData.length; i++){
-          if(selectedTime == data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd){
-            dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + (data.dateData[i].available - 1) + "</option>";
+    //validate if the slots is not available anymore
 
+    if(isDateTimeEarlierThanNow(String(selectedDate), selectedOption)){
+      alert("Cannot Reserve, the Reservation time is already Done.");
+    }else{
+      $.post("../checkReserve", {timeFrame: selectedOption, date: selectedDate, seat: id}, 
+      function(data, status){
+        if(status==='success'){
+          if(data.status === 'avail'){
+            $.post('../reserve', {room: room, seat: id, anon: res, date: selectedDate, timeFrame: selectedOption}, 
+            function(data, status){
+              if(status === 'success'){
+                if(data.status === "reserved"){
+                  let block = document.getElementById(id);
+          
+                  block.classList.add('reserved');
+                  $(idA).hide();
+                  let overlay = document.getElementById("overlay");
+                  overlay.classList.remove('active');
+                }
+              }
+            });
+            
+        
+            $.post('../getTimeFrames', {date: selectedDate},
+            function(data, status){
+              if(status ==='success'){
+                let dateopt = '';
+                var selectedTime = $("#timeSelect").find("option:selected").val();
+            
+                for(let i = 0; i < data.dateData.length; i++){
+                  if(selectedTime == data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd){
+                    dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + (data.dateData[i].available - 1) + "</option>";
+        
+                  }else{
+                    dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + data.dateData[i].available + "</option>";
+                  }
+                }
+                $("#timeSelect").html(dateopt);
+                $("#timeSelect").val(selectedTime);
+              }
+            });
           }else{
-            dateopt += "<option value="+ data.dateData[i].timeStart + "-" + data.dateData[i].timeEnd + ">" + data.dateData[i].timeStart + " - " + data.dateData[i].timeEnd + " :: Available: " + data.dateData[i].available + "</option>";
+            alert('Slot is already Taken.');
           }
         }
-        $("#timeSelect").html(dateopt);
-        $("#timeSelect").val(selectedTime);
-      }
-    });
+      });
+
+    }
+
+
+
   });
 
   $("#overlay").click(function(){
