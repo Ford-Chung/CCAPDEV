@@ -15,6 +15,8 @@ server.engine('hbs', handlebars.engine({
     extname: 'hbs',
 }));
 
+
+
 server.use(express.static('public'));
 
 

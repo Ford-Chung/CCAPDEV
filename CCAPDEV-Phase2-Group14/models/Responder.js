@@ -361,7 +361,22 @@ function getSchedule(room, date, timeFrame) {
 }
 module.exports.getUserbyId = getUserbyId;
 
+function deleteProfile(myEmail) {
+    const dbo = mongoClient.db(databaseName);
+    const colU = dbo.collection(colUsers);
+    const colR = dbo.collection(colReservation)
 
+    const searchQuery = { email: myEmail };
+
+    return new Promise((resolve, reject) => {
+        colU.deleteOne(searchQuery).then(function(resa){
+            colR.deleteMany(searchQuery).then(function(){
+                resolve();
+            }).catch(errorFn);
+        }).catch(errorFn);
+    });
+}
+module.exports.deleteProfile = deleteProfile;
 
 function getReservedYours(rooms, name, timeFrame){
     const dbo = mongoClient.db(databaseName);
@@ -433,12 +448,12 @@ function getTimeslots(lab, date, timeFrame){
 }
 module.exports.getTimeslots = getTimeslots;
 
-function getAllTimeSlots(){
+function getAllTimeSlots(roomNum, date){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colSchedule);
 
     return new Promise((resolve, reject) => {
-        const cursor = col.find({}); //get all timeslots in a specific room and date
+        const cursor = col.find({roomNum, date}); //get all timeslots in a specific room and date
 
         cursor.toArray().then(function(vals){
             resolve(vals);

@@ -18,6 +18,7 @@ $(document).ready(function(){
 		confirmBox.show();
 	});
 
+
 	$("#del-resv-confirm").click(function(myYes) {
 		var confirmBox = $("#del-resv");
 		confirmBox.find("#del-resv-msg").text("Confirm delete reservation?");
