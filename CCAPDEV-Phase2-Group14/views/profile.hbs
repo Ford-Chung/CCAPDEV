@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/common/profile.css">
+<script src="/common/profile.js"></script>
 
 <main>
         <img id="prof-pic" src="/images/pfps/{{user.pfp}}">
@@ -8,7 +9,7 @@
             <form action="edit-profile" method="get">
                 <button type="submit">Edit profile</button>
             </form>
-            <button type="button" class="delete" onclick="confirmDelProf();">Delete profile</button>
+            <button type="button" class="delete" id="del-prof-confirm">Delete profile</button>
         </div>
         <h2>Current Reservations:</h2>
 
@@ -25,7 +26,7 @@
                     <button type="submit" value="{{room}}" name="roomNum" id="roomNum">Edit Reservation</button>
                 </form>
 
-                <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
+                <button type="button" class="delete" id="del-resv-confirm">Delete Reservation</button>
             </div>
         </details>
         {{/each}}

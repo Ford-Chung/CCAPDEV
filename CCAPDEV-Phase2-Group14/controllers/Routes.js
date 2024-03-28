@@ -187,7 +187,6 @@ server.get('/profile', function(req, resp) {
             myReserves[i].timeLogged = removeSeconds(dateAndTime.formattedTime);
         }
 
-
         resp.render('profile',{
             layout: 'profileIndex',
             title: 'Profile',
@@ -306,6 +305,15 @@ server.get('/edit-profile', function(req, resp) {
     });
 })
 
+server.post('/deleteProfile', function(req, resp){
+    responder.deleteProfile(curUserMail).then(function(){
+        console.log("Profile delete success");
+        resp.redirect("/");
+    }).catch(error => {
+        console.error(error);
+    });
+});
+
 // MAIN PAGE: SIDEBAR PEOPLE
 server.post('/load-people', function(req, resp){
     if(searchQuery != null){
@@ -391,7 +399,6 @@ server.post('/change_password', function(req, resp){
         }
     });
 });
-
 
 // LAB VIEW
 server.get('/labs/:id/', function(req, resp) {
@@ -773,7 +780,6 @@ server.post('/dateChange', function(req, resp){
     });
 });
 
-
 server.get('/modifyLab', function(req, resp){
 
     if (curUserData == null){
@@ -803,7 +809,6 @@ server.get('/modifyLab', function(req, resp){
 
 });
 
-
 server.post('/changeModifyLab', function(req, resp){
     responder.getLabById(curLabId)
     .then(curLab => {
@@ -832,7 +837,6 @@ function getCurrentDate(){
     return date;
 }
 
-
 function sortByStartTime(array) {
     return array.sort((a, b) => {
         const timeA = new Date(`1970-01-01T${a.timeStart}`);
@@ -842,7 +846,6 @@ function sortByStartTime(array) {
         return 0;
     });
 }
-
 
 server.post('/save-profile', function(req, resp){
 
@@ -857,7 +860,6 @@ server.post('/save-profile', function(req, resp){
         .catch(error => {
             console.error(error);
         });
-
 
     })
     .catch(error => {
@@ -903,7 +905,6 @@ server.get('/editReservation', function (req, resp) {
     });
 });
 
-
 server.post('/removeReservation', function (req, resp) {
     responder.removeReservation(req.body.date, req.body.timeFrame, req.body.seat, req.body.room)
     .then(result =>{
@@ -914,7 +915,6 @@ server.post('/removeReservation', function (req, resp) {
         console.error(error);
     });
 });
-
 
 server.get('/logout', function (req, resp) {
     curUserData = null;

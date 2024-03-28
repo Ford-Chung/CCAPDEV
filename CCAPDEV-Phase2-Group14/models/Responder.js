@@ -516,6 +516,20 @@ function updateProfile (userEmail, userName, passWord, userBio) {
 }
 module.exports.updateProfile = updateProfile;
 
+function deleteProfile(email) {
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colUsers);
+
+    const searchQuery = { email: email };
+
+    return new Promise((resolve, reject) => {
+        col.deleteOne(searchQuery).then(function(){
+            resolve();
+        }).catch(errorFn);
+    });
+}
+module.exports.deleteProfile = deleteProfile;
+
 function roomSearch(searchString){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colLabs);
