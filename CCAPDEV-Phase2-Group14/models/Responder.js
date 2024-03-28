@@ -516,15 +516,18 @@ function updateProfile (userEmail, userName, passWord, userBio) {
 }
 module.exports.updateProfile = updateProfile;
 
-function deleteProfile(email) {
+function deleteProfile(myEmail) {
     const dbo = mongoClient.db(databaseName);
-    const col = dbo.collection(colUsers);
+    const colU = dbo.collection(colUsers);
+    const colR = dbo.collection(colReservation)
 
-    const searchQuery = { email: email };
+    const searchQuery = { email: myEmail };
 
     return new Promise((resolve, reject) => {
-        col.deleteOne(searchQuery).then(function(){
-            resolve();
+        colU.deleteOne(searchQuery).then(function(resa){
+            colR.deleteMany(searchQuery).then(function(){
+                resolve();
+            }).catch(errorFn);
         }).catch(errorFn);
     });
 }
