@@ -700,7 +700,7 @@ function getStatusSeat(room, seat, timeFrame, date){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colReservation);
 
-    const searchQuery = {room, timeFrame, seat, bookDate: date};
+    const searchQuery = {room, timeFrame, seat, bookDate: date, status: 'active'};
 
     return new Promise((resolve, reject) => {
         col.findOne(searchQuery).then(function (val) {

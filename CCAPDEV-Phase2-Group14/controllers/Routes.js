@@ -3,8 +3,7 @@ const { timeEnd, info } = require('console');
 const responder = require('../models/Responder');
 const fs = require('fs');
 const session = require('express-session');
-const mongoStore = require('connect-mongodb-session')(session);
-const databaseURL = 'mongodb+srv://Krozo:1234@reserverdb.p0fufmc.mongodb.net/REServerDB';
+
 
 
 function dateToVerbose(inputDate){
@@ -1044,8 +1043,9 @@ server.post('/loadReserve', function(req, resp){
 
         responder.getReservedAll(lab, date, time).then(function(reservation){
             responder.getReservedAll2(lab, date).then(function(resData){
-                resp.send({reservation, resData});
+                resp.send({reservation, resData, lab});
             });
+            
             
 
 
