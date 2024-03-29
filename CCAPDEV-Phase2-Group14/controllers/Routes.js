@@ -75,9 +75,16 @@ const isAuth = (req, res, next) => {
     if(req.session.isAuth){
         next();
     }else{
-        res.redirect('/');
+        res.redirect('/');  
     }
+}
 
+const isAuthLabs = (req, res, next) => {
+    if(req.session.isLabs){
+        next();
+    }else{
+        res.redirect('/mainpage');
+    }
 }
 
 const isAuthLogin = (req, res, next) => {
@@ -233,8 +240,7 @@ server.get('/profile', isAuth, function(req, resp) {
 
 // MAIN MENU 
 server.get('/mainMenu', isAuth, function(req, resp) {
-    
-    console.log(req.session);
+    req.session.isLabs = true;
     if(req.query.labs != null){
         let labs = [];
         labs = JSON.parse(req.query.labs);
@@ -375,10 +381,8 @@ server.post('/load-people', function(req, resp){
 
 // PUBLIC PROFILE
 server.get('/public-profile/:id/', isAuth, function(req, resp) {
-
+    req.session.isLabs = false;
  
-
-
     responder.getUserbyId(req.params.id)
     .then(userPublic => {
         if (userPublic.email ==  req.session.curUserData.email){
@@ -707,21 +711,27 @@ server.post('/reserve', function(req, resp){
 });
 
 server.post('/getTimeFrames', function(req, resp){
-    responder.getLabById( req.session.curLabId)
-    .then(curLab => {
-        responder.getTimeslots(curLab, req.body.date)
-        .then(dateData => { 
-            resp.send({dateData : dateData});
-                
+
+    if(req.session.isAuth){
+        responder.getLabById( req.session.curLabId)
+        .then(curLab => {
+            responder.getTimeslots(curLab, req.body.date)
+            .then(dateData => { 
+                resp.send({dateData : dateData});
+                    
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    
         })
         .catch(error => {
             console.error(error);
         });
+    }else{
+        resp.redirect('/');
+    }
 
-    })
-    .catch(error => {
-        console.error(error);
-    });
 })
 
 server.post('/dateChange', function(req, resp){
@@ -1036,22 +1046,26 @@ server.post('/checkReserve', function(req, resp){
 });
 
 server.post('/loadReserve', function(req, resp){
-    const time = req.body.time;
-    const date = req.body.date;
 
-    responder.getLabById(req.session.curLabId).then(function(lab){
+    if(req.session.isAuth){
+        const time = req.body.time;
+        const date = req.body.date;
 
-        responder.getReservedAll(lab, date, time).then(function(reservation){
-            responder.getReservedAll2(lab, date).then(function(resData){
-                resp.send({reservation, resData, lab});
-            });
-            
-            
+        responder.getLabById(req.session.curLabId).then(function(lab){
 
+            responder.getReservedAll(lab, date, time).then(function(reservation){
+                responder.getReservedAll2(lab, date).then(function(resData){
+                    resp.send({reservation, resData, lab});
+                });
+
+            })
 
         })
-
-    })
+    } else{
+        console.log('check');
+        resp.send({status: "lol"});
+    }
+    
 });
 
 

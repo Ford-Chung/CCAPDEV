@@ -2,16 +2,24 @@ $(document).ready(function(){
   let idA;
   const overlay = document.getElementById('overlay');
   var id;
-  var room;
+  var room = $("#roomNum").text();
+
+  
 
   //reload content of page 
   function loadData(){
+    
     var selectedDate = $("#date-input").val();
     var selectedOption = $("#timeSelect").find("option:selected").val();
 
     $.post('../loadReserve', {date: selectedDate, time:selectedOption}, 
     function(data, status){
       if(status==='success'){
+
+        console.log(data.status);
+        if(data.status == 'lol'){
+          location.reload();
+        }
 
         for(let i = 0; i < data.reservation.length; i++){
           if(!($('#'+data.reservation[i].seat).hasClass('reserved'))){
@@ -71,15 +79,11 @@ $(document).ready(function(){
         $("#timeSelect").html(dateopt);
         $("#timeSelect").val(selectedTime);
       }
-    });
-
-    
-
-
+    }); 
   }
 
-  setInterval(loadData, 10000);
-
+    setInterval(loadData, 10000);
+  
 
   
   //initiate click actions 
