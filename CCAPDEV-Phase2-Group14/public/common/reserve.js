@@ -2,7 +2,8 @@ $(document).ready(function(){
   let idA;
   const overlay = document.getElementById('overlay');
   var id;
-  var room;
+  var room = $("#roomNum").text();
+
 
   //reload content of page 
   function loadData(){
@@ -15,12 +16,24 @@ $(document).ready(function(){
         //getall timeframe
         //get lab details
         //reload the slots
+        if(data.status == 'lol'){
+          location.reload();
+        }
+
+
+        for(let i = 1; i <= data.lab.numCols; i++){
+          for(let j = 1; j <= data.lab.seats; j++){
+            $('#C'+i+"S"+j).removeClass('reserved');
+          }
+        }
 
         for(let i = 0; i < data.reservation.length; i++){
           if(!($('#'+data.reservation[i].seat).hasClass('reserved'))){
             $('#'+data.reservation[i].seat).addClass('reserved');
           }
         }
+
+        
       }
     });
 
@@ -45,7 +58,10 @@ $(document).ready(function(){
     });
   }
 
-  setInterval(loadData, 10000);
+  if(room != null){
+    setInterval(loadData, 10000);
+  }
+  
 
   
   //initiate click actions 

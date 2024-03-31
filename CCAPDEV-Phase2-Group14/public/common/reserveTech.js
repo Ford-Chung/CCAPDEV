@@ -2,25 +2,62 @@ $(document).ready(function(){
   let idA;
   const overlay = document.getElementById('overlay');
   var id;
-  var room;
+  var room = $("#roomNum").text();
+
+  
 
   //reload content of page 
   function loadData(){
+    
     var selectedDate = $("#date-input").val();
     var selectedOption = $("#timeSelect").find("option:selected").val();
 
     $.post('../loadReserve', {date: selectedDate, time:selectedOption}, 
     function(data, status){
       if(status==='success'){
-        //getall timeframe
-        //get lab details
-        //reload the slots
+
+        console.log(data.status);
+        if(data.status == 'lol'){
+          location.reload();
+        }
 
         for(let i = 0; i < data.reservation.length; i++){
           if(!($('#'+data.reservation[i].seat).hasClass('reserved'))){
             $('#'+data.reservation[i].seat).addClass('reserved');
           }
         }
+
+
+        
+    let logData = ` 
+    <thead>               
+      <tr>
+      <th class="logDateTime">Date and Time</th>
+      <th class="logName">Name</th>
+      <th class="logActions">Status</th>
+      <th class="logSeat">Seat</th>
+      <th class="logDate">Date</th>
+      <th class="logTime">Time-slot</th>
+      <th class="logEmail">Email</th>
+  </tr> </thead> <tbody>`;
+
+    for(let i = 0; i < data.resData.length; i++){
+      logData +=  `                    
+        <tr>
+        <td class="logDateTime">`+ data.resData[i].dateTime +`</td>
+        <td class="logName">`+ data.resData[i].name +`</td>
+        <td class="logActions">`+ data.resData[i].status +`</td>
+        <td class="logSeat">`+ data.resData[i].seat +`</td>
+        <td class="logDate">`+ data.resData[i].bookDate +`</td>
+        <td class="logTime">`+ data.resData[i].timeFrame +`</td>
+        <td class="logEmail">`+ data.resData[i].email +`</td>
+        </tr>`
+    }
+
+    logData += `</tbody>`
+    
+
+    var logTable = $("#log-table").html(logData);
       }
     });
 
@@ -42,11 +79,11 @@ $(document).ready(function(){
         $("#timeSelect").html(dateopt);
         $("#timeSelect").val(selectedTime);
       }
-    });
+    }); 
   }
 
-  setInterval(loadData, 10000);
-
+    setInterval(loadData, 10000);
+  
 
   
   //initiate click actions 

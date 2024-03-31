@@ -2,6 +2,8 @@
 const { timeEnd, info } = require('console');
 const responder = require('../models/Responder');
 const fs = require('fs');
+const session = require('express-session');
+
 
 
 function dateToVerbose(inputDate){
@@ -53,18 +55,50 @@ function isValidEmail(email) {
 
 function add(server){
 
+
 /******************insert controller code in this area, preferably new code goes at the bottom**************** */
 
-let labPtr = -1;
-let seenLabs = [];
-let curUserData;
-let curUserMail;
-let curLabId;
-let searchQuery;
+
+
+server.use(session({
+    secret: 'a secret fruit',
+    saveUninitialized: false, 
+    resave: false,
+    cookie: {
+        maxAge: 3 * 7 * 24 * 60 * 60 * 1000 // 3 weeks in milliseconds
+    }
+  }));
+
+
+
+const isAuth = (req, res, next) => {
+    if(req.session.isAuth){
+        next();
+    }else{
+        res.redirect('/');  
+    }
+}
+
+const isAuthLabs = (req, res, next) => {
+    if(req.session.isLabs){
+        next();
+    }else{
+        res.redirect('/mainpage');
+    }
+}
+
+const isAuthLogin = (req, res, next) => {
+    if(req.session.isAuth){
+        res.redirect('/mainMenu');
+    }else{
+        next();
+    }
+}
+
 
 
 // LOGIN load login page 
-server.get('/', function(req, resp){
+server.get('/', isAuthLogin, function(req, resp){
     resp.render('login',{
       layout: 'loginIndex',
       title: 'Login Page'
@@ -142,18 +176,25 @@ server.post('/register-checker', function(req, resp){
 });
 
 
+
 // CHECK-LOGIN check if login info is valid, success => redirects to main page, failure => rerender page
     server.post('/login-checker', function(req, resp) {
         let userEmail = req.body.email;
         let userPassword = req.body.password;
-        curUserMail = req.body.email;
+         req.session.curUserMail = req.body.email;
 
         responder.getUser(userEmail, userPassword)
         .then(user => {
             if (user != null){
+                req.session.isAuth = true;
                 
-                curUserData = user;
+                if(req.body.remember != 'on'){
+                    req.session.cookie.expires = false; 
+                }
+
+                req.session.curUserData = user;
                 resp.redirect('/mainMenu');
+ 
             } else {
                 resp.render('login',{
                     layout: 'loginIndex',
@@ -169,14 +210,11 @@ server.post('/register-checker', function(req, resp){
     });
 
 // PROFILE 
-server.get('/profile', function(req, resp) {
+server.get('/profile', isAuth, function(req, resp) {
 
-    if (curUserData == null){
-        resp.redirect('/');
-        return;
-    }
     
-    responder.getReservedOfPerson(curUserData.email)
+    
+    responder.getReservedOfPerson( req.session.curUserData.email)
     .then(myReserves => {
 
         for (let i = 0; i < myReserves.length; i++){
@@ -190,7 +228,7 @@ server.get('/profile', function(req, resp) {
         resp.render('profile',{
             layout: 'profileIndex',
             title: 'Profile',
-            user: curUserData,
+            user:  req.session.curUserData,
             reserves: myReserves
         });
        
@@ -201,13 +239,8 @@ server.get('/profile', function(req, resp) {
 });
 
 // MAIN MENU 
-server.get('/mainMenu', function(req, resp) {
-
-    if (curUserData == null){
-        resp.redirect('/');
-        return;
-    }
-    
+server.get('/mainMenu', isAuth, function(req, resp) {
+    req.session.isLabs = true;
     if(req.query.labs != null){
         let labs = [];
         labs = JSON.parse(req.query.labs);
@@ -215,25 +248,25 @@ server.get('/mainMenu', function(req, resp) {
             layout: 'mainMenuIndex',
             title: 'Main Menu',
             labs: labs,
-            user: curUserData
+            user:  req.session.curUserData
         });
     } else{
     // get lab data for display
-    searchQuery = null;
+    req.session.searchQuery = null;
     responder.getLabs()
     .then(labData => {
         let seenLabs = [];
         for (let i = 0; i < 3 && i < labData.length; i++){
             seenLabs.push(labData[i]);
         }
-        labPtr = seenLabs.length;
+         req.session.labPtr = seenLabs.length;
 
         // render main menu
         resp.render('mainMenu',{
             layout: 'mainMenuIndex',
             title: 'Main Menu',
             labs: seenLabs,
-            user: curUserData
+            user:  req.session.curUserData
         });         
     })
     .catch(error => {
@@ -242,21 +275,35 @@ server.get('/mainMenu', function(req, resp) {
     }
 });
 
+//deleteProfile
+server.post('/deleteProfile', function(req, resp){
+    responder.deleteProfile(req.session.curUserMail).then(function(){
+        console.log("Profile delete success");
+        req.session.destroy((err) => {
+            if(err) throw err;
+            resp.redirect('/');
+        });
+    }).catch(error => {
+        console.error(error);
+    });
+});
+
+
 // MAIN PAGE: NEXT BUTTON AJAX
 server.post('/nextBtn', function(req, resp) {
     responder.getLabs()
     .then(labData => {
         
-        if (labPtr < labData.length){
-            seenLabs = [];
-            i = labPtr;
-            while (i < labPtr+3 && i < labData.length){
-                seenLabs.push(labData[i]);
+        if ( req.session.labPtr < labData.length){
+            req.session.seenLabs = [];
+            i =  req.session.labPtr;
+            while (i <  req.session.labPtr+3 && i < labData.length){
+                req.session.seenLabs.push(labData[i]);
                 i++;
             }
-            labPtr = i;
+             req.session.labPtr = i;
         }
-        resp.send({labs: seenLabs});
+        resp.send({labs:  req.session.seenLabs});
     })
     .catch(error => {
         console.error(error);
@@ -269,17 +316,17 @@ server.post('/backBtn', function(req, resp) {
     responder.getLabs()
     .then(labData => {
         
-        if (labPtr - seenLabs.length > 0){
-            labPtr -= seenLabs.length;
-            seenLabs = [];
+        if ( req.session.labPtr -  req.session.seenLabs.length > 0){
+             req.session.labPtr -=  req.session.seenLabs.length;
+            req.session.seenLabs = [];
             
-            i = labPtr-3;
-            while (i < labPtr && i < labData.length){
-                seenLabs.push(labData[i]);
+            i =  req.session.labPtr-3;
+            while (i <  req.session.labPtr && i < labData.length){
+                req.session.seenLabs.push(labData[i]);
                 i++;
             }
         }
-        resp.send({labs: seenLabs});
+        resp.send({labs:  req.session.seenLabs});
         
     })
     .catch(error => {
@@ -291,22 +338,19 @@ server.post('/backBtn', function(req, resp) {
 //** Please keep new codes below this line, so its easier to append changes in the future. */
 
 // EDIT-PROFILE
-server.get('/edit-profile', function(req, resp) {
+server.get('/edit-profile', isAuth, function(req, resp) {
 
-    if (curUserData == null){
-        resp.redirect('/');
-        return;
-    }
+ 
     
     resp.render('edit-profile',{
         layout: 'profileIndex',
         title: 'Edit Profile',
-        user: curUserData
+        user:  req.session.curUserData
     });
 })
 
 server.post('/deleteProfile', function(req, resp){
-    responder.deleteProfile(curUserMail).then(function(){
+    responder.deleteProfile( req.session.curUserMail).then(function(){
         console.log("Profile delete success");
         resp.redirect("/");
     }).catch(error => {
@@ -316,10 +360,10 @@ server.post('/deleteProfile', function(req, resp){
 
 // MAIN PAGE: SIDEBAR PEOPLE
 server.post('/load-people', function(req, resp){
-    if(searchQuery != null){
-        responder.userSearch(searchQuery)
+    if( req.session.searchQuery != null){
+        responder.userSearch( req.session.searchQuery)
         .then(users => {
-            resp.send({users:users,searchQuery : searchQuery});
+            resp.send({users:users,searchQuery :  req.session.searchQuery});
         }).catch (error =>{
             console.error(error);
         });
@@ -334,26 +378,40 @@ server.post('/load-people', function(req, resp){
     }
 })
 
+server.post('/load-labs', function(req, resp){
+    if( req.session.searchQuery != null){
+        responder.labSearch( req.session.searchQuery)
+        .then(labs => {
+            resp.send({labs:labs, searchQuery :  req.session.searchQuery});
+        }).catch (error =>{
+            console.error(error);
+        });
+    } else{
+        responder.getLabs()
+        .then(labs => {
+            resp.send({labs: labs, searchQuery: "What are you looking for?"});
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+})
+
 
 // PUBLIC PROFILE
-server.get('/public-profile/:id/', function(req, resp) {
-
-    if (curUserData == null){
-        resp.redirect('/');
-        return;
-    }
-
-
+server.get('/public-profile/:id/', isAuth, function(req, resp) {
+    req.session.isLabs = false;
+ 
     responder.getUserbyId(req.params.id)
     .then(userPublic => {
-        if (userPublic.email == curUserData.email){
+        if (userPublic.email ==  req.session.curUserData.email){
             resp.redirect('/profile');
         } else {
             resp.render('public-profile',{
                 layout: 'profileIndex',
                 title: userPublic.username,
                 userPublic: userPublic,
-                user: curUserData
+                user:  req.session.curUserData
                 });
         }
     })
@@ -365,15 +423,15 @@ server.get('/public-profile/:id/', function(req, resp) {
 // CHANGE USERNAME
 server.post('/change_username', function(req, resp){
     var username  = String(req.body.username);
-    var email = curUserData.email;
+    var email =  req.session.curUserData.email;
 
-    responder.changeUsername(curUserData.email,req.body.username)
+    responder.changeUsername( req.session.curUserData.email,req.body.username)
     .then(booleanValue=>{
         if(booleanValue == true){
             console.log("UsernameChangeSuccess");
             responder.getUserByEmail(email)
             .then(user=>{
-                curUserData = user;
+                 req.session.curUserData = user;
             })
             resp.send({username : username});
         } else{
@@ -388,7 +446,7 @@ server.post('/change_password', function(req, resp){
     var password = String(req.body.password);
     var vpassword = String(req.body.vpassword);
 
-    responder.changePassword(curUserData.email,req.body.password,req.body.vpassword)
+    responder.changePassword( req.session.curUserData.email,req.body.password,req.body.vpassword)
     .then(booleanValue =>{
         if(booleanValue == true){
             console.log("PasswordChangeSuccess");
@@ -401,23 +459,20 @@ server.post('/change_password', function(req, resp){
 });
 
 // LAB VIEW
-server.get('/labs/:id/', function(req, resp) {
+server.get('/labs/:id/', isAuth, function(req, resp) {
 
-    if (curUserData == null){
-        resp.redirect('/');
-        return;
-    }
+ 
 
     console.log('LAB ID OF ' + req.params.id + '!!!!');
-    curLabId = req.params.id;
+     req.session.curLabId = req.params.id;
     let roomReservations = [];
     let room = [];
 
-    console.log("mail: " + curUserMail)
+    console.log("mail: " +  req.session.curUserMail)
 
     responder.getLabById(req.params.id)
     .then(curLab => {
-        responder.getUserByEmail(curUserMail)
+        responder.getUserByEmail( req.session.curUserMail)
         .then(name => {
             responder.getTimeslots(curLab, getCurrentDate())
             .then(dateData => {
@@ -448,7 +503,7 @@ server.get('/labs/:id/', function(req, resp) {
                                     resp.render('lab-view-tech', {
                                         layout: 'labIndex-tech',
                                         title: 'Lab View Tech',
-                                        user: curUserData,
+                                        user:  req.session.curUserData,
                                         lab: curLab,
                                         reserved: reserveList,
                                         userRes: reserveUser,
@@ -460,7 +515,7 @@ server.get('/labs/:id/', function(req, resp) {
                                     resp.render('lab-view', {
                                         layout: 'labIndex',
                                         title: 'Lab View',
-                                        user: curUserData,
+                                        user:  req.session.curUserData,
                                         lab: curLab,
                                         reserved: reserveList,
                                         userRes: reserveUser,
@@ -506,7 +561,7 @@ server.post("/modal", function(req, resp){
     .then(curLab => {
         responder.getReservedAll(curLab, req.body.date, req.body.timeFrame)
         .then(reservations =>{
-            responder.getUserByEmail(curUserMail)
+            responder.getUserByEmail( req.session.curUserMail)
             .then(user => {
 
                 let modal = 'A';
@@ -571,7 +626,7 @@ server.post("/modalTech", function(req, resp){
     .then(curLab => {
         responder.getReservedAll(curLab, req.body.date, req.body.timeFrame)
         .then(reservations =>{
-            responder.getUserByEmail(curUserMail)
+            responder.getUserByEmail( req.session.curUserMail)
             .then(user => {
 
                 let modal = 'A';
@@ -634,7 +689,7 @@ server.post('/reserve', function(req, resp){
     const seconds = String(currentDate.getSeconds()).padStart(2, '0');
     const time = `${hours}:${minutes}:${seconds}`;
 
-    responder.getUserByEmail(curUserMail)
+    responder.getUserByEmail( req.session.curUserMail)
     .then(user=>{
     
     var seat  = String(req.body.seat);
@@ -675,21 +730,27 @@ server.post('/reserve', function(req, resp){
 });
 
 server.post('/getTimeFrames', function(req, resp){
-    responder.getLabById(curLabId)
-    .then(curLab => {
-        responder.getTimeslots(curLab, req.body.date)
-        .then(dateData => { 
-            resp.send({dateData : dateData});
-                
+
+    if(req.session.isAuth){
+        responder.getLabById( req.session.curLabId)
+        .then(curLab => {
+            responder.getTimeslots(curLab, req.body.date)
+            .then(dateData => { 
+                resp.send({dateData : dateData});
+                    
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    
         })
         .catch(error => {
             console.error(error);
         });
+    }else{
+        resp.redirect('/');
+    }
 
-    })
-    .catch(error => {
-        console.error(error);
-    });
 })
 
 server.post('/dateChange', function(req, resp){
@@ -698,9 +759,9 @@ server.post('/dateChange', function(req, resp){
     let timeFrame;
 
 
-    responder.getLabById(curLabId)
+    responder.getLabById( req.session.curLabId)
     .then(curLab => {
-        responder.getUserByEmail(curUserMail)
+        responder.getUserByEmail( req.session.curUserMail)
         .then(name => {
             responder.getTimeslots(curLab, req.body.date)
             .then(dateData => {
@@ -731,7 +792,7 @@ server.post('/dateChange', function(req, resp){
 
                                 if(name.isTechnician){
                                     resp.send({
-                                        user: curUserData,
+                                        user:  req.session.curUserData,
                                         lab: curLab,
                                         reserved: reserveList,
                                         userRes: reserveUser,
@@ -741,7 +802,7 @@ server.post('/dateChange', function(req, resp){
                                     });
                                 }else{
                                     resp.send({
-                                        user: curUserData,
+                                        user:  req.session.curUserData,
                                         lab: curLab,
                                         reserved: reserveList,
                                         userRes: reserveUser,
@@ -780,14 +841,11 @@ server.post('/dateChange', function(req, resp){
     });
 });
 
-server.get('/modifyLab', function(req, resp){
+server.get('/modifyLab', isAuth, function(req, resp){
 
-    if (curUserData == null){
-        resp.redirect('/');
-        return;
-    }
+ 
 
-    responder.getLabById(curLabId)
+    responder.getLabById( req.session.curLabId)
     .then(curLab => {
         responder.getTimeslots(curLab, getCurrentDate())
         .then(dateData => {
@@ -810,7 +868,7 @@ server.get('/modifyLab', function(req, resp){
 });
 
 server.post('/changeModifyLab', function(req, resp){
-    responder.getLabById(curLabId)
+    responder.getLabById( req.session.curLabId)
     .then(curLab => {
         responder.getTimeslots(curLab, req.body.date)
         .then(dateData => {
@@ -849,12 +907,12 @@ function sortByStartTime(array) {
 
 server.post('/save-profile', function(req, resp){
 
-    responder.updateProfile(curUserData.email, req.body.username, req.body.password, req.body.bio)
+    responder.updateProfile( req.session.curUserData.email, req.body.username, req.body.password, req.body.bio)
     .then(whatever => {
 
-        responder.getUserByEmail(curUserData.email)
+        responder.getUserByEmail( req.session.curUserData.email)
         .then(user => {
-            curUserData = user;
+             req.session.curUserData = user;
             resp.redirect('/profile')
         })
         .catch(error => {
@@ -870,7 +928,7 @@ server.post('/save-profile', function(req, resp){
 
 server.post('/searchFunction', function (req, resp) {
     const searchString = req.body.stringInput;
-    searchQuery = searchString;
+    req.session.searchQuery = searchString;
     responder.roomSearch(searchString)
         .then(searchQueryResults => {
             let seenLabs = [];
@@ -889,12 +947,9 @@ server.post('/searchFunction', function (req, resp) {
         });
 });
 
-server.get('/editReservation', function (req, resp) {
+server.get('/editReservation', isAuth, function (req, resp) {
 
-    if (curUserData == null){
-        resp.redirect('/');
-        return;
-    }
+ 
 
     responder.getLabByName(req.query.roomNum)
     .then(lab => {
@@ -917,8 +972,12 @@ server.post('/removeReservation', function (req, resp) {
 });
 
 server.get('/logout', function (req, resp) {
-    curUserData = null;
-    resp.redirect('/');
+     req.session.curUserData = null;
+    
+    req.session.destroy((err) => {
+        if(err) throw err;
+        resp.redirect('/');
+    });
 });
 
 server.post('/addTimeFrame', function(req, resp){
@@ -929,9 +988,9 @@ server.post('/addTimeFrame', function(req, resp){
     var valid = true;
 
 
-    responder.getLabById(curLabId)
+    responder.getLabById( req.session.curLabId)
     .then(curLab => {
-        responder.getAllTimeSlots().then(function(timeSlots){
+        responder.getAllTimeSlots(curLab.roomNum, date).then(function(timeSlots){
 
             for(let i = 0; i < timeSlots.length; i++){
                 
@@ -960,7 +1019,7 @@ server.post("/deleteTimeFrame", function(req, resp){
     const timeStart = req.body.timeStart;
     const timeEnd = req.body.timeEnd;
 
-    responder.getLabById(curLabId)
+    responder.getLabById( req.session.curLabId)
     .then(curLab => {
         responder.removeTimeFrame(timeStart, timeEnd, date, curLab.roomNum);
         resp.send({stat: "success"});
@@ -969,19 +1028,63 @@ server.post("/deleteTimeFrame", function(req, resp){
 });
 
 
+
+//automatic completed a reservation if its pass the endtime
+function completeReservation(){
+    responder.getReservationDB().then(function(reservations){
+        for(let i = 0; i < reservations.length; i++){   
+            let time = reservations[i].timeFrame.split("-");
+
+            if(isDateTimeEarlierThanNow(reservations[i].bookDate, time[1])){
+
+                if(reservations[i].status === 'active'){
+                    responder.completeReservation(reservations[i].bookDate, reservations[i].timeFrame, reservations[i].seat, reservations[i].room).then(function(val){
+
+                    })
+                }
+
+            }
+        }
+    })
+    
+}
+setInterval(completeReservation, 10000);
+
+
+server.post('/checkReserve', function(req, resp){
+    responder.getLabById( req.session.curLabId)
+    .then(curLab => {
+        responder.getStatusSeat(curLab.roomNum, req.body.seat, req.body.timeFrame, req.body.date).then(function(result){
+            if(result == null){
+                resp.send({status: 'avail'});
+            }else{
+                resp.send({status: 'unavail'})
+            }
+        })
+    })
+});
+
 server.post('/loadReserve', function(req, resp){
-    const time = req.body.time;
-    const date = req.body.date;
 
-    responder.getLabById(curLabId).then(function(lab){
+    if(req.session.isAuth){
+        const time = req.body.time;
+        const date = req.body.date;
 
-        responder.getReservedAll(lab, date, time).then(function(reservation){
-            resp.send({reservation});
+        responder.getLabById(req.session.curLabId).then(function(lab){
 
+            responder.getReservedAll(lab, date, time).then(function(reservation){
+                responder.getReservedAll2(lab, date).then(function(resData){
+                    resp.send({reservation, resData, lab});
+                });
+
+            })
 
         })
-
-    })
+    } else{
+        console.log('check');
+        resp.send({status: "lol"});
+    }
+    
 });
 
 
@@ -1008,7 +1111,7 @@ setInterval(completeReservation, 10000);
 
 
 server.post('/checkReserve', function(req, resp){
-    responder.getLabById(curLabId)
+    responder.getLabById(req.session.curLabId)
     .then(curLab => {
         responder.getStatusSeat(curLab.roomNum, req.body.seat, req.body.timeFrame, req.body.date).then(function(result){
             if(result == null){
@@ -1020,6 +1123,14 @@ server.post('/checkReserve', function(req, resp){
     })
 });
 
+
+function isDateTimeEarlierThanNow(dateString, timeString) {
+    var [hours, minutes] = timeString.split(':').map(Number);
+    var [year, month, day] = dateString.split('-').map(Number);
+    var dateTimeToCheck = new Date(year, month - 1, day, hours, minutes);
+    var currentDate = new Date();
+    return dateTimeToCheck < currentDate;
+}
 
 function isDateTimeEarlierThanNow(dateString, timeString) {
     var [hours, minutes] = timeString.split(':').map(Number);

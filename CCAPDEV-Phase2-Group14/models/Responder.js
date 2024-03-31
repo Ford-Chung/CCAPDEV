@@ -2,7 +2,8 @@ const { MongoClient, ObjectId } = require('mongodb');
 const { emit } = require('process');
 const databaseURL = "mongodb+srv://Krozo:1234@reserverdb.p0fufmc.mongodb.net/?retryWrites=true&w=majority&appName=REServerDB";
 const mongoClient = new MongoClient(databaseURL);
-
+const bcrypt = require('bcrypt')
+const saltRounds = 10;
 
 
 // Database and collection names here...
@@ -53,17 +54,26 @@ function isValidEmail(email) {
 function getUser(userEmail, userPassword) {
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colUsers);
-    searchQuery = { email: userEmail, password: userPassword };
-
+    let hashedPassword = null;
+    searchQuery = {email: userEmail};
     return new Promise((resolve, reject) => {
-        col.findOne(searchQuery).then(function (val) {
-            if (val != null) {
-                resolve(val);
-            } else {
+        col.findOne(searchQuery).then(function(val){
+            if(val != null){
+                hashedPassword = val.password;
+                bcrypt.compare(userPassword,hashedPassword,function(err,result){
+                    if (result){
+                        resolve(val)
+                    } else{
+                        resolve(null);
+                    }
+                })
+            
+            } else{
                 resolve(null);
             }
-        }).catch(reject);
+        });
     });
+
 }
 module.exports.getUser = getUser;
 
@@ -74,7 +84,8 @@ function addUser(userEmail, userName, userPassword, userVPassword,isTechnician){
     searchQuery = {email: userEmail};
     return new Promise((resolve, reject) => {
         col.findOne(searchQuery).then(function(val){
-            
+            console.log(userPassword);
+            console.log(userVPassword);
             if (val != null){
                 resolve('Email already in use.');
             } else if (userPassword != userVPassword){
@@ -82,22 +93,25 @@ function addUser(userEmail, userName, userPassword, userVPassword,isTechnician){
             } else if (!isValidEmail(userEmail)){
                 resolve('Invalid DLSU email format.');
             } else {
-                if(isTechnician === 'on'){
-                    isTechnician = true;
-                } else{
-                    isTechnician = false;
-                }
-                const info = {
-                    email: userEmail,
-                    password: userPassword,
-                    isTechnician: isTechnician,
-                    pfp: 'amogus.png',
-                    username: userName,
-                    bio: ""
-                };
-                col.insertOne(info).then(function(res){
-                }).catch(errorFn);
-                resolve('Success!');
+                bcrypt.hash(userPassword, saltRounds, function(err, hash) {
+                    userPassword = hash;
+                    if(isTechnician === 'on'){
+                        isTechnician = true;
+                    } else{
+                        isTechnician = false;
+                    }
+                    const info = {
+                        email: userEmail,
+                        password: userPassword,
+                        isTechnician: isTechnician,
+                        pfp: 'amogus.png',
+                        username: userName,
+                        bio: ""
+                    };
+                    col.insertOne(info).then(function(res){
+                    }).catch(errorFn);
+                    resolve('Success!');
+                });
             }
         }).catch(reject);
     });
@@ -361,7 +375,22 @@ function getSchedule(room, date, timeFrame) {
 }
 module.exports.getUserbyId = getUserbyId;
 
+function deleteProfile(myEmail) {
+    const dbo = mongoClient.db(databaseName);
+    const colU = dbo.collection(colUsers);
+    const colR = dbo.collection(colReservation)
 
+    const searchQuery = { email: myEmail };
+
+    return new Promise((resolve, reject) => {
+        colU.deleteOne(searchQuery).then(function(resa){
+            colR.deleteMany(searchQuery).then(function(){
+                resolve();
+            }).catch(errorFn);
+        }).catch(errorFn);
+    });
+}
+module.exports.deleteProfile = deleteProfile;
 
 function getReservedYours(rooms, name, timeFrame){
     const dbo = mongoClient.db(databaseName);
@@ -433,12 +462,12 @@ function getTimeslots(lab, date, timeFrame){
 }
 module.exports.getTimeslots = getTimeslots;
 
-function getAllTimeSlots(){
+function getAllTimeSlots(roomNum, date){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colSchedule);
 
     return new Promise((resolve, reject) => {
-        const cursor = col.find({}); //get all timeslots in a specific room and date
+        const cursor = col.find({roomNum, date}); //get all timeslots in a specific room and date
 
         cursor.toArray().then(function(vals){
             resolve(vals);
@@ -564,6 +593,24 @@ function userSearch(searchString) {
 
 module.exports.userSearch = userSearch;
 
+function labSearch(searchString) {
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colLabs);
+    const searchQuery = { "roomNum": { $regex: searchString, $options: 'i' } };
+
+    return new Promise((resolve, reject) => {
+        const cursor = col.find(searchQuery);
+        cursor.toArray()
+            .then(function (vals) {
+                resolve(vals);
+            })
+            .catch(errorFn);
+    });
+}
+
+module.exports.labSearch = labSearch;
+
+
 function removeReservation(date, timeFrame, seat, room){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colReservation);
@@ -688,7 +735,7 @@ function getStatusSeat(room, seat, timeFrame, date){
     const dbo = mongoClient.db(databaseName);
     const col = dbo.collection(colReservation);
 
-    const searchQuery = {room, timeFrame, seat, bookDate: date};
+    const searchQuery = {room, timeFrame, seat, bookDate: date, status: 'active'};
 
     return new Promise((resolve, reject) => {
         col.findOne(searchQuery).then(function (val) {
