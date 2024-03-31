@@ -1,4 +1,5 @@
- <main>
+<script src="/common/roomDeleter.js"></script>
+<main>
         <div class="filter">
             
             <div class="filter-container">
@@ -26,8 +27,6 @@
             </div>
         </div>
 
-
-        
         <div class="room-container">
         {{#if dateData.length}}
             {{#nestedLoop lab.numCols}}
@@ -85,5 +84,12 @@
         <form action="/modifyLab" method="get">
             <div class="modify-container"><input type="submit" id="modifyRoom" value="Modfiy Room Availability"></div>
         </form>
-        
+        <button type="button" id="del-room-btn">Delete Room</button>
+
+        {{!-- popup to confirm deletion --}}
+        <div class="confirm" id="conf-del-room-div">
+            <p class="message" id="del-room-msg">Confirm delete room?</p>
+            <button class="btn" id="conf-del-room-btn">Proceed</button>
+            <button class="btn" id="cancel-btn">Cancel</button>
+        </div>
     </main>

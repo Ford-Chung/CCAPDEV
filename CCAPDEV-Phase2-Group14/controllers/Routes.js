@@ -95,8 +95,6 @@ const isAuthLogin = (req, res, next) => {
     }
 }
 
-
-
 // LOGIN load login page 
 server.get('/', isAuthLogin, function(req, resp){
     resp.render('login',{
@@ -237,6 +235,15 @@ server.get('/profile', isAuth, function(req, resp) {
         console.error(error);
     });
 });
+
+//ABOUT PAGE
+server.get('/about', isAuth, function(req, resp) {
+    resp.render('about', {
+        layout: 'aboutIndex',
+        title: 'About Page',
+        user: req.session.curUserData
+    });
+})
 
 // MAIN MENU 
 server.get('/mainMenu', isAuth, function(req, resp) {

@@ -190,8 +190,7 @@ th, td{
     color: white;
 }
 
-
-#modifyRoom{
+#modifyRoom {
     border-radius: 6px;
     background-color: #55c4aa;
     border: none;   
@@ -200,6 +199,26 @@ th, td{
     color: white;
     font-weight: bold;
     font-size: large;
+}
+
+#modifyRoom:hover {
+    background-color: #3BBA9C;
+}
+
+#del-room-btn {
+    border-radius: 6px;
+    background-color: #e03f3f;
+    border: none;   
+    height: 30px;
+    width: 300px;
+    color: white;
+    font-weight: bold;
+    font-size: large;
+    margin-bottom: 10px;
+}
+
+#del-room-btn:hover {
+    background-color: #db3434;
 }
 
 .modify-container{
@@ -214,4 +233,46 @@ th, td{
     position: sticky;
     top: 0;
     background-color: #2e8a74;
+}
+
+.confirm {
+    display: none;
+    background-color: #564F6F;
+    border: 1px solid #2D283E;
+    border-radius: 15px;
+    position: fixed;
+    width: 300px;
+    height: 100px;
+    left: 38%;
+    top: 40%;
+    text-align: center;
+}
+
+.message {
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.btn {
+    color: white;
+    background-color: #707793;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #2D283E;
+    padding-inline: 10px;
+    transition: background-color 0.3s; 
+    margin: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#cancel-btn:hover {
+    background-color: #3BBA9C;
+}
+
+#conf-del-room-btn:hover {
+    background-color: #e03f3f;
 }

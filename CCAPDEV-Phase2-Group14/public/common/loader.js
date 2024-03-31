@@ -4,6 +4,10 @@ function toggleMenu() {
   subMenu.classList.toggle("open-menu");
 }
 
+function redirectToAbout() {
+  window.location.href = '/about';
+}
+
 function redirectToProfile() {
     window.location.href = '/profile';
 }
