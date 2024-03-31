@@ -378,6 +378,25 @@ server.post('/load-people', function(req, resp){
     }
 })
 
+server.post('/load-labs', function(req, resp){
+    if( req.session.searchQuery != null){
+        responder.labSearch( req.session.searchQuery)
+        .then(labs => {
+            resp.send({labs:labs, searchQuery :  req.session.searchQuery});
+        }).catch (error =>{
+            console.error(error);
+        });
+    } else{
+        responder.getLabs()
+        .then(labs => {
+            resp.send({labs: labs, searchQuery: "What are you looking for?"});
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+})
+
 
 // PUBLIC PROFILE
 server.get('/public-profile/:id/', isAuth, function(req, resp) {
