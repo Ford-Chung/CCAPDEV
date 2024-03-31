@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/common/profile.css">
+<link rel="stylesheet" href="/common/about.css">
 
 <script>
     function redirectRoom(){
@@ -14,39 +14,38 @@
     <p id="desc">REServerDB is a reservation management system used to reserve slots from computer labratories.</p>
     <h2>Features</h2>
     <ul>
-        <li>In the main menu, users can see a list of laboratories where they can make reservations.</li>
-        <ul>
-            <li>The laboratories can be filtered using tags.</li>
-        </ul>
-        <li>They can also see the list of users and see their profiles in the main menu.
-        <li>Users can also customize their own profile.</li>
-        <li>Technician accounts have extra features</li>
+        <li>In the main menu, users can see a list of laboratories where they can make reservations. These laboratories can be filtered using tags.</li>
+        <li>View the list of users in the main menu and see information of each user upon clicking on their name.
+        <li>Users can also customize their own profiles.</li>
+        <li>Technician accounts have extra features such as:
+            <ul>
+                <li>adding and deleting reservations for students
+                <li>editing slots</li>
+                <li>adding and deleting laboratories</li>
+            </ul>
+        </li>
     </ul>
     <h2>Third party services used</h2>
-    <table>
+    <table id="infoTbl">
         <tr>
-            <td>Database</td>
-            <td>MongoDB Atlas</td>
-        </tr>
-        <tr>
-            <td>Framework</td>
-            <td>Express</td>
-        </tr>
-        <tr>
-            <td>Hosting</td>
-            <td>Render</td>
-        </tr>
-        <tr>
-            <td>Libraries</td>
-            <td>
-                Handlebars<br>
-                JQuery<br>
-                MondoDB
+            <td id="infoCell">NPM Packages</td>
+            <td id="infoCell">express<br>
+                express-handlebars<br>
+                body-parser<br>
+                mongodb
             </td>
         </tr>
         <tr>
-            <td>Miscellaneous</td>
-            <td>Ajax</td>
+            <td id="infoCell">Third Party Libraries</td>
+            <td id="infoCell">JQuery</td>
+        </tr>
+        <tr>
+            <td id="infoCell">Back-end Database</td>
+            <td id="infoCell">MongoDB Atlas</td>
+        </tr>
+        <tr>
+            <td id="infoCell">Hosting</td>
+            <td id="infoCell">Render</td>
         </tr>
     </table>
 </main>
