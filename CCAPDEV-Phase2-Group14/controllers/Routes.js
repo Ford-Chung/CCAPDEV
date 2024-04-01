@@ -69,8 +69,6 @@ server.use(session({
     }
   }));
 
-
-
 const isAuth = (req, res, next) => {
     if(req.session.isAuth){
         next();
@@ -282,7 +280,7 @@ server.get('/mainMenu', isAuth, function(req, resp) {
     }
 });
 
-//deleteProfile
+// delete profile
 server.post('/deleteProfile', function(req, resp){
     responder.deleteProfile(req.session.curUserMail).then(function(){
         console.log("Profile delete success");
@@ -294,7 +292,6 @@ server.post('/deleteProfile', function(req, resp){
         console.error(error);
     });
 });
-
 
 // MAIN PAGE: NEXT BUTTON AJAX
 server.post('/nextBtn', function(req, resp) {
@@ -1173,7 +1170,6 @@ function isTimeOutsideFrame(time, startTime, endTime) {
         return false; // Time falls outside the frame
     }
 }
-
 
 /************************no need to edit past this point********************************* */
 }

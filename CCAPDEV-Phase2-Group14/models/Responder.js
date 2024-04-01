@@ -383,7 +383,7 @@ function deleteProfile(myEmail) {
     const searchQuery = { email: myEmail };
 
     return new Promise((resolve, reject) => {
-        colU.deleteOne(searchQuery).then(function(resa){
+        colU.deleteOne(searchQuery).then(function(){
             colR.deleteMany(searchQuery).then(function(){
                 resolve();
             }).catch(errorFn);
@@ -544,23 +544,6 @@ function updateProfile (userEmail, userName, passWord, userBio) {
 
 }
 module.exports.updateProfile = updateProfile;
-
-function deleteProfile(myEmail) {
-    const dbo = mongoClient.db(databaseName);
-    const colU = dbo.collection(colUsers);
-    const colR = dbo.collection(colReservation)
-
-    const searchQuery = { email: myEmail };
-
-    return new Promise((resolve, reject) => {
-        colU.deleteOne(searchQuery).then(function(resa){
-            colR.deleteMany(searchQuery).then(function(){
-                resolve();
-            }).catch(errorFn);
-        }).catch(errorFn);
-    });
-}
-module.exports.deleteProfile = deleteProfile;
 
 function roomSearch(searchString){
     const dbo = mongoClient.db(databaseName);

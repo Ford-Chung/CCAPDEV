@@ -10,7 +10,7 @@ $(document).ready(function(){
 				type: "POST",
 				url:  "deleteProfile",
 				success: function() {
-					window.location.assign("/");
+					redirectToLoginPage();
 				}
 			});
 		});
