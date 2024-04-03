@@ -515,32 +515,45 @@ function getReservedOfPerson (personEmail) {
 }
 module.exports.getReservedOfPerson = getReservedOfPerson;
 
-function updateProfile (userEmail, userName, passWord, userPfp, userBio) {
-
-    const dbo = mongoClient.db(databaseName);
-    const colUser = dbo.collection(colUsers);
-    const colReserve = dbo.collection(colReservation);
-
-  
-    const updateQuery = { email: userEmail};
-    const updateValues = { $set: { username: userName, password: passWord, pfp: userPfp, bio: userBio } };
-    const updateValuesReserves = { $set: { name: userName} };
-
-
+function updateProfile(userEmail, userName, passWord, userPfp, userBio) {
     return new Promise((resolve, reject) => {
-        colUser.updateOne(updateQuery, updateValues).then(function(res){
+        const dbo = mongoClient.db(databaseName);
+        const colUser = dbo.collection(colUsers);
+        const colReserve = dbo.collection(colReservation);
+        const updateQuery = { email: userEmail };
+        const updateValuesReserves = { $set: { name: userName } };
 
-            colReserve.updateMany(updateQuery, updateValuesReserves).then(function(res){
-                console.log('Update successful');
-                console.log('Inside: '+JSON.stringify(res));
-                resolve();
-        
-              }).catch(errorFn);
-
-          }).catch(errorFn);
+        const emailSearch = { email: userEmail };
+        colUser.findOne(emailSearch).then(function (val) {
+            if (val != null) {
+                if (val.password != passWord) {
+                    bcrypt.hash(passWord, saltRounds, function (err, hash) {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            const updateValues = { $set: { username: userName, password: hash, pfp: userPfp, bio: userBio } };
+                            colUser.updateOne(updateQuery, updateValues).then(function (res) {
+                                colReserve.updateMany(updateQuery, updateValuesReserves).then(function (res) {
+                                    console.log('Update successful');
+                                    console.log('Inside: ' + JSON.stringify(res));
+                                    resolve();
+                                }).catch(error => reject(error));
+                            }).catch(error => reject(error));
+                        }
+                    });
+                } else {
+                    const updateValues = { $set: { username: userName, password: passWord, pfp: userPfp, bio: userBio } };
+                    colUser.updateOne(updateQuery, updateValues).then(function (res) {
+                        colReserve.updateMany(updateQuery, updateValuesReserves).then(function (res) {
+                            console.log('Update successful');
+                            console.log('Inside: ' + JSON.stringify(res));
+                            resolve();
+                        }).catch(error => reject(error));
+                    }).catch(error => reject(error));
+                }
+            }
+        }).catch(error => reject(error));
     });
-
-
 }
 module.exports.updateProfile = updateProfile;
 
@@ -731,6 +744,26 @@ function getStatusSeat(room, seat, timeFrame, date){
     
 }
 module.exports.getStatusSeat = getStatusSeat;
+
+function tagSearch(searchString) {
+    const dbo = mongoClient.db(databaseName);
+    const col = dbo.collection(colLabs);
+    const searchQuery = { "tags": { $regex: searchString, $options: 'i' } };
+
+    return new Promise((resolve, reject) => {
+        const cursor = col.find(searchQuery);
+        cursor.toArray()
+            .then(function (vals) {
+                resolve(vals);
+            })
+            .catch(errorFn);
+    });
+}
+
+module.exports.tagSearch = tagSearch;
+
+
+
 
 function finalClose(){
     console.log('Close connection at the end!');
