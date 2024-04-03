@@ -26,7 +26,7 @@ $(document).ready(function(){
            
                            <div class="heading">
                                <div class="profilePicture">
-                                   <img src="/images/pfps/` + data.users[i]['pfp'] +`">
+                                   <img src="` + data.users[i]['pfp'] +`">
                                </div>
                                <h1> ` + data.users[i]['username'] +` </h1>
                            </div>

@@ -104,7 +104,7 @@ function addUser(userEmail, userName, userPassword, userVPassword,isTechnician){
                         email: userEmail,
                         password: userPassword,
                         isTechnician: isTechnician,
-                        pfp: 'amogus.png',
+                        pfp: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
                         username: userName,
                         bio: ""
                     };
@@ -515,8 +515,7 @@ function getReservedOfPerson (personEmail) {
 }
 module.exports.getReservedOfPerson = getReservedOfPerson;
 
-// this currently just has username and password, change in the future to include pic and bio
-function updateProfile (userEmail, userName, passWord, userBio) {
+function updateProfile (userEmail, userName, passWord, userPfp, userBio) {
 
     const dbo = mongoClient.db(databaseName);
     const colUser = dbo.collection(colUsers);
@@ -524,7 +523,7 @@ function updateProfile (userEmail, userName, passWord, userBio) {
 
   
     const updateQuery = { email: userEmail};
-    const updateValues = { $set: { username: userName, password: passWord, bio: userBio } };
+    const updateValues = { $set: { username: userName, password: passWord, pfp: userPfp, bio: userBio } };
     const updateValuesReserves = { $set: { name: userName} };
 
 

@@ -911,7 +911,7 @@ function sortByStartTime(array) {
 
 server.post('/save-profile', function(req, resp){
 
-    responder.updateProfile( req.session.curUserData.email, req.body.username, req.body.password, req.body.bio)
+    responder.updateProfile( req.session.curUserData.email, req.body.username, req.body.password, req.body['prof-pic'], req.body.bio)
     .then(whatever => {
 
         responder.getUserByEmail( req.session.curUserData.email)
