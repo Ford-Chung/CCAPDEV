@@ -44,6 +44,10 @@ main button{
     padding-bottom: 5px;
 }
 main button:hover {
+    background-color: #2D283E;
+}
+.save:hover {
+    color: black;
     background-color: #3BBA9C;
 }
 .delete:hover {
@@ -75,7 +79,7 @@ details {
     margin-top: 10px;
     margin-bottom: 30px;
 }
-.confirm {
+#del-prof {
     display: none;
     background-color: #564F6F;
     border: 1px solid #2D283E;
@@ -95,7 +99,6 @@ main{
     padding-top: 80px;
     padding-bottom: 5%;
 }
-
 .back img{
     margin-top: 65px;
     margin-left: 10px;
