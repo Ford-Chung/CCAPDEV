@@ -1,6 +1,7 @@
 const { MongoClient, ObjectId } = require('mongodb');
 const { emit } = require('process');
 const databaseURL = "mongodb+srv://Krozo:1234@reserverdb.p0fufmc.mongodb.net/?retryWrites=true&w=majority&appName=REServerDB";
+
 const mongoClient = new MongoClient(databaseURL);
 const bcrypt = require('bcrypt')
 const saltRounds = 10;
@@ -526,6 +527,11 @@ function updateProfile(userEmail, userName, passWord, userPfp, userBio) {
         const emailSearch = { email: userEmail };
         colUser.findOne(emailSearch).then(function (val) {
             if (val != null) {
+                if (passWord == ""){
+                    passWord = val.password;
+                    console.log("password after: " +passWord);
+                }
+
                 if (val.password != passWord) {
                     bcrypt.hash(passWord, saltRounds, function (err, hash) {
                         if (err) {
