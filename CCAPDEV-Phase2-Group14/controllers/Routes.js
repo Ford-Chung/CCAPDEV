@@ -402,6 +402,29 @@ server.post('/load-labs', function(req, resp){
 })
 
 
+server.post('/load-labsbyTags', function(req, resp){
+    if( req.session.searchQuery != null){
+        responder.tagSearch( req.session.searchQuery)
+        .then(labs => {
+            resp.send({labs:labs, searchQuery : req.session.searchQuery});
+        }).catch (error =>{
+            console.error(error);
+        });
+    } else{
+        responder.getLabs()
+        .then(labs => {
+            resp.send({labs: labs, searchQuery: "What are you looking for?"});
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+})
+
+
+
+
+
 // PUBLIC PROFILE
 server.get('/public-profile/:id/', isAuth, function(req, resp) {
     req.session.isLabs = false;
@@ -911,7 +934,7 @@ function sortByStartTime(array) {
 
 server.post('/save-profile', function(req, resp){
 
-    responder.updateProfile( req.session.curUserData.email, req.body.username, req.body.password, req.body.bio)
+    responder.updateProfile( req.session.curUserData.email, req.body.username, req.body.password, req.body['prof-pic'], req.body.bio)
     .then(whatever => {
 
         responder.getUserByEmail( req.session.curUserData.email)
