@@ -74,15 +74,5 @@ $(document).ready(function(){
         }//if
       });//fn+post
     });
-
-    $("#tags").click(function(){
-        alert('To be implemented phase 3');
-    });
-
-    $("#etc").click(function(){
-        alert('To be implemented phase 3');
-    });
-
-
 });
 

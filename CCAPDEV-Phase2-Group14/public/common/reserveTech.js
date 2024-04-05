@@ -166,7 +166,7 @@ $(".cancel").click(function(){
     var email = $("#reserved-email").val();
 
     if (name.trim() === '' || email.trim() === '') {
-      alert('Name and Email fields are require!');
+      alert('Name and Email fields are required!');
       return;
     }
 

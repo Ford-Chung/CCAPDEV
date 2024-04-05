@@ -952,9 +952,6 @@ server.post('/searchFunction', function (req, resp) {
 });
 
 server.get('/editReservation', isAuth, function (req, resp) {
-
- 
-
     responder.getLabByName(req.query.roomNum)
     .then(lab => {
         resp.redirect('/labs/' + lab._id);            
