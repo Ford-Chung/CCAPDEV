@@ -19,7 +19,7 @@
             <p>Laboratory: {{room}}</p>
             <p>Seat Number: {{seat}}</p>
             <p>Reservation: {{bookDateVerbose}} {{timeFrame}}</p>
-            <p>Requested: {{dateLogged}} {{timeLogged}}</p>
+            <p>Requested: {{dateLogged}} {{timeLogged}} (UTC+00:00)</p>
             <div id="resv-buttons-div">
                 <form action="/editReservation" method="get">
                     <button type="submit" value="{{room}}" name="roomNum" id="roomNum">Edit/Delete Reservation</button>
