@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="profile.css">
+    <script src="../loader.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        function redirectRoom(){
+            history.back();
+        }
+    </script>
+</head>
+<body>
+    <div id="nav-placeholder">
+        
+    </div>
+
+    <div class="back" onclick="redirectRoom()">
+        <img src="../Image/back.png">
+    </div>
+    <main>
+        <img id="prof-pic" src="../Image/amogus.png">
+        <h1 id="name">Ryan Thompson</h1>
+        <p id="bio">Hey, I'm Ryan Thompson, and my passion lies in exploring the intersection of art and technology. Growing up in a family of artists and engineers, I was exposed to a unique blend of creativity and innovation from an early age.</p>
+    </main>
+    
+    <script>
+        $(function(){
+            //$("#nav-placeholder").load("../navbar/navbar.html");
+        });
+
+        window.onload = function() {
+            loadNav();
+        };
+
+        </script>
+    <script src="profile.js"></script>
+</body>
+</html>

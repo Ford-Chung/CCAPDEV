@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../Mainpage/main.css">
+        <link rel="stylesheet" href="../Mainpage/mainMenu.css">
+        <script src="../jquery-3.7.1.min.js"></script>
+        <script src="../Mainpage/filterHandler.js"> </script>
+        <script src="../loader.js"> </script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100..900&display=swap" rel="stylesheet">
+        <script>
+
+        </script>
+    </head> 
+
+    <body>
+        <div>
+            <div id="nav-placeholder"> 
+
+            </div>
+        </div>
+        
+        <div class="bg">
+            <img src="../Image/computerLab.jpg">
+        </div>
+        <div class="flexContainer">
+            
+            <aside>
+                <div class="tech-title">
+                    <img src="../Image/TECH.png">
+                </div>
+                
+                <div>
+                    <h1> Filters </h1>
+                </div>
+                <hr>
+                <div class="searchFilterContainer selected" id="room">
+                    <img class="filterIcons" src="../Image/home.png">   
+                    <h4>Room</h4>
+                </div>
+                <div class="searchFilterContainer" id = "people">
+                    <img class="filterIcons" src="../Image/people.png">   
+                    <h4>People</h4>
+                </div>
+                <div class="searchFilterContainer">
+                    <img class="filterIcons" src="../Image/tags.png">   
+                    <h4>Tags</h4>
+                </div>
+                <div class="searchFilterContainer">
+                    <img class="filterIcons" src="../Image/more.png">   
+                    <h4>etc</h4>
+                </div>
+
+                
+            </aside>
+            
+    
+            
+            <div class ="flexParent">
+
+
+                <div class="peopleContainer">
+                    
+                </div>
+    
+
+
+                <div class="laboratoryContainer" onclick="redirectToGeneralPage1()">
+                    
+                    <div class="heading">
+                        <h1> Laboratory: G301B </h1>
+                    </div>
+
+                    <div class="laboratoryDetailsContainer">
+                        <div class="laboratoryDetails">
+                            <h2> Total Seats: 30</h2>
+                            <h2> Building: GOKONGWEI</h2>
+                            <h2> Floor: 3</h2>
+                        </div>
+                        <div class="laboratoryDetails">
+                            <h2> Time Start: 0900</h2>
+                            <h2> Time End: 17500</h2>
+                            <h2> Tags: HOT</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="laboratoryContainer" onclick="redirectToGeneralPage2()">
+                    <div class="heading">
+                        <h1> Laboratory: G304B </h1>
+                    </div>
+
+                    <div class="laboratoryDetailsContainer">
+                        <div class="laboratoryDetails">
+                            <h2> Total Seats: 20</h2>
+                            <h2> Building: GOKONGWEI</h2>
+                            <h2> Floor: 3</h2>
+                        </div>
+                        <div class="laboratoryDetails">
+                            <h2> Time Start: 0900</h2>
+                            <h2> Time End: 17500</h2>
+                            <h2> Tags: GOOD</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nextPage"><button onclick="history.back()">Back</button></div>
+
+
+        </div>
+        
+
+
+    </body>
+
+    <script>
+
+        $(function(){
+          //$("#nav-placeholder").load("../navbar/navbar.html");
+        });
+
+        function redirectToGeneralPage() {
+            window.location.href="../TechView/roomTech.html";
+        };
+        function redirectToGeneralPage1() {
+            window.location.href="../TechView/roomTech2.html";
+        };
+        function redirectToGeneralPage2() {
+            window.location.href="../TechView/roomTech3.html";
+        };
+
+        window.onload = function() {
+            loadNav();
+        };
+
+
+        
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

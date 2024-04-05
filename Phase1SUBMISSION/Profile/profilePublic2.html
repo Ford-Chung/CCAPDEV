@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="profile.css">
+    <script src="../loader.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        function redirectRoom(){
+            history.back();
+        }
+    </script>
+</head>
+<body>
+    <div id="nav-placeholder">
+        
+    </div>
+
+    <div class="back" onclick="redirectRoom()">
+        <img src="../Image/back.png">
+    </div>
+    <main>
+        <img id="prof-pic" src="../Image/amogus.png">
+        <h1 id="name">Sarah Patel</h1>
+        <p id="bio">Hi, I'm Sarah Patel, and I'm passionate about harnessing the power of education to drive positive change in the world. Growing up in a small town in India, I experienced firsthand the transformative impact of learning and community support.</p>
+    </main>
+    
+    <script>
+        $(function(){
+            //$("#nav-placeholder").load("../navbar/navbar.html");
+        });
+
+        window.onload = function() {
+            loadNav();
+        };
+
+        </script>
+    <script src="profile.js"></script>
+</body>
+</html>

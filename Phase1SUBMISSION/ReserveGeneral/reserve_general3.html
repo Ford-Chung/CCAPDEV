@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+    <title>Reservation</title>
+    <script src="../jquery-3.7.1.min.js"></script>
+    <script src="../loader.js"></script>
+    <link href="reserve_general.css" rel = "stylesheet">
+</head>
+<body>
+    <div class="bg">
+        <img src="../Image/bg.jpg">
+    </div>
+    <header>
+        <div id="nav-placeholder">
+
+        </div>
+    </header>
+
+    <main>
+        <div class="room-container">
+            <div class="rooms">
+                <div><h1>Student View</h1></div>
+                <div><img src="../Image/lab1.jpg" onclick="redirectRoomA()"></div>
+            </div>
+            <div class="rooms">
+                <div><h1>Tech View</h1></div>
+                <div><img src="../Image/lab2.jpg" onclick="redirectTech()"></div>
+            </div>
+        </div>
+
+ 
+    </main>
+    <script>
+        $(function(){
+          $("#nav-placeholder").load("../navbar/navbar.html");
+        });
+
+        function redirectRoomA(){
+            window.location.href = "../ReservePage/studentView3.html";
+        }
+
+        function redirectTech(){
+            window.location.href = "../TechView/roomTech3.html";
+        }
+
+        window.onload = function() {
+            loadNav();
+        };
+    </script>
+        <!--end of Navigation bar-->
+</body>
+</html>

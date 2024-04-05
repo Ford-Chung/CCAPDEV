@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="profile.css">
+    <script src="../loader.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="nav-placeholder">
+        
+    </div>
+    <main>
+        <img id="prof-pic" src="../Image/amogus.png">
+        <h1 id="name">Maya Rodriguez</h1>
+        <p id="bio">I'm Maya Rodriguez, and my passion lies in protecting our environment and the incredible creatures that call it home. Growing up in Costa Rica, I was fortunate to be surrounded by breathtaking nature, from dense rainforests to stunning beaches. These experiences ignited a fire within me to dedicate my life to conservation efforts.</p>
+        <div id="prof-buttons-div">
+            <a href="edit-profile.html">
+                <button type="button">Edit profile</button>
+            </a>
+            <button type="button" class="delete" onclick="confirmDelProf();">Delete profile</button>
+        </div>
+        <h2>Current Reservations:</h2>
+        <details>
+            <summary>G301A - Feb. 1, 2024 10:00-12:00</summary>
+            <p>Laboratory: G301A</p>
+            <p>Seat Number: C1S1</p>
+            <p>Reservation: February 1, 2024 10:00-12:00</p>
+            <p>Requested: January 29, 2024 23:17</p>
+            <div id="resv-buttons-div">
+                <a href="../Mainpage/mainMenu.html">
+                    <button type="button">Edit Reservation</button>
+                </a>
+                <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
+            </div>
+        </details>
+        <details>
+            <summary>G301B - Feb. 2, 2024 11:00-12:00</summary>
+            <p>Laboratory: G301B</p>
+            <p>Seat Number: C1S1</p>
+            <p>Reservation: February 2, 2024 11:00-12:00</p>
+            <p>Requested: January 29, 2024 23:18</p>
+            <div id="resv-buttons-div">
+                <a href="../Mainpage/mainMenu.html">
+                    <button type="button">Edit Reservation</button>
+                </a>
+                <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
+            </div>
+        </details>
+        <details>
+            <summary>G304B - Feb. 3, 2024 11:00-13:00</summary>
+            <p>Laboratory: G304B</p>
+            <p>Seat Number: C1S1</p>
+            <p>Reservation: February 3, 2024 11:00-13:00</p>
+            <p>Requested: January 29, 2024 23:19</p>
+            <div id="resv-buttons-div">
+                <a href="../Mainpage/mainMenu.html">
+                    <button type="button">Edit Reservation</button>
+                </a>
+                <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
+            </div>
+        </details>
+        <details>
+            <summary>G301A - Feb. 4, 2024 14:00-15:00</summary>
+            <p>Laboratory: G301A</p>
+            <p>Seat Number: C1S1</p>
+            <p>Reservation: February 4, 2024 14:00-15:00</p>
+            <p>Requested: January 29, 2024 23:20</p>
+            <div id="resv-buttons-div">
+                <a href="../Mainpage/mainMenu.html">
+                    <button type="button">Edit Reservation</button>
+                </a>
+                <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
+            </div>
+        </details>
+        <details>
+            <summary>G301B - Feb. 5, 2024 16:00-18:00</summary>
+            <p>Laboratory: G301B</p>
+            <p>Seat Number: C1S1</p>
+            <p>Reservation: February 5, 2024 16:00-18:00</p>
+            <p>Requested: February 3, 2024 23:17</p>
+            <div id="resv-buttons-div">
+                <a href="../Mainpage/mainMenu.html">
+                    <button type="button">Edit Reservation</button>
+                </a>
+                <button type="button" class="delete" onclick="confirmDelResv();">Delete Reservation</button>
+            </div>
+        </details>
+        <div class="confirm" id="del-prof">
+            <p class="message" id="del-prof-msg">Confirm delete profile?</p>
+            <button class="delete" id="del-prof-btn">Proceed</button>
+            <button id="save-prof-btn">Cancel</button>
+        </div>
+        <div class="confirm" id="del-resv">
+            <p class="message" id="del-resv-msg">Confirm delete reservation?</p>
+            <button class="delete" id="del-resv-btn">Proceed</button>
+            <button id="save-resv-btn">Cancel</button>
+        </div>
+    </main>
+    
+    <script>
+        $(function(){
+            //$("#nav-placeholder").load("../navbar/navbar.html");
+        });
+
+        window.onload = function() {
+            loadNav();
+        };
+        </script>
+    <script src="profile.js"></script>
+</body>
+</html>

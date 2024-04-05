@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="profile.css">
+    <script src="../loader.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        function redirectRoom(){
+            history.back();
+        }
+    </script>
+</head>
+<body>
+    <div id="nav-placeholder">
+        
+    </div>
+
+    <div class="back" onclick="redirectRoom()">
+        <img src="../Image/back.png">
+    </div>
+    <main>
+        <img id="prof-pic" src="../Image/amogus.png">
+        <h1 id="name">Marcus Lee</h1>
+        <p id="bio">Hey, I'm Marcus Lee, and I'm on a mission to blend my passion for adventure with my love for sustainable living. Growing up in the mountains of Colorado, I developed a deep appreciation for the great outdoors and the importance of preserving our natural environment.</p>
+    </main>
+    
+    <script>
+        $(function(){
+            //$("#nav-placeholder").load("../navbar/navbar.html");
+        });
+
+        window.onload = function() {
+            loadNav();
+        };
+
+        </script>
+    <script src="profile.js"></script>
+</body>
+</html>

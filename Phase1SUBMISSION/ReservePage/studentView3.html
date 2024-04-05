@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<head>
+    <title>Reservation</title>
+    <link href="modal.css" rel="stylesheet">
+    <link href="studentView3.css" rel="stylesheet">
+    <script defer src="modal.js"></script>
+    <script src="../jquery-3.7.1.min.js"></script>
+    <script src="../loader.js"></script>
+
+    <script>
+        function generateBlocks(columnId){
+            let container = document.getElementById(columnId);
+          
+            for(let i = 1; i <= 10; i++){
+                let blocks = document.createElement("button");
+                blocks.setAttribute("class", "row");
+                let temp = "" + columnId + "S" + i;
+                blocks.setAttribute("id", temp); 
+                blocks.setAttribute("data-modal-target", "#modalA");
+                
+                blocks.textContent = temp;
+                container.appendChild(blocks);
+                
+            }
+            
+          }
+          
+          function changeAnon(id){
+            let name = document.getElementById(id);
+            name.classList.add("anon");
+            
+          }
+
+          function yours(id){
+            let name = document.getElementById(id);
+            name.classList.add("yours");
+          }
+
+          function loadHardcode(){
+            let temp;
+
+            changeAvailability("C1S1");
+            temp = document.getElementById("C1S1").classList.remove('yours');
+            changeAnon("C1S1");
+            changeAvailability("C1S2");
+            temp = document.getElementById("C1S2").classList.remove('yours')
+            changeAvailability("C1S4");
+            yours("C1S4");
+            changeAvailability("C2S3");
+            temp = document.getElementById("C2S3").classList.add('anon')
+            changeAvailability("C2S9");
+          }
+
+          
+
+
+        $(function(){
+            //$("#nav-placeholder").load("../navbar/navbar.html");
+            //$("#modal-placeholder").load("modal.html");
+          });
+  
+
+  
+          window.onload = function() {
+              generateBlocks('C1');
+              generateBlocks('C2');
+              limitDate();
+              generateTimeOptions();
+              loadHardcode();
+              loadNav();
+              loadModal();
+
+          };
+
+
+    </script>
+
+</head>
+<body>
+    <div class="bg">
+        <img src="../Image/computerLab.jpg">
+    </div>
+    <header>
+        <div id="nav-placeholder">
+            
+        </div>
+    </header>
+
+    <div id="modal-placeholder">
+
+    </div>
+
+    <div id="overlay"></div>
+
+    <main>
+        <div class="filter">
+            
+            <div class="filter-container">
+                <div class="back" onclick="goback()">
+                    <img src="../Image/back.png">
+                </div>
+                <div class="roomID">
+                    <h1>Room G34B</h1>
+                </div>
+                <div class="date-container">
+                    <label for="date-input">Date: </label>
+                    <input type="date" id="date-input" name="date">
+                </div>
+
+                <div class="timeframe-container">
+                    <label for="timeSelect">TimeSlots: </label>
+                    <select id="timeSelect">
+                        <!-- Options will be generated dynamically here -->
+                    </select>   
+                </div>
+
+            </div>
+        </div>
+    
+        
+        <div class="room-container">
+            <div class="column" id="C1">
+                <!-- Empty div for blocks -->
+            </div>
+            <div class="column" id="C2">
+                <!-- Empty div for blocks -->
+            </div>
+        </div>  
+
+    </main>
+
+
+
+</body>
+</html>
