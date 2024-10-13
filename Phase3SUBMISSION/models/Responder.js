@@ -1,6 +1,6 @@
 const { MongoClient, ObjectId } = require('mongodb');
 const { emit } = require('process');
-const databaseURL = "mongodb+srv://Krozo:1234@reserverdb.p0fufmc.mongodb.net/?retryWrites=true&w=majority&appName=REServerDB";
+const databaseURL = "database_link";
 
 const mongoClient = new MongoClient(databaseURL);
 const bcrypt = require('bcrypt')
